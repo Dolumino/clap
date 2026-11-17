@@ -670,7 +670,8 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
 .pick-actions .icon-btn[data-seen][aria-pressed="true"]{color:var(--on-amber);background:var(--amber);border-color:var(--amber)}
 
 /* ---- Moods: max 3 ---- */
-.mood.maxed{opacity:.4}
+.mood.maxed,.chip.maxed{opacity:.4}
+.set-seen .switch-row{margin-top:0;padding-top:0;border-top:0}
 .mood.maxed:hover{background:var(--surface)}
 
 /* ---- Settings page ---- */
@@ -809,7 +810,7 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
 
     <section class="set g">
       <div class="set-head"><h3>Genres</h3><span class="val" id="gen-val"></span></div>
-      <p class="hint">Optional. When empty, your mood picks the genres.</p>
+      <p class="hint">Optional, up to five. When empty, your mood picks the genres.</p>
       <div class="chips" id="genres"></div>
     </section>
 
@@ -838,21 +839,18 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
       </button>
       <div class="acc-panel" id="acc-panel" hidden>
         <p class="sub-label">Release period</p>
-        <div class="dual" id="dual">
-          <div class="dual-track"></div>
-          <input type="range" class="slider" id="era-a" min="1920" max="2026" step="1" aria-label="From year">
-          <input type="range" class="slider" id="era-b" min="1920" max="2026" step="1" aria-label="To year">
-        </div>
-        <div class="era-read"><span id="era-a-t"></span><span id="era-b-t"></span></div>
-        <div class="chips" id="era-presets" style="margin-top:12px"></div>
+        <div class="chips" id="era-presets"></div>
         <p class="sub-label">Image</p>
         <div class="seg" id="image" role="group" aria-label="Image"></div>
         <p class="sub-label">Length</p>
         <div class="seg" id="len" role="group" aria-label="Length"></div>
         <p class="sub-label">Original language</p>
         <div class="seg" id="lang" role="group" aria-label="Original language"></div>
-        <div class="switch-row"><div><b>Hide films I've seen</b><small>Leave out the films in your Seen diary</small></div><button class="switch" id="hideseen" role="switch" aria-checked="true" aria-label="Hide films I've seen"></button></div>
       </div>
+    </section>
+
+    <section class="set g set-seen">
+      <div class="switch-row"><div><b>Hide films I've seen</b><small>Leave out the films in your Seen diary</small></div><button class="switch" id="hideseen" role="switch" aria-checked="true" aria-label="Hide films I've seen"></button></div>
     </section>
 
     <p class="fineprint g">Film data and images from TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB. Streaming availability by JustWatch.</p>
@@ -986,7 +984,7 @@ const DEFAULT_PLATS=[/^netflix$/i,/^amazon prime video$/i,/^canal\+$/i];
 /* ================= State ================= */
 const KEY="cesoir.tmdb.v1";
 const DEFAULTS={mood:[],who:null,genres:[],fame:0,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,added:[],shown:null,shownV:0,only:false,hideSeen:true};
-const TOP_PLATS=10,MAX_MOODS=3;
+const TOP_PLATS=10,MAX_MOODS=3,MAX_GENRES=5;
 /* Default streaming services, in this order (TMDB names vary slightly, so each has alternatives) */
 const DEFAULT_SERVICES=[[/^canal\+$/i],[/^netflix$/i],[/^amazon prime video$/i,/^prime video$/i],[/^disney ?(plus|\+)$/i],[/^apple tv ?(plus|\+)$/i,/^apple tv$/i],[/^youtube premium$/i],[/^arte$/i],[/^france ?[.]?tv$/i,/^france ?télévisions$/i],[/^m6 ?\+$/i,/^6play$/i],[/^mubi$/i]];
 let DEF_IDS=[];
@@ -1246,22 +1244,20 @@ function syncGo(){const on=hasFilters();$("#go").hidden=!on;$("#go-hint").hidden
 function syncSettings(){
   syncGo();
   const maxed=S.mood.size>=MAX_MOODS;document.querySelectorAll("[data-mood]").forEach(b=>{const on=S.mood.has(b.dataset.mood);b.setAttribute("aria-pressed",on);b.classList.toggle("maxed",maxed&&!on);if(maxed&&!on)b.setAttribute("aria-disabled","true");else b.removeAttribute("aria-disabled")});
-  document.querySelectorAll("[data-genre]").forEach(b=>{const id=+b.dataset.genre,on=S.genres.has(id);b.setAttribute("aria-pressed",on);b.innerHTML=(on?icon("check"):"")+GNAME[id]});
+  const gmax=S.genres.size>=MAX_GENRES;document.querySelectorAll("[data-genre]").forEach(b=>{const id=+b.dataset.genre,on=S.genres.has(id);b.setAttribute("aria-pressed",on);b.innerHTML=(on?icon("check"):"")+GNAME[id];b.classList.toggle("maxed",gmax&&!on);if(gmax&&!on)b.setAttribute("aria-disabled","true");else b.removeAttribute("aria-disabled")});
   renderPlats();
   $("#who").innerHTML=segHTML(WHO,S.who,"who");
   $("#image").innerHTML=segHTML(IMAGE,S.image,"image");
   $("#len").innerHTML=segHTML(LEN,S.len,"len");
   $("#lang").innerHTML=segHTML(LANGS,S.lang,"lang");
   $("#mood-val").textContent=S.mood.size?S.mood.size+(S.mood.size>=MAX_MOODS?" of 3 · max":" selected"):"";
-  $("#gen-val").textContent=S.genres.size?S.genres.size+" selected":"From your mood";
+  $("#gen-val").textContent=S.genres.size?S.genres.size+(S.genres.size>=MAX_GENRES?" of 5 · max":" selected"):"From your mood";
   const np=S.plats?S.plats.size:0;$("#plat-val").textContent=np?np+" selected":"None yet";
   const fm=$("#fame");fm.value=S.fame;fm.style.setProperty("--fill",(S.fame/4*100)+"%");
   $("#fame-val").textContent=S.fame?FAME[S.fame-1].t:"Any";$("#fame-note").textContent=S.fame?FAME[S.fame-1].d:"No preference: from blockbusters to rare finds.";
   document.querySelectorAll("#fame-ticks span").forEach((s,i)=>s.classList.toggle("on",i===S.fame));
   $("#only").setAttribute("aria-checked",S.only);$("#hideseen").setAttribute("aria-checked",S.hideSeen);
-  const[a,b]=S.era;$("#era-a").value=a;$("#era-b").value=b;
-  $("#dual").style.setProperty("--a",(a-1920)/106*100+"%");$("#dual").style.setProperty("--b",(b-1920)/106*100+"%");
-  $("#era-a-t").textContent=a;$("#era-b-t").textContent=b===2026?"Today":b;
+  const[a,b]=S.era;
   document.querySelectorAll("[data-era]").forEach(c=>{const p=ERA_PRESETS[+c.dataset.era];const on=p.a===a&&p.b===b;c.setAttribute("aria-pressed",on);c.innerHTML=(on?icon("check"):"")+p.n});
   const eraT=(a===1920&&b===2026)?"Any period":`${a}–${b===2026?"today":b}`;
   const lab=(L,k)=>L.find(o=>o.k===k).n;
@@ -1286,7 +1282,7 @@ function toggleSet(set,k){set.has(k)?set.delete(k):set.add(k)}
 $("#v-settings").addEventListener("click",e=>{
   const t=e.target.closest("button");if(!t)return;const d=t.dataset;
   if(d.mood){if(!S.mood.has(d.mood)&&S.mood.size>=MAX_MOODS){snack("Up to 3 moods. Unselect one to pick another.");return}toggleSet(S.mood,d.mood)}
-  else if(d.genre)toggleSet(S.genres,+d.genre);
+  else if(d.genre){const g=+d.genre;if(!S.genres.has(g)&&S.genres.size>=MAX_GENRES){snack("Up to 5 genres. Unselect one to pick another.");return}toggleSet(S.genres,g)}
   else if(d.plat){if(!S.plats)S.plats=new Set();toggleSet(S.plats,+d.plat)}
   else if(d.act==="addplats"){openPlatPicker();return}
   else if(d.unplat){const id=+d.unplat,p=PROV_BY_ID.get(id),was=S.plats&&S.plats.has(id);
@@ -1310,13 +1306,7 @@ $("#v-settings").addEventListener("click",e=>{
   syncSettings();
 });
 $("#fame").addEventListener("input",e=>{S.fame=+e.target.value;syncSettings()});
-function eraInput(which){
-  let a=+$("#era-a").value,b=+$("#era-b").value;
-  if(a>b-5){if(which==="a")a=b-5;else b=a+5}
-  S.era=[Math.max(1920,a),Math.min(2026,b)];syncSettings();
-}
-$("#era-a").addEventListener("input",()=>eraInput("a"));
-$("#era-b").addEventListener("input",()=>eraInput("b"));
+
 function pick(arr,n){const c=arr.slice(),out=[];while(out.length<n&&c.length)out.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);return out}
 /* Surprise me: draw random settings, check with TMDB that they give enough films, widen if needed, then search. */
 const SURPRISE_GOOD=10,SURPRISE_MIN=5;
@@ -2096,7 +2086,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1857";
+const APP_VERSION="2026.11.17-1906";
 $("#app-ver").textContent=APP_VERSION;
 let updateShown=false;
 async function checkUpdate(){
