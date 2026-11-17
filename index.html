@@ -770,6 +770,18 @@ input,select,textarea{font-size:max(16px,1em)}
 .detail .dbar{gap:10px}
 .pick-actions{gap:10px}
 .pick-actions .btn.filled{margin-right:2px}
+
+/* Pager between result rounds */
+.pager{display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
+.pager.top{justify-content:flex-start;padding-block:0 6px}
+.pg-nums{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.pg-n{min-width:40px;height:40px;padding:0 8px;border:1px solid var(--rule);border-radius:50%;background:transparent;color:var(--text);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums}
+.pg-n[aria-current="page"]{background:var(--amber);border-color:var(--amber);color:var(--on-amber)}
+.pg-arrow{width:44px;height:44px;border:1px solid var(--rule-strong);border-radius:50%;background:transparent;color:var(--text);display:grid;place-items:center;flex:none}
+.pg-arrow .ms{font-size:20px}
+.pg-arrow.next .ms{transform:rotate(180deg)}
+.pg-arrow:disabled{opacity:.35;cursor:default}
+.refresh-row .pager{margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -1031,7 +1043,7 @@ function defaultShown(){
 let CFG={key:"",region:"FR",lang:"en-US"};
 let thPlace=null, thRadius=5, seen={}, diaryRange="month", S, lists=[{id:"fav",name:"Favorites",films:[]}], meta={}, theme=null, view="setup", discoverSub="settings", openList=null;
 let PROVIDERS=[], PROV_BY_ID=new Map(), BW_KW=null;
-let ranked=[], round=1, pool=null, searchSeq=0;
+let ranked=[], round=1, maxRound=1, pool=null, searchSeq=0;
 const FILMS=new Map();
 function fromPlain(p){return{mood:new Set(p.mood),who:p.who,genres:new Set(p.genres),fame:p.fame,era:p.era.slice(),image:p.image,len:p.len,lang:p.lang,plats:p.plats?new Set(p.plats):null,added:new Set(p.added||[]),shown:p.shown?new Set(p.shown):null,only:p.only,hideSeen:p.hideSeen!==false,shownV:p.shownV||0}}
 function plainOf(st){return{mood:[...st.mood],who:st.who,genres:[...st.genres],fame:st.fame,era:st.era.slice(),image:st.image,len:st.len,lang:st.lang,plats:st.plats?[...st.plats]:null,added:[...st.added],shown:st.shown?[...st.shown]:null,only:st.only,hideSeen:st.hideSeen,shownV:st.shownV||0}}
@@ -1425,14 +1437,26 @@ async function enrich(f){
 }
 async function search(){
   const seq=++searchSeq;
-  ranked=[];round=1;pool={page:0,total:1,results:0,seen:new Set()};
+  ranked=[];round=1;maxRound=1;pool={page:0,total:1,results:0,seen:new Set()};
   go("results");showLoading("Searching the TMDB catalog");
   try{await fetchMore(3);if(seq!==searchSeq)return;await renderRound(seq)}
   catch(e){if(seq===searchSeq)showError(e)}
 }
 async function refresh(){
-  if(!pool)return;const seq=++searchSeq;round++;showLoading("Looking further down the list");
+  if(!pool)return;const seq=++searchSeq;round++;maxRound=Math.max(maxRound,round);showLoading("Looking further down the list");
   try{await renderRound(seq)}catch(e){if(seq===searchSeq)showError(e)}
+}
+function gotoRound(n){
+  if(!pool||n<1||n===round)return;const seq=++searchSeq;round=n;maxRound=Math.max(maxRound,n);showLoading("Loading your picks");
+  renderRound(seq).catch(e=>{if(seq===searchSeq)showError(e)});
+}
+function pagerHTML(more){
+  const nums=[];for(let i=1;i<=maxRound;i++)nums.push(`<button class="pg-n" data-round="${i}"${i===round?' aria-current="page"':""} aria-label="Round ${i}${i===1?", best matches":""}">${i}</button>`);
+  return `<nav class="pager" aria-label="Result rounds">
+    <button class="pg-arrow" data-act="prev"${round<=1?" disabled":""} aria-label="Previous 10">${icon("arrow_back")}</button>
+    <div class="pg-nums">${nums.join("")}</div>
+    <button class="pg-arrow next" data-act="refresh"${more?"":" disabled"} aria-label="${round<maxRound?"Next 10":"Show 10 more"}">${icon("arrow_back")}</button>
+  </nav>`;
 }
 function showLoading(t){const v=$("#v-results");v.scrollTop=0;v.innerHTML=`<div class="loading g"><div class="lin"></div><p>${esc(t)}</p></div>`}
 function showError(e){
@@ -1445,6 +1469,7 @@ async function renderRound(seq){
   const slice=ranked.slice(start,start+10);
   const v=$("#v-results");
   if(!slice.length){
+    if(ranked.length)maxRound=Math.max(1,round-1);
     v.innerHTML=`<div class="empty g"><div class="halo">${icon("movie_off")}</div><h2>${ranked.length?"That's every film that fits":"Nothing fits these settings"}</h2><p>${ranked.length?`You've seen all ${ranked.length} matches. Widen the period or turn off “Only my platforms” for more.`:"Try a wider period, another discovery level, or turn off “Only my platforms”."}</p><div class="hero-actions"><button class="btn filled" data-act="edit">${icon("tune")}Edit settings</button>${ranked.length?`<button class="btn outlined" data-act="restart">${icon("replay")}Back to best matches</button>`:""}</div></div>`;
     return;
   }
@@ -1458,14 +1483,16 @@ async function renderRound(seq){
     <div class="sum-chips g" aria-label="Your settings">${summaryChips()}</div>
     ${first?`<p class="ranked-from g">Ranked from ${nf.format(pool.results)} matching films</p>`
       :`<div class="round-head g"><div><span class="round-pill">${icon("trending_down")}Round ${round} · looser matches</span>
-        <h2>Next ${rescored.length} picks</h2><p>Picks ${start+1}–${start+rescored.length} from ${nf.format(pool.results)} matching films</p></div></div>`}
+        <h2>Next ${rescored.length} picks</h2><p>Picks ${start+1}–${start+rescored.length} from ${nf.format(pool.results)} matching films</p></div></div>${pagerHTML(more).replace('class="pager"','class="pager top g"')}`}
     ${hero?pickHTML(hero):""}
     <section class="runners g" aria-labelledby="ru-t">
       <h3 class="sec-title" id="ru-t">${first?"Also good tonight":"Ranked for you"}</h3>
       <ol class="rlist" start="${first?start+2:start+1}">${rest.map((r,i)=>rowRankHTML(r,(first?start+2:start+1)+i)).join("")}</ol>
     </section>
     <div class="refresh-row g">
-      ${more?`<button class="btn tonal" data-act="refresh">${icon("refresh")}Show 10 more</button><p>The next round goes further down the ranking, so expect weaker matches.</p>`:`<p>That's the last round for these settings.</p><button class="btn outlined" data-act="restart">${icon("replay")}Back to best matches</button>`}
+      ${maxRound>1?pagerHTML(more):""}
+      ${round<maxRound?"":more?`<button class="btn tonal" data-act="refresh">${icon("refresh")}Show 10 more</button><p>The next round goes further down the ranking, so expect weaker matches.</p>`:`<p>That's the last round for these settings.</p><button class="btn outlined" data-act="restart">${icon("replay")}Back to best matches</button>`}
+      ${round<maxRound?`<p>You've been further down the list. Use the arrows or numbers to move between rounds.</p>`:""}
     </div>`;
 }
 /* ----- Platform apps: open the app if installed, otherwise its store page (phones); the website on computers ----- */
@@ -1605,10 +1632,12 @@ $("#v-results").addEventListener("click",e=>{
   if(d.more){const p=$("#desc-"+d.more);const open=!p.classList.contains("open");p.classList.toggle("open",open);b.setAttribute("aria-expanded",open);b.querySelector("span").textContent=open?"Show less":"Read more";return}
   if(d.open){openDetail(+d.open);return}
   if(d.act==="edit")go("settings");
-  if(d.act==="refresh")refresh();
+  if(d.round){gotoRound(+d.round);return}
+  if(d.act==="prev"){gotoRound(round-1);return}
+  if(d.act==="refresh"){round<maxRound?gotoRound(round+1):refresh();return}
   if(d.act==="retry")round>1?(round--,refresh()):search();
   if(d.act==="config")openSetup(true);
-  if(d.act==="restart"){round=0;refresh()}
+  if(d.act==="restart"){gotoRound(1)}
 });
 /* Vertical swipe with drag feedback; a tap does the same */
 function swipe(el,dir,cb,moveEl){
@@ -2117,7 +2146,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-2144";
+const APP_VERSION="2026.11.17-2150";
 $("#app-ver").textContent=APP_VERSION;
 let updateShown=false;
 async function checkUpdate(){
