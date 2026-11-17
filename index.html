@@ -1004,7 +1004,13 @@ async function loadCatalogMeta(){
   else S.plats=new Set([...S.plats].filter(id=>PROV_BY_ID.has(id)));
   const topIds=new Set(PROVIDERS.slice(0,TOP_PLATS).map(p=>p.id));
   DEF_IDS=defaultShown();
-  if(!S.shown||S.shownV!==2){const keep=[...(S.plats||[]),...S.added];S.shown=new Set([...DEF_IDS,...keep]);S.shownV=2}
+  if(!S.shown||S.shownV!==3){
+    /* Reset to the 10 default services; keep selections only among them */
+    S.shown=new Set(DEF_IDS);S.added=new Set();
+    const keepSel=[...(S.plats||[])].filter(id=>S.shown.has(id));
+    S.plats=new Set(keepSel.length?keepSel:PROVIDERS.filter(p=>DEFAULT_PLATS.some(re=>re.test(p.n))&&S.shown.has(p.id)).map(p=>p.id));
+    S.shownV=3;
+  }
   S.plats.forEach(id=>S.shown.add(id));
   S.shown=new Set([...S.shown].filter(id=>PROV_BY_ID.has(id)));
 }
@@ -1883,7 +1889,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1736";
+const APP_VERSION="2026.11.17-1745";
 let updateShown=false;
 async function checkUpdate(){
   if(updateShown||location.protocol!=="https:")return;
