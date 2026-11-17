@@ -1025,7 +1025,7 @@ function cardHTML(r,i){
   const platLine=show.length?show.map(p=>p.logo?`<img src="${IMG}w92${p.logo}" alt="${esc(p.n)}" title="${esc(p.n)}">`:"").join("")+`<small>${mine.length?"On your platforms":"Streaming"}</small>`:`<small>${f.prov&&(f.prov.rent.length||f.prov.buy.length)?"To rent or buy":"Not streaming in "+esc(regionName(CFG.region))}</small>`;
   return `<article class="card${i?"":" active"}" role="listitem" data-id="${f.id}" aria-label="${esc(f.t)}">
     <div class="card-poster" data-swipe="${f.id}">${posterHTML(f,"w500")}
-      <span class="match">${icon("auto_awesome",1)}${r.pct}% match</span>
+      <span class="match" aria-label="${r.pct}% match">${icon("auto_awesome",1)}${r.pct}%</span>
       <button class="fav-btn" data-fav="${f.id}" aria-pressed="${fav}" aria-label="${fav?"Remove from favorites":"Add to favorites"}">${icon("favorite")}</button>
     </div>
     <div class="card-body">
@@ -1314,7 +1314,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(!sticky)snackT=setTimeout(()=>$("#snack").classList.remove("show"),3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1617";
+const APP_VERSION="2026.11.17-1619";
 let updateShown=false;
 async function checkUpdate(){
   if(updateShown||location.protocol!=="https:")return;
