@@ -669,6 +669,10 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
 .dlg-date input{font-size:18px}
 .pick-actions .icon-btn[data-seen][aria-pressed="true"]{color:var(--on-amber);background:var(--amber);border-color:var(--amber)}
 
+/* ---- Moods: max 3 ---- */
+.mood.maxed{opacity:.4}
+.mood.maxed:hover{background:var(--surface)}
+
 /* ---- Settings page ---- */
 .app-version{margin:0;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 .setup-sec{display:flex;flex-direction:column;gap:10px}
@@ -793,7 +797,7 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
 
     <section class="set g">
       <div class="set-head"><h3>How do you want to feel?</h3><span class="val" id="mood-val"></span></div>
-      <p class="hint">Pick one or two. This weighs most in the ranking.</p>
+      <p class="hint">Pick up to three. This weighs most in the ranking.</p>
       <div class="mood-grid" id="moods"></div>
     </section>
 
@@ -982,7 +986,7 @@ const DEFAULT_PLATS=[/^netflix$/i,/^amazon prime video$/i,/^canal\+$/i];
 /* ================= State ================= */
 const KEY="cesoir.tmdb.v1";
 const DEFAULTS={mood:[],who:null,genres:[],fame:0,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,added:[],shown:null,shownV:0,only:false,hideSeen:true};
-const TOP_PLATS=10;
+const TOP_PLATS=10,MAX_MOODS=3;
 /* Default streaming services, in this order (TMDB names vary slightly, so each has alternatives) */
 const DEFAULT_SERVICES=[[/^canal\+$/i],[/^netflix$/i],[/^amazon prime video$/i,/^prime video$/i],[/^disney ?(plus|\+)$/i],[/^apple tv ?(plus|\+)$/i,/^apple tv$/i],[/^youtube premium$/i],[/^arte$/i],[/^france ?[.]?tv$/i,/^france ?télévisions$/i],[/^m6 ?\+$/i,/^6play$/i],[/^mubi$/i]];
 let DEF_IDS=[];
@@ -1241,14 +1245,14 @@ function hasFilters(st){st=st||S;return !!(st.mood.size||st.who||st.genres.size|
 function syncGo(){const on=hasFilters();$("#go").hidden=!on;$("#go-hint").hidden=on}
 function syncSettings(){
   syncGo();
-  document.querySelectorAll("[data-mood]").forEach(b=>b.setAttribute("aria-pressed",S.mood.has(b.dataset.mood)));
+  const maxed=S.mood.size>=MAX_MOODS;document.querySelectorAll("[data-mood]").forEach(b=>{const on=S.mood.has(b.dataset.mood);b.setAttribute("aria-pressed",on);b.classList.toggle("maxed",maxed&&!on);if(maxed&&!on)b.setAttribute("aria-disabled","true");else b.removeAttribute("aria-disabled")});
   document.querySelectorAll("[data-genre]").forEach(b=>{const id=+b.dataset.genre,on=S.genres.has(id);b.setAttribute("aria-pressed",on);b.innerHTML=(on?icon("check"):"")+GNAME[id]});
   renderPlats();
   $("#who").innerHTML=segHTML(WHO,S.who,"who");
   $("#image").innerHTML=segHTML(IMAGE,S.image,"image");
   $("#len").innerHTML=segHTML(LEN,S.len,"len");
   $("#lang").innerHTML=segHTML(LANGS,S.lang,"lang");
-  $("#mood-val").textContent=S.mood.size?S.mood.size+" selected":"";
+  $("#mood-val").textContent=S.mood.size?S.mood.size+(S.mood.size>=MAX_MOODS?" of 3 · max":" selected"):"";
   $("#gen-val").textContent=S.genres.size?S.genres.size+" selected":"From your mood";
   const np=S.plats?S.plats.size:0;$("#plat-val").textContent=np?np+" selected":"None yet";
   const fm=$("#fame");fm.value=S.fame;fm.style.setProperty("--fill",(S.fame/4*100)+"%");
@@ -1281,7 +1285,7 @@ function scheduleCount(){
 function toggleSet(set,k){set.has(k)?set.delete(k):set.add(k)}
 $("#v-settings").addEventListener("click",e=>{
   const t=e.target.closest("button");if(!t)return;const d=t.dataset;
-  if(d.mood)toggleSet(S.mood,d.mood);
+  if(d.mood){if(!S.mood.has(d.mood)&&S.mood.size>=MAX_MOODS){snack("Up to 3 moods. Unselect one to pick another.");return}toggleSet(S.mood,d.mood)}
   else if(d.genre)toggleSet(S.genres,+d.genre);
   else if(d.plat){if(!S.plats)S.plats=new Set();toggleSet(S.plats,+d.plat)}
   else if(d.act==="addplats"){openPlatPicker();return}
@@ -2092,7 +2096,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1808";
+const APP_VERSION="2026.11.17-1857";
 $("#app-ver").textContent=APP_VERSION;
 let updateShown=false;
 async function checkUpdate(){
