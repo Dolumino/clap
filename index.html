@@ -942,6 +942,33 @@ button,.btn{-webkit-tap-highlight-color:transparent}
 .srow-danger,.srow-danger .lbl{color:var(--danger)}
 .srow-danger>.ms{color:var(--danger)!important}
 .srow-danger small{color:var(--muted)}
+
+/* Primary only when there is a change */
+.btn:disabled,.btn[aria-disabled="true"]{opacity:.5;cursor:default;box-shadow:none;filter:saturate(.6)}
+.btn.outlined{transition:background-color .3s ease,color .3s ease,border-color .3s ease,opacity .3s ease}
+#f-go,#dlg-ok{border-width:1px;border-style:solid}
+#f-go{height:48px;padding:0 24px;border-radius:2px}
+#f-go.filled,#dlg-ok.filled{border-color:transparent}
+
+/* Results without actions: breathing room above the tab bar */
+#v-results>.runners:last-child{padding-bottom:28px}
+
+/* Sheet footer: remove-from-all on the left, Done on the right */
+.sheet-foot{justify-content:space-between;align-items:center;gap:12px}
+.sheet-foot .btn.filled{margin-left:auto}
+#sheet-removeall{color:var(--danger);padding:0 6px;gap:6px}
+#sheet-removeall .ms{font-size:18px;color:var(--danger)}
+
+/* Seen diary search */
+.diary-search{margin:2px 0 6px}
+.diary-search input{font-size:17px!important}
+.diary-none{margin:24px 0;text-align:center;color:var(--muted);font-size:14px}
+.drow[hidden],.diary-month[hidden]{display:none!important}
+
+
+/* Film page: availability note, set apart and quiet */
+.d-sec .note{margin:28px 0 4px;font-size:11px;line-height:15px;color:var(--faint);opacity:.85;letter-spacing:.01em}
+.d-sec .note .ms{font-size:13px;margin-top:1px;color:var(--faint)}
 </style>
 </head>
 <body>
@@ -1107,7 +1134,7 @@ button,.btn{-webkit-tap-highlight-color:transparent}
     <div class="g"><h2 id="sheet-t">Save to list</h2><p class="sheet-film" id="sheet-film"></p></div>
     <div class="sheet-lists" id="sheet-lists"></div>
     <button class="sheet-new" id="sheet-new"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M222,128a6,6,0,0,1-6,6H134v82a6,6,0,0,1-12,0V134H40a6,6,0,0,1,0-12h82V40a6,6,0,0,1,12,0v82h82A6,6,0,0,1,222,128Z"/></svg>New list</button>
-    <div class="sheet-foot g"><button class="btn filled" id="sheet-done">Done</button></div>
+    <div class="sheet-foot g"><button class="btn text sheet-removeall" id="sheet-removeall" hidden>Remove from all lists</button><button class="btn filled" id="sheet-done">Done</button></div>
   </section>
   <section class="sheet tall" id="psheet" role="dialog" aria-modal="true" aria-labelledby="psheet-t" hidden>
     <i class="sheet-handle" aria-hidden="true"></i>
@@ -1163,7 +1190,7 @@ const FR={
 "Fine-tune":"Affiner","Release period":"Période de sortie","Period":"Période","Any period":"Toutes périodes","Image":"Image","Any image":"Toutes images",
 "Length":"Durée","Any length":"Toutes durées","Original language":"Langue originale","Any language":"Toutes langues",
 "Hide films I've seen":"Masquer les films déjà vus","Leave out the films in your Seen diary":"Écarter les films de ton journal Vus",
-"Find films":"Trouver des films","Pick a filter to start":"Choisis un filtre pour commencer","in the TMDB catalog":"dans le catalogue TMDB",
+"Find films":"Trouver des films","Pick a filter to start":"Choisis un filtre pour commencer","in the TMDB catalog":"catalogue TMDB",
 "Counting…":"Calcul…","Count unavailable":"Nombre indisponible","Loosen a setting to see results":"Élargis un filtre pour voir des résultats","Loosen a setting for more choice":"Élargis un filtre pour plus de choix",
 "Closest match left for these settings":"Le plus proche restant pour ces filtres",
 /* results */
@@ -1213,8 +1240,8 @@ const FR={
 "Your diary is empty":"Ton journal est vide","Nothing seen this week":"Aucun film vu cette semaine","Nothing seen this month":"Aucun film vu ce mois-ci","Nothing seen this year":"Aucun film vu cette année",
 "Open a film and tap the eye to mark it as seen, with the date you watched it.":"Ouvre un film et touche l'œil pour le marquer comme vu, avec la date du visionnage.","None yet":"Aucun pour l'instant",
 /* search */
-"Trending this week":"Tendances de la semaine","No film found":"Aucun film trouvé","More results":"Plus de résultats","Couldn't load suggestions":"Impossible de charger les suggestions",
-"Show more films":"Plus de films","Search for a film":"Rechercher un film","Clear search":"Effacer la recherche",
+"Trending this week":"Tendances de la semaine","No film found":"Aucun film trouvé","No film":"Aucun film","More results":"Plus de résultats","Couldn't load suggestions":"Impossible de charger les suggestions",
+"Show more films":"Plus de films","Search for a film":"Rechercher un film","Search your Seen films":"Chercher dans tes films vus","Clear search":"Effacer la recherche",
 /* in theatres */
 "Now in cinemas":"À l'affiche","City or area":"Ville ou quartier","Use my location":"Utiliser ma position","Your location":"Ta position",
 "Choose a city or use your location to see cinemas nearby.":"Choisis une ville ou utilise ta position pour voir les cinémas proches.","Cinemas nearby":"Cinémas à proximité",
@@ -1281,7 +1308,7 @@ const FRX=[
   [/^Change the date for (.+)$/,"Changer la date de $1"],
   [/^Remove (.+) from your services$/,"Retirer $1 de tes services"],
   [/^Remove (.+) from (.+)$/,(m,a,b)=>`Retirer ${a} de ${b==="Seen"?"tes Vus":frT(b)}`],
-  [/^In (\d+) lists$/,"Dans $1 listes"],
+  [/^Remove from all (\d+) lists$/,"Retirer des $1 listes"],
   [/^Removed from (\d+) lists$/,"Retiré de $1 listes"],
   [/^Removed from (.+)$/,(m,b)=>`Retiré de ${frT(b)}`],
   [/^(.+) removed$/,"$1 retiré"],
@@ -1293,6 +1320,7 @@ const FRX=[
   [/^The list is removed\. Its (\d+) films? stays? in your other lists\.$/,(m,n)=>`La liste est supprimée. ${+n>1?`Ses ${n} films restent`:"Son film reste"} dans tes autres listes.`],
   [/^No films in (.+) yet$/,(m,x)=>`Aucun film dans ${frT(x)} pour l'instant`],
   [/^Nothing matches “(.*)”\. Check the spelling, or try the original title\.$/,"Rien ne correspond à « $1 ». Vérifie l'orthographe ou essaie le titre original."],
+  [/^Nothing matches “(.*)”$/,"Rien ne correspond à « $1 »"],
   [/^Searching for “(.*)”$/,"Recherche de « $1 »"],
   [/^Cinemas within (.+)$/,"Cinémas à moins de $1"],
   [/^No cinema found within (.+)\. Try a larger distance\.$/,"Aucun cinéma à moins de $1. Essaie une distance plus grande."],
@@ -1303,7 +1331,7 @@ const FRX=[
   [/^No service called “(.*)” in (.+)\.$/,"Aucun service nommé « $1 » ($2)."],
   [/^Restore the (\d+) suggestions$/,"Rétablir les $1 suggestions"],
   [/^Something went wrong after connecting: (.*)$/,"Un problème est survenu après la connexion : $1"],
-  [/^Up to (\d+) (.+)$/,"Jusqu'à $1 $2"],
+  [/^Up to ([\d\s\u202f]+) (films?)$/,"Jusqu'à $1 $2"],
   [/^Out (.+)$/,"Sortie le $1"],
   [/^Rated$/,"Noté"]
 ];
@@ -1402,7 +1430,7 @@ function defaultShown(){
 let CFG={key:"",region:"FR",lang:UI_FR?"fr-FR":"en-US"};
 let thPlace=null, thRadius=5, seen={}, diaryRange="month", S, lists=[{id:"fav",name:"Favorites",films:[]}], meta={}, theme=null, view="setup", discoverSub="settings", openList=null;
 let PROVIDERS=[], PROV_BY_ID=new Map(), BW_KW=null;
-let ranked=[], round=1, maxRound=1, pool=null, searchSeq=0;
+let resultsSingle=false, ranked=[], round=1, maxRound=1, pool=null, searchSeq=0;
 const FILMS=new Map();
 function fromPlain(p){return{mood:new Set(p.mood),who:p.who,genres:new Set(p.genres),fame:p.fame,era:p.era.slice(),image:p.image,len:p.len,lang:p.lang,plats:p.plats?new Set(p.plats):null,added:new Set(p.added||[]),shown:p.shown?new Set(p.shown):null,only:p.only,hideSeen:p.hideSeen!==false,shownV:p.shownV||0}}
 function plainOf(st){return{mood:[...st.mood],who:st.who,genres:[...st.genres],fame:st.fame,era:st.era.slice(),image:st.image,len:st.len,lang:st.lang,plats:st.plats?[...st.plats]:null,added:[...st.added],shown:st.shown?[...st.shown]:null,only:st.only,hideSeen:st.hideSeen,shownV:st.shownV||0}}
@@ -1549,7 +1577,7 @@ function renderTopbar(){
   let h="";
   if(view==="setup")h=setupEditing?`<button class="icon-btn" data-act="edit" aria-label="Back">${icon("arrow_back")}</button><h1>Settings</h1>`:brand;
   else if(view==="settings")h=brand+`<button class="icon-btn" data-act="config" aria-label="Settings">${icon("settings")}</button>`;
-  else if(view==="results")h=`<button class="icon-btn" data-act="edit" aria-label="Back to settings">${icon("arrow_back")}</button><h1>Tonight's picks</h1><button class="icon-btn" data-act="refresh" aria-label="Show 10 more">${icon("refresh")}</button>`;
+  else if(view==="results")h=`<button class="icon-btn" data-act="edit" aria-label="Back to settings">${icon("arrow_back")}</button><h1>Tonight's picks</h1>${resultsSingle?"":`<button class="icon-btn" data-act="refresh" aria-label="Show 10 more">${icon("refresh")}</button>`}`;
   else if(view==="search")h=`<h1 style="padding-left:12px">Search</h1>`;
   else if(view==="theatres")h=`<h1 style="padding-left:12px">In theatres</h1>`;
   else if(openList==="__seen")h=`<button class="icon-btn" data-act="listsback" aria-label="Back to lists">${icon("arrow_back")}</button><h1>Seen</h1>`;
@@ -1594,6 +1622,9 @@ let setupEditing=false;
 const THEME_OPTS=[["system","contrast","System"],["light","light_mode","Light"],["dark","dark_mode","Dark"]];
 function renderThemeSeg(){const cur=theme||"system";$("#theme-seg").innerHTML=THEME_OPTS.map(([k,i,n])=>`<button type="button" data-themeopt="${k}" aria-pressed="${k===cur}">${icon(i)}${n}</button>`).join("")}
 $("#theme-seg").addEventListener("click",e=>{const b=e.target.closest("[data-themeopt]");if(!b)return;const k=b.dataset.themeopt;theme=k==="system"?null:k;applyTheme();save();renderThemeSeg();$(`[data-themeopt="${k}"]`).focus()});
+function setupSync(){const k=$("#f-key").value.replace(/^\s*(bearer\s+)?/i,"").replace(/["'\s]/g,"");
+  const dirty=setupEditing?(k!==CFG.key||$("#f-region").value!==CFG.region||$("#f-lang").value!==CFG.lang)&&!!k:!!k;setPrimary($("#f-go"),dirty)}
+["#f-key","#f-region","#f-lang"].forEach(id=>{const el=$(id);if(el){el.addEventListener("input",setupSync);el.addEventListener("change",setupSync)}});
 function openSetup(editing){
   setupEditing=!!editing;
   $("#appearance").hidden=!editing;$("#catalog-h").hidden=!editing;$("#setup-steps").hidden=!!editing;$("#su-eb").hidden=!!editing;$("#su-sub").hidden=!!editing;
@@ -1601,12 +1632,12 @@ function openSetup(editing){
   $("#f-go").innerHTML=icon(editing?"check":"link")+(editing?"Save":"Connect");
   renderThemeSeg();
   $("#f-key").value=CFG.key;$("#f-region").value=CFG.region;$("#f-lang").value=CFG.lang;
-  $("#f-cancel").hidden=!editing;$("#f-forget").hidden=!editing||!CFG.key;
+  $("#f-cancel").hidden=!editing;$("#f-forget").hidden=!editing||!CFG.key;setupSync();
   $("#setup-err").hidden=true;go("setup");
 }
 $("#f-eye").onclick=()=>{const i=$("#f-key");const show=i.type==="password";i.type=show?"text":"password";$("#f-eye").setAttribute("aria-label",show?"Hide key":"Show key");$("#f-eye").innerHTML=icon(show?"visibility_off":"visibility")};
 $("#f-cancel").onclick=()=>go("settings");
-$("#f-forget").onclick=()=>{CFG.key="";save();$("#f-key").value="";$("#f-forget").hidden=true;$("#f-cancel").hidden=true;snack("Key removed from this browser")};
+$("#f-forget").onclick=()=>{CFG.key="";save();$("#f-key").value="";setupSync();$("#f-forget").hidden=true;$("#f-cancel").hidden=true;snack("Key removed from this browser")};
 $("#setup-form").addEventListener("submit",async e=>{
   e.preventDefault();
   const key=$("#f-key").value.replace(/^\s*(bearer\s+)?/i,"").replace(/["'\s]/g,"");
@@ -1623,7 +1654,7 @@ $("#setup-form").addEventListener("submit",async e=>{
     if(prev.lang!==CFG.lang){location.reload();return}
     buildSettings();go("settings");
   }catch(err){CFG=prev;console.error("[Clap] connect failed",err);showSetupErr(err instanceof ApiError?errText(err):"Something went wrong after connecting: "+(err&&err.message||err))}
-  finally{btn.disabled=false;btn.innerHTML=icon(setupEditing?"check":"link")+(setupEditing?"Save":"Connect")}
+  finally{btn.innerHTML=icon(setupEditing?"check":"link")+(setupEditing?"Save":"Connect");setupSync()}
 });
 function showSetupErr(t){$("#setup-err-t").textContent=t;$("#setup-err").hidden=false;$("#setup-err").scrollIntoView({block:"center",behavior:"smooth"})}
 if(window.self!==window.top||location.protocol==="about:"){
@@ -1686,7 +1717,7 @@ function scheduleCount(){
       const r=await tmdb("/discover/movie",buildParams(1));if(seq!==countSeq)return;
       const n=r.total_results||0;
       if(!hasFilters()){$("#count-n").textContent=nf.format(n)+" films";$("#count-t").textContent="in the TMDB catalog";return}
-      $("#count-n").textContent=n?(S.lang==="world"?"Up to ":"")+nf.format(n)+(n===1?" film fits":" films fit"):"No film fits";
+      $("#count-n").textContent=n?(S.lang==="world"?"Up to ":"")+nf.format(n)+(n===1?" film":" films"):"No film";
       $("#count-t").textContent=n===0?"Loosen a setting to see results":n<10?"Loosen a setting for more choice":"in the TMDB catalog";
     }catch(e){if(seq!==countSeq)return;$("#count-n").textContent="Count unavailable";$("#count-t").textContent=e.kind==="auth"?"Check your TMDB key":"You can still search"}
   },400);
@@ -1808,7 +1839,7 @@ async function enrich(f){
 }
 async function search(){
   const seq=++searchSeq;
-  ranked=[];round=1;maxRound=1;pool={page:0,total:1,results:0,seen:new Set(),keys:new Set()};
+  resultsSingle=false;ranked=[];round=1;maxRound=1;pool={page:0,total:1,results:0,seen:new Set(),keys:new Set()};
   go("results");showLoading("Searching the TMDB catalog");
   try{await fetchMore(3);if(seq!==searchSeq)return;await renderRound(seq)}
   catch(e){if(seq===searchSeq)showError(e)}
@@ -1849,22 +1880,22 @@ async function renderRound(seq){
   const rescored=slice.map(r=>scoreFilm(r.f)).sort((x,y)=>y.pct-x.pct);
   ranked.splice(start,rescored.length,...rescored);
   const first=round===1,more=ranked.length>start+10||pool.page<pool.total;
+  const single=first&&!more&&maxRound===1;resultsSingle=!more;renderTopbar();
   const hero=first?rescored[0]:null,rest=first?rescored.slice(1):rescored;
   v.innerHTML=`
     <div class="sum-chips g" aria-label="Your settings">${summaryChips()}</div>
     ${first?`<p class="ranked-from g">Ranked from ${nf.format(pool.results)} matching films</p>`
       :`<div class="round-head g"><div><span class="round-pill">${icon("trending_down")}Round ${round} · looser matches</span>
-        <h2>Next ${rescored.length} picks</h2><p>Picks ${start+1}–${start+rescored.length} from ${nf.format(pool.results)} matching films</p></div></div>${pagerHTML(more).replace('class="pager"','class="pager top g"')}`}
+        <h2>Next ${rescored.length} picks</h2><p>Picks ${start+1}–${start+rescored.length} from ${nf.format(pool.results)} matching films</p></div></div>`}
     ${hero?pickHTML(hero):""}
     <section class="runners g" aria-labelledby="ru-t">
       <h3 class="sec-title" id="ru-t">${first?"Also good tonight":"Ranked for you"}</h3>
       <ol class="rlist" start="${first?start+2:start+1}">${rest.map((r,i)=>rowRankHTML(r,(first?start+2:start+1)+i)).join("")}</ol>
     </section>
-    <div class="refresh-row g">
-      ${maxRound>1?pagerHTML(more):""}
-      ${round<maxRound?"":more?`<button class="btn tonal" data-act="refresh">${icon("refresh")}Show 10 more</button><p>The next round goes further down the ranking, so expect weaker matches.</p>`:`<p>That's the last round for these settings.</p><button class="btn outlined" data-act="restart">${icon("replay")}Back to best matches</button>`}
-      ${round<maxRound?`<p>You've been further down the list. Use the arrows or numbers to move between rounds.</p>`:""}
-    </div>`;
+    ${single?"":`<div class="refresh-row g">
+      ${more?`<button class="btn tonal" data-act="refresh">${icon("refresh")}Show 10 more</button><p>The next round goes further down the ranking, so expect weaker matches.</p>`:`<p>That's the last round for these settings.</p>`}
+      ${round>1?`<button class="btn outlined" data-act="restart">${icon("replay")}Back to best matches</button>`:""}
+    </div>`}`;
 }
 /* ----- Platform apps: open the app if installed, otherwise its store page (phones); the website on computers ----- */
 const UA=navigator.userAgent,IS_ANDROID=/android/i.test(UA),IS_IOS=/iphone|ipad|ipod/i.test(UA)||(/macintosh/i.test(UA)&&navigator.maxTouchPoints>1);
@@ -2317,7 +2348,7 @@ function seenBtn(id){const on=!!seen[id];return `<button class="icon-btn eye" da
 function seenTag(id){return seen[id]?`<small class="seen-tag">${icon("seen",1)}Seen ${esc(fmtDay(seen[id],{day:"numeric",month:"short",year:dOf(seen[id]).getFullYear()===new Date().getFullYear()?undefined:"numeric"}))}</small>`:""}
 function seenLine(id){
   if(!seen[id])return "";
-  return `<p class="seen-line">${icon("calendar_check")}<span>Seen on <b>${esc(fmtDay(seen[id]))}</b></span></p><p class="seen-acts"><button data-seenact="edit">${icon("calendar_month")}Change date</button><button data-seenact="remove" class="danger">${icon("close")}Remove from Seen</button></p>`;
+  return `<p class="seen-line">${icon("calendar_check")}<span>Seen on <b>${esc(fmtDay(seen[id]))}</b></span></p><p class="seen-acts"><button data-seenact="edit">${icon("calendar_month")}Change date</button></p>`;
 }
 function renderQuick(){
   const t=new Date(),y=new Date();y.setDate(t.getDate()-1);
@@ -2330,7 +2361,7 @@ $("#dlg-date").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefau
 function openSeenDialog(id){
   remember(id);const m=meta[id]||FILMS.get(id);if(!m)return;const had=seen[id];
   $("#snack").classList.remove("show");
-  openDialog({title:had?"Change the date":"When did you see it?",text:m.t+(m.y?` (${m.y})`:""),date:true,value:had||todayISO(),ok:had?"Save":"Mark as seen",
+  openDialog({title:had?"Change the date":"When did you see it?",text:m.t+(m.y?` (${m.y})`:""),date:true,value:had||todayISO(),ok:had?"Save":"Mark as seen",dirty:v=>!!v&&(!had||v!==had),
     onOk:v=>{seen[id]=v;save();syncSeenUI();
 }});
 }
@@ -2340,6 +2371,17 @@ function syncSeenUI(){
   syncDetailFav();
   if(view==="lists")renderLists();
   if(view==="search"){if(qState.q)renderSearch();else if(trending)renderTrending()}
+}
+let diaryQ="";
+const foldTxt=t=>String(t||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function filterDiary(){
+  const q=foldTxt(diaryQ.trim()),box=$("#v-lists .diary");if(!box)return;let n=0;
+  box.querySelectorAll(".drow").forEach(r=>{const show=!q||r.dataset.q.includes(q);r.hidden=!show;if(show)n++});
+  box.querySelectorAll(".diary-month").forEach(h=>{let el=h.nextElementSibling,any=false;while(el&&!el.classList.contains("diary-month")){if(!el.hidden&&el.classList.contains("drow"))any=true;el=el.nextElementSibling}h.hidden=!any});
+  const c=$("#diary-count"),label={week:"this week",month:"this month",year:"this year",all:"in total"}[diaryRange];
+  if(c)c.innerHTML=`<b>${plural(n,"film")}</b> seen ${label}`;
+  const e=$("#diary-none");if(e){e.hidden=!(q&&!n);if(q&&!n)e.textContent=`Nothing matches “${diaryQ.trim()}”`}
+  const x=$("#dq-clear");if(x)x.hidden=!diaryQ;
 }
 function renderDiary(){
   const v=$("#v-lists"),from=rangeStart(diaryRange);
@@ -2354,12 +2396,15 @@ function renderDiary(){
     body=`<div class="g diary">`+rows.map(({id,d})=>{
       const m=meta[id]||{id,t:"Film"},mk=d.slice(0,7);let head="";
       if(mk!==cur){cur=mk;head=`<h3 class="diary-month">${esc(dOf(d).toLocaleDateString(LOC,{month:"long",year:"numeric"}))}</h3>`}
-      return head+`<div class="drow"><span class="dday" aria-hidden="true"><b>${dOf(d).getDate()}</b><small>${esc(dOf(d).toLocaleDateString(LOC,{weekday:"short"}))}</small></span>
+      return head+`<div class="drow" data-q="${esc(foldTxt([m.t,m.y,m.d].filter(Boolean).join(" ")))}"><span class="dday" aria-hidden="true"><b>${dOf(d).getDate()}</b><small>${esc(dOf(d).toLocaleDateString(LOC,{weekday:"short"}))}</small></span>
         <button class="item-open" data-open="${id}" aria-label="${esc(m.t)}, seen ${esc(fmtDay(d))}"><span class="thumb">${posterHTML(m,"w185",true)}</span><span class="item-txt"><b>${esc(m.t)}</b><small>${esc(m.y||"")}${m.d?" · "+esc(m.d):""}</small></span></button>
         <button class="icon-btn" data-seenedit="${id}" aria-label="Change the date for ${esc(m.t)}">${icon("calendar_check")}</button><button class="icon-btn" data-unsee="${id}" aria-label="Remove ${esc(m.t)} from Seen">${icon("close")}</button></div>`}).join("")+`</div>`;
   }
-  v.innerHTML=`<div class="g diary-top"><div class="seg" role="group" aria-label="Period">${R.map(([k,n])=>`<button data-range="${k}" aria-pressed="${k===diaryRange}">${n}</button>`).join("")}</div>
-    <p class="diary-count"><b>${plural(rows.length,"film")}</b> seen ${label}</p></div>`+body;
+  const sb=Object.keys(seen).length>1?`<label class="searchbar compact diary-search">${icon("search")}<input id="dq" type="search" placeholder="Search your Seen films" autocomplete="off" enterkeyhint="search" aria-label="Search your Seen films" value="${esc(diaryQ)}"><button type="button" class="icon-btn" id="dq-clear" aria-label="Clear search"${diaryQ?"":" hidden"}>${icon("close")}</button></label>`:"";
+  v.innerHTML=`<div class="g diary-top">${sb}<div class="seg" role="group" aria-label="Period">${R.map(([k,n])=>`<button data-range="${k}" aria-pressed="${k===diaryRange}">${n}</button>`).join("")}</div>
+    <p class="diary-count" id="diary-count"><b>${plural(rows.length,"film")}</b> seen ${label}</p></div>`+body+`<p class="diary-none g" id="diary-none" hidden></p>`;
+  const i=$("#dq");if(i){i.addEventListener("input",()=>{diaryQ=i.value;filterDiary()});$("#dq-clear").onclick=()=>{diaryQ="";i.value="";filterDiary();i.focus()}}
+  filterDiary();
 }
 
 /* ----- Save-to-list sheet ----- */
@@ -2377,8 +2422,8 @@ function renderSheet(){
   const m=meta[sheetFilm]||FILMS.get(sheetFilm)||{};
   $("#sheet-film").textContent=m.t?m.t+(m.y?` (${m.y})`:""):"";
   $("#sheet-lists").innerHTML=lists.map(l=>{const on=l.films.includes(sheetFilm);
-    return `<button class="srow" role="checkbox" aria-checked="${on}" data-toggle="${l.id}">${icon(l.id==="fav"?"favorite":"bookmark",on)}<span class="lbl">${esc(l.name)}<small>${plural(l.films.length,"film")}</small></span><span class="cbox">${on?icon("check"):""}</span></button>`}).join("")
-    +(()=>{const n=lists.filter(l=>l.films.includes(sheetFilm)).length;return n>1?`<button class="srow srow-danger" data-removeall>${icon("delete")}<span class="lbl">Remove from all lists<small>In ${n} lists</small></span></button>`:""})();
+    return `<button class="srow" role="checkbox" aria-checked="${on}" data-toggle="${l.id}">${icon(l.id==="fav"?"favorite":"bookmark",on)}<span class="lbl">${esc(l.name)}<small>${plural(l.films.length,"film")}</small></span><span class="cbox">${on?icon("check"):""}</span></button>`}).join("");
+  {const n=lists.filter(l=>l.films.includes(sheetFilm)).length,b=$("#sheet-removeall");b.hidden=n<2;b.innerHTML=icon("delete")+"Remove from all lists";b.setAttribute("aria-label",`Remove from all ${n} lists`)}
 }
 function closeSheet(){
   const sh=$("#sheet");sh.classList.remove("open");$("#scrim").hidden=true;
@@ -2386,14 +2431,15 @@ function closeSheet(){
   const back=sheetFilm!=null&&document.querySelector(`.icon-btn[data-addlist="${sheetFilm}"]`);sheetFilm=null;if(back)back.focus({preventScroll:true});
 }
 $("#sheet-lists").addEventListener("click",e=>{
-  if(e.target.closest("[data-removeall]")&&sheetFilm!=null){
-    const id=sheetFilm,was=lists.filter(l=>l.films.includes(id)).map(l=>[l,l.films.indexOf(id)]);
-    was.forEach(([l])=>{l.films=l.films.filter(x=>x!==id)});save();syncFavUI();renderSheet();
-    snack(`Removed from ${was.length} lists`,()=>{was.forEach(([l,i])=>{if(!l.films.includes(id))l.films.splice(i,0,id)});save();syncFavUI();renderSheet()});return}
   const b=e.target.closest("[data-toggle]");if(!b||sheetFilm==null)return;
   const l=lists.find(x=>x.id===b.dataset.toggle);const on=!l.films.includes(sheetFilm);
-  setInList(l,sheetFilm,on);
+  setInList(l,sheetFilm,on);renderSheet();
   const nb=$(`#sheet-lists [data-toggle="${l.id}"]`);if(nb)nb.focus({preventScroll:true});
+});
+$("#sheet-removeall").addEventListener("click",()=>{if(sheetFilm==null)return;{
+    const id=sheetFilm,was=lists.filter(l=>l.films.includes(id)).map(l=>[l,l.films.indexOf(id)]);
+    was.forEach(([l])=>{l.films=l.films.filter(x=>x!==id)});save();syncFavUI();renderSheet();
+    snack(`Removed from ${was.length} lists`,()=>{was.forEach(([l,i])=>{if(!l.films.includes(id))l.films.splice(i,0,id)});save();syncFavUI();renderSheet()})}
 });
 $("#sheet-new").onclick=()=>openNameDialog(null,true);
 $("#sheet-done").onclick=closeSheet;
@@ -2432,17 +2478,21 @@ $("#psheet-done").onclick=closePlatPicker;
 
 /* ----- Dialog ----- */
 let dlg=null;
+/* Primary button only lights up when there is something to save; otherwise it stays secondary and inert */
+function setPrimary(btn,on){if(!btn)return;btn.classList.toggle("filled",on);btn.classList.toggle("outlined",!on);btn.classList.remove("text");btn.disabled=!on;btn.setAttribute("aria-disabled",String(!on))}
+function dlgSync(){if(!dlg||dlg.danger){return}const v=dlg.field?$("#dlg-input").value.trim():dlg.date?$("#dlg-date").value:null;setPrimary($("#dlg-ok"),dlg.dirty?!!dlg.dirty(v):true)}
 function openDialog(o){
   dlg=o;$("#dlg-t").textContent=o.title;$("#dlg-p").textContent=o.text||"";$("#dlg-p").hidden=!o.text;
   $("#dlg-field").hidden=!o.field;$("#dlg-input").value=o.field?o.value||"":"";$("#dlg-err").textContent="";
   $("#dlg-datefield").hidden=!o.date;if(o.date){const t=todayISO();$("#dlg-date").value=o.value||t;$("#dlg-date").max=t;renderQuick()}
   $("#dlg-ok").textContent=o.ok;$("#dlg-ok").classList.toggle("danger",!!o.danger);
+  if(o.danger){const b=$("#dlg-ok");b.className="btn text danger";b.disabled=false;b.removeAttribute("aria-disabled")}else dlgSync();
   $("#dscrim").hidden=false;$("#dialog").hidden=false;
   setTimeout(()=>(o.field?$("#dlg-input"):o.date?$("#dlg-date"):$("#dlg-cancel")).focus(),30);
 }
 function closeDialog(){$("#dialog").hidden=true;$("#dscrim").hidden=true;dlg=null}
 function confirmDialog(){
-  if(!dlg)return;
+  if(!dlg||$("#dlg-ok").disabled)return;
   if(dlg.date){
     const v=$("#dlg-date").value;
     if(!v){$("#dlg-err").textContent="Pick the date you saw it.";return}
@@ -2457,12 +2507,13 @@ function confirmDialog(){
   }else{const fn=dlg.onOk;closeDialog();fn()}
 }
 $("#dlg-ok").onclick=confirmDialog;
+$("#dlg-input").addEventListener("input",dlgSync);$("#dlg-date").addEventListener("input",dlgSync);$("#dlg-date").addEventListener("change",dlgSync);$("#dlg-quick").addEventListener("click",()=>setTimeout(dlgSync,0));
 $("#dlg-cancel").onclick=closeDialog;
 $("#dscrim").onclick=closeDialog;
 $("#dlg-input").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();confirmDialog()}});
 function openNameDialog(list,fromSheet){
   openDialog({title:list?"Rename list":"New list",text:list?"":fromSheet?"Name it the way you like. The film is added right away.":"Name it the way you like, for example “Sunday afternoons” or “Date nights”.",
-    value:list?list.name:"",ok:list?"Save":"Create",field:true,list,
+    value:list?list.name:"",ok:list?"Save":"Create",field:true,list,dirty:v=>!!v&&(!list||v!==list.name),
     onOk:name=>{
       if(list){list.name=name;save();renderLists();renderTopbar();renderSheet();return}
       const l={id:"l"+Date.now().toString(36),name,films:[]};lists.push(l);
@@ -2532,7 +2583,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-2318";
+const APP_VERSION="2026.11.17-2347";
 $("#app-ver").textContent=APP_VERSION;
 let updateShown=false;
 async function checkUpdate(){
