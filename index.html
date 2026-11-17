@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Clap</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" href="icon-192.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest?v=2">
+<link rel="icon" type="image/png" href="icon-192-v2.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-v2.png">
 <meta name="theme-color" content="#f5ede4" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#130d0b" media="(prefers-color-scheme: dark)">
 <meta name="mobile-web-app-capable" content="yes">
@@ -585,6 +585,11 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
 .pimg .pfb{font-family:var(--font-display);font-style:normal;font-weight:700;font-stretch:80%}
 .item-txt .orig{font-style:normal}
 
+/* ---- Bottom bar: Find films only once a filter is chosen ---- */
+.go-hint{margin:0;max-width:14ch;text-align:right;font-size:13px;line-height:18px;color:var(--muted)}
+#go:not([hidden]){animation:goIn .25s ease-out}
+@keyframes goIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
 /* ---- Surprise me: highlight drawn settings ---- */
 .set.drawn{animation:drawn 2.4s ease-out}
 @keyframes drawn{0%,35%{background:color-mix(in srgb,var(--amber) 16%,transparent);box-shadow:inset 3px 0 0 var(--amber)}100%{background:transparent;box-shadow:inset 3px 0 0 transparent}}
@@ -808,6 +813,7 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
 
     <div class="bottom-cta g">
       <div class="count" aria-live="polite"><b id="count-n">Counting…</b><span id="count-t">in the TMDB catalog</span></div>
+      <p class="go-hint" id="go-hint">Pick a filter to start</p>
       <button class="fab" id="go"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M232,218H176a102,102,0,1,0-48,12H232a6,6,0,0,0,0-12ZM38,128a90,90,0,1,1,90,90A90.1,90.1,0,0,1,38,128Zm90-26a22,22,0,1,0-22-22A22,22,0,0,0,128,102Zm0-32a10,10,0,1,1-10,10A10,10,0,0,1,128,70Zm22,106a22,22,0,1,0-22,22A22,22,0,0,0,150,176Zm-32,0a10,10,0,1,1,10,10A10,10,0,0,1,118,176Zm58-26a22,22,0,1,0-22-22A22,22,0,0,0,176,150Zm0-32a10,10,0,1,1-10,10A10,10,0,0,1,176,118ZM80,106a22,22,0,1,0,22,22A22,22,0,0,0,80,106Zm0,32a10,10,0,1,1,10-10A10,10,0,0,1,80,138Z"/></svg>Find films</button>
     </div>
   </main>
@@ -1176,7 +1182,10 @@ function renderPlats(){
     +`<button class="chip ghost" data-act="addplats" id="add-plat">${icon("add")}Add a service</button>`
     +(missingTop?`<button class="plats-restore" data-act="restoreplats">${icon("restart_alt")}Restore the ${DEF_IDS.length} suggestions</button>`:"");
 }
+function hasFilters(st){st=st||S;return !!(st.mood.size||st.who||st.genres.size||st.fame||st.era[0]>1920||st.era[1]<2026||st.image!=="any"||st.len!=="any"||st.lang!=="any"||st.only||(st.plats&&st.plats.size))}
+function syncGo(){const on=hasFilters();$("#go").hidden=!on;$("#go-hint").hidden=on}
 function syncSettings(){
+  syncGo();
   document.querySelectorAll("[data-mood]").forEach(b=>b.setAttribute("aria-pressed",S.mood.has(b.dataset.mood)));
   document.querySelectorAll("[data-genre]").forEach(b=>{const id=+b.dataset.genre,on=S.genres.has(id);b.setAttribute("aria-pressed",on);b.innerHTML=(on?icon("check"):"")+GNAME[id]});
   renderPlats();
@@ -1208,6 +1217,7 @@ function scheduleCount(){
     try{
       const r=await tmdb("/discover/movie",buildParams(1));if(seq!==countSeq)return;
       const n=r.total_results||0;
+      if(!hasFilters()){$("#count-n").textContent=nf.format(n)+" films";$("#count-t").textContent="in the TMDB catalog";return}
       $("#count-n").textContent=n?(S.lang==="world"?"Up to ":"")+nf.format(n)+(n===1?" film fits":" films fit"):"No film fits";
       $("#count-t").textContent=n===0?"Loosen a setting to see results":n<10?"Loosen a setting for more choice":"in the TMDB catalog";
     }catch(e){if(seq!==countSeq)return;$("#count-n").textContent="Count unavailable";$("#count-t").textContent=e.kind==="auth"?"Check your TMDB key":"You can still search"}
@@ -1887,7 +1897,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1750";
+const APP_VERSION="2026.11.17-1753";
 let updateShown=false;
 async function checkUpdate(){
   if(updateShown||location.protocol!=="https:")return;
