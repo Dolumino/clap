@@ -7,8 +7,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#F9F9FF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121318" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5ede4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#130d0b" media="(prefers-color-scheme: dark)">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Clap">
@@ -16,59 +16,28 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://image.tmdb.org">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Roboto+Flex:opsz,wght@8..144,300..800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap">
 <style>
 /* Clap — TMDB-connected prototype. Material 3 tokens, light + dark. */
 :root{
-  --primary:#3A5BA0; --on-primary:#FFFFFF;
-  --primary-container:#D9E2FF; --on-primary-container:#001946;
-  --secondary-container:#DCE2F9; --on-secondary-container:#141B2C;
-  --tertiary-container:#FFDEA6; --on-tertiary-container:#271900;
-  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
-  --surface:#F9F9FF; --surface-low:#F3F3FA; --surface-mid:#EDEDF4; --surface-high:#E7E8EE; --surface-highest:#E1E2E9;
-  --on-surface:#1A1B20; --on-surface-variant:#44464F;
-  --outline:#757780; --outline-variant:#C5C6D0;
-  --inverse-surface:#2F3036; --inverse-on-surface:#F0F0F7; --inverse-primary:#AFC6FF;
-  --page:#E3E5EE;
-  --shadow:0 1px 2px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.10);
-  --shadow-3:0 4px 8px rgba(0,0,0,.14),0 1px 3px rgba(0,0,0,.2);
-  --font-ui:"Roboto Flex",Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-serif:"Instrument Serif",Georgia,"Times New Roman",serif;
-  color-scheme:light;
+  /* Cinema editorial, Brick. Dark-first like a theatre; light mode reads like a printed programme. */
+  --bg:#130d0b; --s1:#1c1411; --s2:#271c18; --s3:#332520; --text:#f6ebe4; --muted:#c4b1a7; --faint:#9c8a80; --rule:rgba(246,235,228,.13); --rule-strong:rgba(246,235,228,.32); --amber:#ad4428; --amber-text:#f2a283; --on-amber:#ffffff; --focus:#f2a283; --danger:#ff8f7a; --danger-bg:#3d1712; --inv-accent:#913220; --page:#000000; --chip-ink:#f2a283; --veil:linear-gradient(to bottom,rgba(19,13,11,.15),rgba(19,13,11,0) 30%,rgba(19,13,11,.55) 70%,#130d0b); color-scheme:dark;
+  --primary:var(--amber-text); --on-primary:var(--on-amber);
+  --primary-container:var(--amber); --on-primary-container:var(--on-amber);
+  --secondary-container:var(--s3); --on-secondary-container:var(--text);
+  --tertiary-container:var(--amber); --on-tertiary-container:var(--on-amber);
+  --error:var(--danger); --error-container:var(--danger-bg); --on-error-container:var(--danger);
+  --surface:var(--bg); --surface-low:var(--s1); --surface-mid:var(--s1); --surface-high:var(--s2); --surface-highest:var(--s3);
+  --on-surface:var(--text); --on-surface-variant:var(--muted);
+  --outline:var(--rule-strong); --outline-variant:var(--rule);
+  --inverse-surface:var(--text); --inverse-on-surface:var(--bg); --inverse-primary:var(--inv-accent);
+  --shadow:none; --shadow-3:0 18px 40px rgba(0,0,0,.35);
+  --font-ui:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-display:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-serif:var(--font-display);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --primary:#AFC6FF; --on-primary:#0A2D6A;
-    --primary-container:#284483; --on-primary-container:#D9E2FF;
-    --secondary-container:#3C4659; --on-secondary-container:#DCE2F9;
-    --tertiary-container:#5C4200; --on-tertiary-container:#FFDEA6;
-    --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
-    --surface:#121318; --surface-low:#1A1B21; --surface-mid:#1E1F25; --surface-high:#282A2F; --surface-highest:#33353A;
-    --on-surface:#E2E2E9; --on-surface-variant:#C5C6D0;
-    --outline:#8F9099; --outline-variant:#44464F;
-    --inverse-surface:#E2E2E9; --inverse-on-surface:#2F3036; --inverse-primary:#3A5BA0;
-    --page:#08090C;
-    --shadow:0 1px 2px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.35);
-    --shadow-3:0 4px 10px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.5);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --primary:#AFC6FF; --on-primary:#0A2D6A;
-  --primary-container:#284483; --on-primary-container:#D9E2FF;
-  --secondary-container:#3C4659; --on-secondary-container:#DCE2F9;
-  --tertiary-container:#5C4200; --on-tertiary-container:#FFDEA6;
-  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
-  --surface:#121318; --surface-low:#1A1B21; --surface-mid:#1E1F25; --surface-high:#282A2F; --surface-highest:#33353A;
-  --on-surface:#E2E2E9; --on-surface-variant:#C5C6D0;
-  --outline:#8F9099; --outline-variant:#44464F;
-  --inverse-surface:#E2E2E9; --inverse-on-surface:#2F3036; --inverse-primary:#3A5BA0;
-  --page:#08090C;
-  --shadow:0 1px 2px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.35);
-  --shadow-3:0 4px 10px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.5);
-  color-scheme:dark;
-}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --bg:#f5ede4; --s1:#fffbf6; --s2:#ede1d4; --s3:#e2d2c2; --text:#211915; --muted:#5e5049; --faint:#72655d; --rule:rgba(33,25,21,.14); --rule-strong:rgba(33,25,21,.4); --amber:#913220; --amber-text:#913220; --on-amber:#ffffff; --focus:#913220; --danger:#a3321a; --danger-bg:#fbe3dc; --inv-accent:#f2a283; --page:#e8dccd; --chip-ink:#f2a283; --veil:linear-gradient(to bottom,rgba(245,237,228,.1),rgba(245,237,228,0) 30%,rgba(245,237,228,.6) 70%,#f5ede4); color-scheme:light; } }
+:root[data-theme="light"]{ --bg:#f5ede4; --s1:#fffbf6; --s2:#ede1d4; --s3:#e2d2c2; --text:#211915; --muted:#5e5049; --faint:#72655d; --rule:rgba(33,25,21,.14); --rule-strong:rgba(33,25,21,.4); --amber:#913220; --amber-text:#913220; --on-amber:#ffffff; --focus:#913220; --danger:#a3321a; --danger-bg:#fbe3dc; --inv-accent:#f2a283; --page:#e8dccd; --chip-ink:#f2a283; --veil:linear-gradient(to bottom,rgba(245,237,228,.1),rgba(245,237,228,0) 30%,rgba(245,237,228,.6) 70%,#f5ede4); color-scheme:light; }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 body{background:var(--page);color:var(--on-surface);font-family:var(--font-ui);font-size:14px;display:flex;justify-content:center;-webkit-font-smoothing:antialiased}
@@ -348,7 +317,7 @@ img{max-width:100%}
 .d-actions .btn{height:48px;border-radius:24px;flex:1;min-width:0}
 .d-actions .btn span:last-child{overflow:hidden;text-overflow:ellipsis}
 
-.snack{position:absolute;left:12px;right:12px;bottom:92px;z-index:60;display:flex;align-items:center;gap:8px;min-height:48px;padding:6px 8px 6px 16px;border-radius:6px;background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:14px;box-shadow:var(--shadow-3);transform:translateY(16px);opacity:0;pointer-events:none;transition:all .2s}
+.snack{position:absolute;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:60;display:flex;align-items:center;gap:8px;min-height:48px;padding:6px 8px 6px 16px;border-radius:6px;background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:14px;box-shadow:var(--shadow-3);transform:translateY(-16px);opacity:0;pointer-events:none;transition:all .2s}
 .snack.show{transform:none;opacity:1;pointer-events:auto}
 .snack span{flex:1;min-width:0}
 .snack button{border:0;background:transparent;color:var(--inverse-primary);font-weight:650;font-size:14px;padding:8px 12px;border-radius:20px}
@@ -388,6 +357,12 @@ img{max-width:100%}
 .scrim.top{z-index:54}
 .sheet{position:absolute;left:0;right:0;bottom:0;z-index:50;background:var(--surface-low);border-radius:28px 28px 0 0;padding:0 0 max(16px,env(safe-area-inset-bottom,0px));max-height:80%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .3s cubic-bezier(.2,0,0,1);box-shadow:var(--shadow-3)}
 .sheet.open{transform:none}
+.sheet.tall{height:80%}
+.sheet.tall .sheet-lists{flex:1}
+.sheet.tall .sheet-film{white-space:normal}
+.searchbar.compact{height:48px;margin:4px 0 8px}
+.wav.sm{width:32px;height:32px;border-radius:8px}
+.sheet-empty{padding:24px;text-align:center;color:var(--on-surface-variant);font-size:14px}
 .sheet-handle{display:block;width:32px;height:4px;border-radius:2px;background:var(--outline);margin:16px auto}
 .sheet h2{margin:0;font-size:22px;font-weight:450;line-height:28px}
 .sheet-film{margin:2px 0 8px;font-size:14px;color:var(--on-surface-variant);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -411,6 +386,311 @@ img{max-width:100%}
 .btn.text.danger{color:var(--error)}
 .btn.text.danger:hover{background:color-mix(in srgb,var(--error) 8%,transparent)}
 
+
+/* ================= Cinema editorial ================= */
+body{letter-spacing:.005em}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+svg.ms{width:1em;height:1em;font-size:22px;fill:currentColor;display:inline-block;flex:none}
+.caps,.eyebrow,.set .val,.ticks,.sub-label,.round-head p,.card-meta,.facts,.lcount,.sec-title,.fav-count,.d-sec h3,.nav-item,.fineprint,.count span,.match,.round-pill{font-family:var(--font-ui);font-stretch:85%}
+h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialog h2,.round-head h2,.setup h2,.set h3,.item-txt b,.lname,.tagline{font-family:var(--font-display);font-optical-sizing:auto}
+.topbar{border-bottom:1px solid transparent}
+.topbar.scrolled{background:var(--surface);border-bottom-color:var(--rule)}
+.topbar h1{font-size:22px;font-weight:500;letter-spacing:-.01em}
+.brand-mark{display:none}
+.brand b::after{content:".";color:var(--amber);font-style:normal}
+.brand{padding-left:10px}
+.brand b{font-family:var(--font-display);font-weight:600;font-style:italic;font-size:30px;letter-spacing:-.02em;text-transform:lowercase;display:inline-block;color:var(--text)}
+.brand b::first-letter{text-transform:uppercase}
+.icon-btn{border-radius:50%;color:var(--text)}
+.icon-btn:hover{background:var(--s2)}
+.btn{height:44px;border-radius:2px;padding:0 18px;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-stretch:90%}
+.btn:hover{filter:none;box-shadow:none}
+.btn.filled{background:var(--amber);color:var(--on-amber)}
+.btn.filled:hover{background:color-mix(in srgb,var(--amber) 88%,#fff)}
+.btn.tonal,.btn.outlined{background:transparent;border:1px solid var(--rule-strong);color:var(--text)}
+.btn.tonal:hover,.btn.outlined:hover{border-color:var(--text)}
+.btn.text{color:var(--text);padding:0 8px}
+.btn.text:hover{background:transparent;color:var(--amber-text)}
+.btn.text.danger{color:var(--danger)}
+.eyebrow{color:var(--amber-text);font-weight:600;font-size:12px;letter-spacing:.22em}
+.hero{padding-block:12px 28px}
+.hero h2{font-size:44px;line-height:44px;font-weight:400;letter-spacing:-.03em}
+.hero h2 em{font-style:italic;font-weight:300;color:var(--amber-text)}
+.hero p.sub,.setup p.sub{font-size:15px;color:var(--muted)}
+.set{border-top:1px solid var(--rule);padding-block:22px}
+.set h3{font-size:22px;font-weight:400;letter-spacing:-.01em;line-height:28px}
+.set .val{color:var(--amber-text);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.set .hint{color:var(--muted)}
+.mood-grid{gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.mood{border:0;border-radius:0;background:var(--surface);min-height:84px;font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text)}
+.mood .ms{color:var(--muted);font-size:24px}
+.mood:hover{background:var(--s1)}
+.mood[aria-pressed="true"]{background:var(--amber);color:var(--on-amber)}
+.mood[aria-pressed="true"] .ms{color:var(--on-amber)}
+.chip{border:1px solid var(--rule-strong);border-radius:999px;background:transparent;color:var(--text);font-weight:500;height:34px}
+.chip:hover{border-color:var(--text);background:transparent}
+.chip[aria-pressed="true"]{background:var(--amber);color:var(--on-amber);border-color:var(--amber)}
+.chip.ghost{border-style:dashed;color:var(--amber-text);border-color:var(--amber-text)}
+.chip img{border-radius:50%}
+.seg{border:0;border-bottom:1px solid var(--rule);border-radius:0;gap:4px}
+.seg button,.seg button:first-child{border:0;border-radius:0;color:var(--muted);font-weight:500;position:relative}
+.seg button[aria-pressed="true"]{background:transparent;color:var(--text)}
+.seg button[aria-pressed="true"]::after{content:"";position:absolute;left:12%;right:12%;bottom:-1px;height:2px;background:var(--amber)}
+.seg button[aria-pressed="true"] .ms{color:var(--amber-text)}
+.slider::-webkit-slider-runnable-track{height:2px;border-radius:0;background:linear-gradient(to right,var(--amber) var(--fill),var(--rule-strong) var(--fill))}
+.slider::-moz-range-track{height:2px;background:var(--rule-strong)}
+.slider::-moz-range-progress{height:2px;background:var(--amber)}
+.slider::-webkit-slider-thumb{width:18px;height:18px;margin-top:-8px;background:var(--amber);box-shadow:0 0 0 4px var(--bg)}
+.slider::-moz-range-thumb{width:18px;height:18px;background:var(--amber);box-shadow:0 0 0 4px var(--bg)}
+.dual-track{top:13px;height:2px;border-radius:0;background:linear-gradient(to right,var(--rule-strong) var(--a),var(--amber) var(--a),var(--amber) var(--b),var(--rule-strong) var(--b))}
+.ticks{text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.ticks span.on{color:var(--amber-text);font-weight:700}
+.fame-note{font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--text)}
+.switch{width:46px;height:26px;border:1px solid var(--rule-strong);background:transparent}
+.switch::after{left:4px;width:16px;height:16px;background:var(--muted)}
+.switch[aria-checked="true"]{background:var(--amber);border-color:var(--amber)}
+.switch[aria-checked="true"]::after{left:24px;width:16px;height:16px;background:var(--on-amber)}
+.switch-row{background:transparent;border:0;border-top:1px solid var(--rule);border-radius:0;padding:14px 0 0;margin-top:18px}
+.sub-label{text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--muted)}
+.acc-btn h3{font-size:22px}
+.fineprint{border-top:1px solid var(--rule);color:var(--faint)}
+.bottom-cta{background:var(--surface);border-top:1px solid var(--rule);padding-block:12px;margin-top:0}
+.bottom-cta .count b{font-family:var(--font-display);font-size:20px;font-weight:500}
+.bottom-cta .count span{text-transform:uppercase;letter-spacing:.12em;font-size:10px}
+.fab{height:50px;border-radius:2px;padding:0 22px 0 18px;background:var(--amber);color:var(--on-amber);box-shadow:0 10px 28px color-mix(in srgb,var(--amber) 40%,transparent);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-stretch:90%}
+.fab:hover{filter:none}
+.steps li::before{background:transparent;border:1px solid var(--amber-text);color:var(--amber-text);font-family:var(--font-display)}
+.steps a{color:var(--amber-text)}
+.input-wrap{border:0;border-bottom:1px solid var(--rule-strong);border-radius:0;background:transparent;padding-left:0}
+.input-wrap:focus-within{border:0;border-bottom:2px solid var(--amber);padding-left:0}
+.alert{border-radius:2px}
+.assist{border:1px solid var(--rule);border-radius:999px;background:transparent;color:var(--text);font-weight:500}
+.assist .ms{color:var(--amber-text)}
+.round-head{padding-block:12px 4px}
+.round-head h2{font-size:26px;font-weight:400;letter-spacing:-.02em}
+.round-head p{text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.round-pill{background:transparent;color:var(--amber-text);border:1px solid var(--amber-text);border-radius:999px;text-transform:uppercase;letter-spacing:.12em;font-size:10px}
+.card{background:transparent;border:0;border-radius:0;opacity:.45}
+.card.active{opacity:1;box-shadow:none}
+.card-poster{border-radius:6px;overflow:hidden;box-shadow:var(--shadow-3)}
+.card-body{padding:14px 2px 8px}
+.card-title{font-size:24px;font-weight:500;line-height:26px;letter-spacing:-.02em}
+.card-meta{text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--muted)}
+.card-meta b{color:var(--amber-text);font-weight:600}
+.match{background:rgba(14,13,12,.62);color:#f3ede4;border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font-weight:700;letter-spacing:.08em;font-size:11px}
+.match .ms{color:#f2a283}
+.d-title .match{background:transparent;color:var(--amber-text);padding:0;letter-spacing:.16em;text-transform:uppercase}
+.d-title .match .ms{color:var(--amber-text)}
+.fav-btn{background:rgba(14,13,12,.5);border-radius:50%}
+.fav-btn[aria-pressed="true"] .ms{color:#f2a283}
+.desc{color:var(--muted)}
+.more{color:var(--text);font-weight:600}
+.handle{border-top:1px solid var(--rule);color:var(--faint);text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.dots i{background:var(--rule-strong);height:2px;width:14px;border-radius:0}
+.dots i.on{width:28px;background:var(--amber)}
+.lin{height:2px;border-radius:0;background:var(--rule)}
+.lin::after{background:var(--amber)}
+.loading p{font-family:var(--font-display);font-style:italic;font-size:18px;color:var(--text)}
+.empty .halo{background:transparent;border:1px solid var(--rule-strong);border-radius:50%;color:var(--amber-text)}
+.empty h2{font-size:26px;font-weight:400}
+.item{border-bottom:1px solid var(--rule)}
+.item .thumb{border-radius:3px}
+.item-txt b{font-size:19px;font-weight:500;letter-spacing:-.01em;white-space:normal;line-height:23px}
+.item-txt .rate .ms,.item .icon-btn[data-addlist]{color:var(--amber-text)}
+.navbar{background:var(--surface);border-top:1px solid var(--rule)}
+.nav-item{text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:600;color:var(--faint);position:relative}
+.nav-ind{background:transparent!important;height:30px}
+.nav-item[aria-current="page"]{color:var(--text)}
+.nav-item[aria-current="page"] .nav-ind{color:var(--amber-text)}
+.nav-item[aria-current="page"]::before{content:"";position:absolute;top:-1px;left:30%;right:30%;height:2px;background:var(--amber)}
+.detail .dbar .icon-btn{background:rgba(14,13,12,.5);border-radius:50%}
+.d-backdrop{aspect-ratio:4/3}
+.d-backdrop::after{background:var(--veil)}
+.d-head{margin-top:-120px}
+.d-poster{width:108px;border-radius:4px}
+.d-title h2{font-size:32px;line-height:34px;font-weight:500;letter-spacing:-.025em}
+.d-title .orig{font-family:var(--font-display);font-size:15px}
+.tagline{font-style:italic;font-weight:300;font-size:22px;line-height:28px;color:var(--amber-text);margin-top:14px}
+.d-by{font-size:14px;color:var(--muted)}
+.d-by b{color:var(--text);font-weight:600}
+.facts{text-transform:uppercase;letter-spacing:.1em;font-size:11px}
+.facts .ms{color:var(--amber-text)}
+.d-sec{border-top:1px solid var(--rule);padding-block:20px}
+.d-sec h3{text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:600;color:var(--amber-text)}
+.d-sec p{font-size:16px;line-height:25px}
+.why .ms{color:var(--amber-text)}
+.watch{gap:0}
+.wrow{background:transparent;border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:12px 0}
+.wrow.mine{background:transparent;color:var(--text)}
+.wrow.mine .wtxt small{color:var(--amber-text);opacity:1}
+.wav{border-radius:50%;background:var(--s2)}
+.wrow .btn{height:36px;padding:0 12px}
+.d-bottom{background:var(--surface);border-top:1px solid var(--rule)}
+.d-grab{text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.d-grab i{background:var(--rule-strong)}
+.d-actions .btn{height:50px;border-radius:2px}
+.snack{border-radius:4px}
+.searchbar{background:transparent;border-radius:0;border-bottom:1px solid var(--rule-strong);height:56px;padding-left:0;color:var(--muted)}
+.searchbar:focus-within{outline:none;border-bottom:2px solid var(--amber)}
+.searchbar input{font-family:var(--font-display);font-size:22px;font-weight:400}
+.searchbar input::placeholder{color:var(--faint);font-style:italic}
+.sec-title{text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:600;color:var(--amber-text);margin-top:8px}
+.lists-head h2{font-size:34px;font-weight:400;letter-spacing:-.03em}
+.lists-head p{text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.lcard{background:transparent;border:0;border-radius:0;padding:0}
+.lcard:hover{background:transparent}
+.lcard:hover .collage{outline:1px solid var(--amber)}
+.collage{border-radius:4px;gap:2px;margin-bottom:10px}
+.collage img,.collage .cph{background:var(--s2);color:var(--amber-text)}
+.lname{font-size:19px;font-weight:500;padding:0;letter-spacing:-.01em}
+.lname .ms{color:var(--amber-text)}
+.lcount{text-transform:uppercase;letter-spacing:.14em;font-size:10px;padding:0;color:var(--faint)}
+.scrim{background:rgba(0,0,0,.55)}
+.sheet{background:var(--s1);border-radius:14px 14px 0 0;border-top:1px solid var(--rule)}
+.sheet h2{font-size:26px;font-weight:400;letter-spacing:-.02em}
+.sheet-handle{background:var(--rule-strong)}
+.srow,.sheet-new{border-top:1px solid var(--rule)}
+.srow:hover,.sheet-new:hover{background:var(--s2)}
+.srow .lbl{font-family:var(--font-display);font-size:18px}
+.srow>.ms{color:var(--muted)}
+.srow[aria-checked="true"]>.ms{color:var(--amber-text)}
+.cbox{border-radius:50%;border:1px solid var(--rule-strong)}
+.srow[aria-checked="true"] .cbox{background:var(--amber);border-color:var(--amber);color:var(--on-amber)}
+.sheet-new{color:var(--amber-text);font-weight:600;text-transform:uppercase;letter-spacing:.14em;font-size:12px}
+.dialog{background:var(--s1);border-radius:6px;border:1px solid var(--rule)}
+.dialog h2{font-size:28px;font-weight:400;letter-spacing:-.02em}
+.pimg{background:var(--s2)}
+.pimg .pfb{font-family:var(--font-display);font-style:italic}
+
+/* ---- One family, two roles: condensed semibold for titles, regular width for reading ---- */
+h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialog h2,.round-head h2,.setup h2,.set h3,.acc-btn h3,.item-txt b,.lname,.topbar h1{font-family:var(--font-display);font-stretch:82%;font-weight:600;letter-spacing:-.02em}
+.hero h2{font-size:32px;line-height:33px;font-weight:650;letter-spacing:-.025em;font-stretch:80%;margin-bottom:16px}
+.hero h2 em{font-style:normal;font-weight:650;color:var(--amber-text)}
+.set h3,.acc-btn h3{font-size:21px;line-height:26px}
+.topbar h1{font-size:22px}
+.round-head h2{font-size:25px}
+.card-title{font-size:23px;line-height:25px}
+.d-title h2{font-size:32px;line-height:33px;font-stretch:80%}
+.lists-head h2{font-size:34px;font-stretch:78%}
+.sheet h2,.dialog h2,.empty h2{font-size:25px}
+.item-txt b{font-size:18px;line-height:22px}
+.lname{font-size:19px}
+.brand b{font-family:var(--font-display);font-style:normal;font-weight:700;font-stretch:78%;font-size:31px;letter-spacing:-.03em}
+.mood{font-family:var(--font-ui);font-size:15px;font-weight:600}
+.fame-note{font-family:var(--font-ui);font-style:normal;font-size:15px;color:var(--text)}
+.loading p{font-family:var(--font-ui);font-style:normal;font-size:16px;font-weight:500}
+.tagline{font-family:var(--font-display);font-style:normal;font-weight:500;font-stretch:85%;font-size:20px;line-height:26px}
+.d-title .orig{font-family:var(--font-ui);font-style:normal;color:var(--muted)}
+.searchbar input{font-family:var(--font-display);font-stretch:85%;font-size:21px;font-weight:500}
+.searchbar input::placeholder{font-style:normal}
+.srow .lbl{font-family:var(--font-ui);font-size:16px;font-weight:600}
+.steps li::before{font-family:var(--font-ui);font-weight:700}
+.pimg .pfb{font-family:var(--font-display);font-style:normal;font-weight:700;font-stretch:80%}
+.item-txt .orig{font-style:normal}
+
+/* ---- Surprise me: highlight drawn settings ---- */
+.set.drawn{animation:drawn 2.4s ease-out}
+@keyframes drawn{0%,35%{background:color-mix(in srgb,var(--amber) 16%,transparent);box-shadow:inset 3px 0 0 var(--amber)}100%{background:transparent;box-shadow:inset 3px 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.set.drawn{animation:none;box-shadow:inset 3px 0 0 var(--amber)}}
+
+/* ---- Seen diary ---- */
+.seen-card{width:100%;display:flex;align-items:center;gap:14px;margin:8px 0 4px;padding:16px;border:1px solid var(--rule-strong);border-radius:4px;background:var(--s1);color:var(--text);text-align:left;cursor:pointer}
+.seen-card:hover{border-color:var(--amber-text)}
+.seen-ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--amber);color:var(--on-amber);flex:none}
+.seen-ic .ms{font-size:22px}
+.seen-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.seen-txt b{font-family:var(--font-display);font-stretch:82%;font-weight:600;font-size:21px;letter-spacing:-.02em}
+.seen-txt small{font-size:13px;color:var(--muted);line-height:18px}
+.seen-num{font-family:var(--font-display);font-stretch:78%;font-weight:650;font-size:34px;color:var(--amber-text);font-variant-numeric:tabular-nums}
+.diary-top{position:sticky;top:0;z-index:2;background:var(--surface);padding-block:6px 10px}
+.diary-count{margin:10px 0 0;font-size:13px;color:var(--muted)}
+.diary-count b{color:var(--text)}
+.diary-month{margin:18px 0 2px;text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:700;color:var(--amber-text);font-family:var(--font-ui);font-stretch:85%}
+.drow{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--rule)}
+.dday{width:40px;flex:none;display:flex;flex-direction:column;align-items:center;line-height:1}
+.dday b{font-family:var(--font-display);font-stretch:78%;font-weight:650;font-size:26px;font-variant-numeric:tabular-nums}
+.dday small{margin-top:3px;text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:var(--muted)}
+.drow .item-open{padding:10px 0}
+.drow .icon-btn{color:var(--muted)}
+.seen-tag{display:flex!important;width:max-content;max-width:100%;margin-top:2px;align-items:center;gap:4px;color:var(--amber-text)!important;font-weight:600;text-transform:none!important;letter-spacing:0!important;font-size:12px!important}
+.seen-tag .ms{font-size:14px}
+#d-seen.on{color:#f2a283}
+.seen-mark{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 14px;border:1px solid var(--rule-strong);border-radius:999px;background:transparent;color:var(--text);font-weight:600;font-size:13px;cursor:pointer}
+.seen-mark .ms{font-size:18px;color:var(--amber-text)}
+.seen-line{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;color:var(--muted)}
+.seen-line .ms{font-size:18px;color:var(--amber-text)}
+.seen-line b{color:var(--text);font-weight:600}
+.seen-acts{display:flex;gap:16px;margin:4px 0 14px 26px}
+.seen-acts button{border:0;background:none;padding:4px 0;color:var(--text);font-weight:600;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule-strong)}
+.seen-acts button:hover{text-decoration-color:var(--amber-text)}
+.dlg-date{display:flex;flex-direction:column;gap:10px}
+.dlg-date input{font-size:18px}
+.pick-actions .icon-btn[data-seen][aria-pressed="true"]{color:var(--on-amber);background:var(--amber);border-color:var(--amber)}
+
+/* ---- Settings page ---- */
+.setup-sec{display:flex;flex-direction:column;gap:10px}
+.setup-h{margin:0;font-family:var(--font-display);font-stretch:82%;font-weight:600;font-size:21px;letter-spacing:-.02em}
+#catalog-h{margin-top:4px;padding-top:20px;border-top:1px solid var(--rule)}
+.setup-actions .btn.filled{border-radius:2px}
+
+/* ---- Added services: chip + remove button ---- */
+.chip-pair{display:inline-flex;align-items:stretch;max-width:100%}
+.plats-empty{flex-basis:100%;margin:0 0 4px;font-size:14px;color:var(--muted)}
+.plats-restore{flex-basis:100%;display:inline-flex;align-items:center;gap:6px;justify-content:flex-start;margin-top:4px;padding:6px 0;border:0;background:none;color:var(--amber-text);font-weight:600;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.plats-restore .ms{font-size:16px}
+.chip.extra{border-top-right-radius:0;border-bottom-right-radius:0;border-right:0;padding-right:10px}
+.chip-x{flex:none;width:34px;height:34px;display:grid;place-items:center;padding:0;border:1px solid var(--rule-strong);border-left:1px solid var(--rule);border-radius:0 999px 999px 0;background:transparent;color:var(--muted);cursor:pointer}
+.chip-x .ms{font-size:14px}
+.chip-x:hover{color:var(--danger);border-color:var(--danger)}
+.chip.extra[aria-pressed="true"]+.chip-x{background:var(--amber);border-color:var(--amber);border-left-color:color-mix(in srgb,var(--on-amber) 35%,transparent);color:var(--on-amber)}
+.chip.extra[aria-pressed="true"]+.chip-x:hover{color:var(--on-amber);background:color-mix(in srgb,var(--amber) 85%,#000)}
+
+/* ---- Results: Tonight's pick + ranked runners-up ---- */
+.ranked-from{margin:2px 0 0;text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:600;color:var(--faint);font-stretch:85%}
+.pick{padding-block:18px 26px}
+.pick-eyebrow{display:flex;align-items:center;gap:8px;margin:0 0 14px;text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:700;color:var(--amber-text);font-stretch:85%}
+.pick-eyebrow .ms{font-size:16px}
+.pick-eyebrow .pct{margin-left:auto;color:var(--text);letter-spacing:.12em}
+.pick-main{display:grid;grid-template-columns:44% minmax(0,1fr);gap:16px;align-items:end}
+.pick-poster{display:block;padding:0;border:0;background:none;border-radius:6px;overflow:hidden;box-shadow:var(--shadow-3);cursor:pointer}
+.pick-info{min-width:0;display:flex;flex-direction:column;gap:8px;padding-bottom:2px}
+.pick-info h2{margin:0;font-family:var(--font-display);font-stretch:80%;font-weight:650;font-size:34px;line-height:33px;letter-spacing:-.03em;text-wrap:balance;overflow-wrap:anywhere}
+.pick-meta{margin:0;text-transform:uppercase;letter-spacing:.12em;font-size:11px;line-height:16px;color:var(--muted);font-stretch:85%}
+.pick-meta b{color:var(--amber-text);font-weight:700}
+.pick-rate{margin:0;display:flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pick-rate .ms{font-size:15px;color:var(--amber-text)}
+.pick-plats,.rplat{display:flex;align-items:center;gap:4px;min-height:22px;font-size:12px;color:var(--muted)}
+.pick-plats img,.rplat img{width:22px;height:22px;border-radius:50%}
+.pick-plats span,.rplat span{margin-left:4px}
+.rplat img{width:18px;height:18px}
+.pick-why{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.pick-why li{display:flex;gap:8px;font-size:14px;line-height:20px}
+.pick-why .ms{font-size:18px;color:var(--amber-text);margin-top:1px}
+.pick-desc{margin:12px 0 0;color:var(--muted);font-size:15px;line-height:22px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:62ch}
+.pick-actions{display:flex;gap:4px;align-items:center;margin-top:18px}
+.pick-actions .btn.filled{flex:1;min-width:0;height:50px;margin-right:6px}
+.pick-actions .btn.filled span{overflow:hidden;text-overflow:ellipsis}
+.pick-actions .icon-btn{border:1px solid var(--rule-strong);border-radius:50%;width:46px;height:46px}
+.pick-actions [data-fav][aria-pressed="true"]{color:var(--on-amber);background:var(--amber);border-color:var(--amber)}
+.pick-more{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:6px 0;border:0;background:none;color:var(--text);font-weight:600;font-size:14px;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule-strong)}
+.pick-more .ms{font-size:16px;transform:rotate(180deg)}
+.pick-more:hover{text-decoration-color:var(--amber)}
+.runners{border-top:1px solid var(--rule);padding-block:18px 4px}
+.runners .sec-title{margin:0 0 4px}
+.rlist{list-style:none;margin:0;padding:0}
+.ritem{display:flex;align-items:center;gap:2px;border-bottom:1px solid var(--rule)}
+.ritem-open{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:12px 0;border:0;background:none;text-align:left;color:var(--text);cursor:pointer}
+.ritem-open:hover .rtxt b{color:var(--amber-text)}
+.rank{width:22px;flex:none;text-align:center;font-family:var(--font-display);font-stretch:78%;font-weight:600;font-size:22px;color:var(--faint);font-variant-numeric:tabular-nums}
+.ritem .thumb{width:58px;flex:none;border-radius:3px;overflow:hidden}
+.rtxt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.rtxt b{font-family:var(--font-display);font-stretch:82%;font-weight:600;font-size:19px;line-height:22px;letter-spacing:-.015em}
+.rtxt small{font-size:11px;line-height:15px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-stretch:85%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rtxt small em{font-style:normal;font-weight:700;color:var(--amber-text)}
+.rtxt .rwhy{text-transform:none;letter-spacing:0;font-size:13px;line-height:18px;font-stretch:100%}
+.ritem .icon-btn{color:var(--amber-text)}
+.refresh-row{padding-block:20px 28px}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 @media (max-width:360px){.mood-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.seg button{font-size:12px}.row2{grid-template-columns:1fr}}
 </style>
@@ -423,27 +703,32 @@ img{max-width:100%}
   <main class="view" id="v-setup" aria-label="Connect to TMDB" hidden>
     <form class="setup g" id="setup-form" novalidate>
       <div>
-        <p class="eyebrow">One-time setup</p>
-        <h2>Connect the film catalog</h2>
-        <p class="sub">Clap uses The Movie Database (TMDB) for posters, synopses and where each film is streaming. You need a free personal key.</p>
+        <p class="eyebrow" id="su-eb">One-time setup</p>
+        <h2 id="su-h">Connect the film catalog</h2>
+        <p class="sub" id="su-sub">Clap uses The Movie Database (TMDB) for posters, synopses and where each film is streaming. You need a free personal key.</p>
       </div>
-      <ol class="steps">
+      <section class="setup-sec" id="appearance" aria-labelledby="ap-h" hidden>
+        <h3 class="setup-h" id="ap-h">Appearance</h3>
+        <div class="seg tall" id="theme-seg" role="group" aria-label="Appearance"></div>
+      </section>
+      <h3 class="setup-h" id="catalog-h" hidden>Film catalog</h3>
+      <ol class="steps" id="setup-steps">
         <li><span>Create a free account on <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a>.</span></li>
         <li><span>Open <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">Settings → API</a> and request a key. Choose “Developer” and describe it as a personal prototype.</span></li>
         <li><span>Copy the <b>API Read Access Token</b> (the long one) or the short <b>API Key</b>, and paste it below.</span></li>
       </ol>
       <div class="field">
         <label for="f-key">TMDB key or read access token</label>
-        <div class="input-wrap"><input id="f-key" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your key"><button type="button" class="icon-btn" id="f-eye" aria-label="Show key"><span class="ms">visibility</span></button></div>
+        <div class="input-wrap"><input id="f-key" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your key"><button type="button" class="icon-btn" id="f-eye" aria-label="Show key"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M245.48,125.57c-.34-.78-8.66-19.23-27.24-37.81C201,70.54,171.38,50,128,50S55,70.54,37.76,87.76c-18.58,18.58-26.9,37-27.24,37.81a6,6,0,0,0,0,4.88c.34.77,8.66,19.22,27.24,37.8C55,185.47,84.62,206,128,206s73-20.53,90.24-37.75c18.58-18.58,26.9-37,27.24-37.8A6,6,0,0,0,245.48,125.57ZM128,194c-31.38,0-58.78-11.42-81.45-33.93A134.77,134.77,0,0,1,22.69,128,134.56,134.56,0,0,1,46.55,95.94C69.22,73.42,96.62,62,128,62s58.78,11.42,81.45,33.94A134.56,134.56,0,0,1,233.31,128C226.94,140.21,195,194,128,194Zm0-112a46,46,0,1,0,46,46A46.06,46.06,0,0,0,128,82Zm0,80a34,34,0,1,1,34-34A34,34,0,0,1,128,162Z"/></svg></button></div>
         <small>Stored only in this browser. It is never written into the file.</small>
       </div>
       <div class="row2">
         <div class="field"><label for="f-region">Streaming country</label><div class="input-wrap"><select id="f-region"></select></div></div>
         <div class="field"><label for="f-lang">Titles and synopses</label><div class="input-wrap"><select id="f-lang"><option value="en-US">English</option><option value="fr-FR">Français</option></select></div></div>
       </div>
-      <div class="alert" id="setup-err" role="alert" hidden><span class="ms">error</span><span id="setup-err-t"></span></div>
+      <div class="alert" id="setup-err" role="alert" hidden><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.1,90.1,0,0,1,128,218Zm-6-82V80a6,6,0,0,1,12,0v56a6,6,0,0,1-12,0Zm16,36a10,10,0,1,1-10-10A10,10,0,0,1,138,172Z"/></svg><span id="setup-err-t"></span></div>
       <div class="setup-actions">
-        <button type="submit" class="btn filled" id="f-go"><span class="ms">link</span>Connect</button>
+        <button type="submit" class="btn filled" id="f-go"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M238,88.18a52.42,52.42,0,0,1-15.4,35.66l-34.75,34.75A52.28,52.28,0,0,1,150.62,174h-.05A52.63,52.63,0,0,1,98,119.9a6,6,0,0,1,6-5.84h.17a6,6,0,0,1,5.83,6.16A40.62,40.62,0,0,0,150.58,162h0a40.4,40.4,0,0,0,28.73-11.9l34.75-34.74A40.63,40.63,0,0,0,156.63,57.9l-11,11a6,6,0,0,1-8.49-8.49l11-11a52.62,52.62,0,0,1,74.43,0A52.83,52.83,0,0,1,238,88.18Zm-127.62,98.9-11,11A40.36,40.36,0,0,1,70.6,210h0a40.63,40.63,0,0,1-28.7-69.36L76.62,105.9A40.63,40.63,0,0,1,146,135.77a6,6,0,0,0,5.83,6.16H152a6,6,0,0,0,6-5.84A52.63,52.63,0,0,0,68.14,97.42L33.38,132.16A52.63,52.63,0,0,0,70.56,222h0a52.26,52.26,0,0,0,37.22-15.42l11-11a6,6,0,1,0-8.49-8.48Z"/></svg>Connect</button>
         <button type="button" class="btn text" id="f-cancel" hidden>Cancel</button>
         <button type="button" class="btn text" id="f-forget" hidden>Remove key</button>
       </div>
@@ -455,11 +740,10 @@ img{max-width:100%}
   <main class="view" id="v-settings" aria-label="Settings" hidden>
     <section class="hero g">
       <p class="eyebrow" id="tonight">Tonight</p>
-      <h2>What are we watching?</h2>
-      <p class="sub">Set the mood and a few limits. You get ten films, best match first.</p>
+      <h2>What are we <em>watching</em> tonight?</h2>
       <div class="hero-actions">
-        <button class="btn tonal" id="shuffle"><span class="ms">shuffle</span>Surprise me</button>
-        <button class="btn text" id="reset"><span class="ms">restart_alt</span>Reset</button>
+        <button class="btn tonal" id="shuffle"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M236.24,179.76a6,6,0,0,1,0,8.48l-24,24a6,6,0,0,1-8.48-8.48L217.52,190H200.94a70.16,70.16,0,0,1-57-29.31l-41.71-58.4A58.11,58.11,0,0,0,55.06,78H32a6,6,0,0,1,0-12H55.06a70.16,70.16,0,0,1,57,29.31l41.71,58.4A58.11,58.11,0,0,0,200.94,178h16.58l-13.76-13.76a6,6,0,0,1,8.48-8.48Zm-92.06-74.41a5.91,5.91,0,0,0,3.48,1.12,6,6,0,0,0,4.89-2.51l1.19-1.67A58.11,58.11,0,0,1,200.94,78h16.58L203.76,91.76a6,6,0,1,0,8.48,8.48l24-24a6,6,0,0,0,0-8.48l-24-24a6,6,0,0,0-8.48,8.48L217.52,66H200.94a70.16,70.16,0,0,0-57,29.31L142.78,97A6,6,0,0,0,144.18,105.35Zm-32.36,45.3a6,6,0,0,0-8.37,1.39l-1.19,1.67A58.11,58.11,0,0,1,55.06,178H32a6,6,0,0,0,0,12H55.06a70.16,70.16,0,0,0,57-29.31l1.19-1.67A6,6,0,0,0,111.82,150.65Z"/></svg>Surprise me</button>
+        <button class="btn text" id="reset"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M222,128a94,94,0,0,1-92.74,94H128a93.43,93.43,0,0,1-64.5-25.65,6,6,0,1,1,8.24-8.72A82,82,0,1,0,70,70l-.19.19L39.44,98H72a6,6,0,0,1,0,12H24a6,6,0,0,1-6-6V56a6,6,0,0,1,12,0V90.34L61.63,61.4A94,94,0,0,1,222,128Z"/></svg>Reset</button>
       </div>
     </section>
 
@@ -502,7 +786,7 @@ img{max-width:100%}
     <section class="set g">
       <button class="acc-btn" id="acc" aria-expanded="false" aria-controls="acc-panel">
         <div><h3>Fine-tune</h3><small id="acc-sum"></small></div>
-        <span class="ms">expand_more</span>
+        <svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M212.24,100.24l-80,80a6,6,0,0,1-8.48,0l-80-80a6,6,0,0,1,8.48-8.48L128,167.51l75.76-75.75a6,6,0,0,1,8.48,8.48Z"/></svg>
       </button>
       <div class="acc-panel" id="acc-panel" hidden>
         <p class="sub-label">Release period</p>
@@ -519,6 +803,7 @@ img{max-width:100%}
         <div class="seg" id="len" role="group" aria-label="Length"></div>
         <p class="sub-label">Original language</p>
         <div class="seg" id="lang" role="group" aria-label="Original language"></div>
+        <div class="switch-row"><div><b>Hide films I've seen</b><small>Leave out the films in your Seen diary</small></div><button class="switch" id="hideseen" role="switch" aria-checked="true" aria-label="Hide films I've seen"></button></div>
       </div>
     </section>
 
@@ -526,31 +811,32 @@ img{max-width:100%}
 
     <div class="bottom-cta g">
       <div class="count" aria-live="polite"><b id="count-n">Counting…</b><span id="count-t">in the TMDB catalog</span></div>
-      <button class="fab" id="go"><span class="ms">movie_filter</span>Find films</button>
+      <button class="fab" id="go"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M232,218H176a102,102,0,1,0-48,12H232a6,6,0,0,0,0-12ZM38,128a90,90,0,1,1,90,90A90.1,90.1,0,0,1,38,128Zm90-26a22,22,0,1,0-22-22A22,22,0,0,0,128,102Zm0-32a10,10,0,1,1-10,10A10,10,0,0,1,128,70Zm22,106a22,22,0,1,0-22,22A22,22,0,0,0,150,176Zm-32,0a10,10,0,1,1,10,10A10,10,0,0,1,118,176Zm58-26a22,22,0,1,0-22-22A22,22,0,0,0,176,150Zm0-32a10,10,0,1,1-10,10A10,10,0,0,1,176,118ZM80,106a22,22,0,1,0,22,22A22,22,0,0,0,80,106Zm0,32a10,10,0,1,1,10-10A10,10,0,0,1,80,138Z"/></svg>Find films</button>
     </div>
   </main>
 
   <main class="view" id="v-results" aria-label="Results" hidden></main>
   <main class="view" id="v-search" aria-label="Search" hidden>
     <div class="search-wrap g">
-      <label class="searchbar"><span class="ms" aria-hidden="true">search</span><input id="q" type="search" placeholder="Search for a film" autocomplete="off" enterkeyhint="search" aria-label="Search for a film"><button type="button" class="icon-btn" id="q-clear" aria-label="Clear search" hidden><span class="ms">close</span></button></label>
+      <label class="searchbar"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z"/></svg><input id="q" type="search" placeholder="Search for a film" autocomplete="off" enterkeyhint="search" aria-label="Search for a film"><button type="button" class="icon-btn" id="q-clear" aria-label="Clear search" hidden><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M204.24,195.76a6,6,0,1,1-8.48,8.48L128,136.49,60.24,204.24a6,6,0,0,1-8.48-8.48L119.51,128,51.76,60.24a6,6,0,0,1,8.48-8.48L128,119.51l67.76-67.75a6,6,0,0,1,8.48,8.48L136.49,128Z"/></svg></button></label>
     </div>
     <div id="search-res"></div>
   </main>
   <main class="view" id="v-lists" aria-label="Lists" hidden></main>
 
   <nav class="navbar" id="navbar" aria-label="Main">
-    <button class="nav-item" id="nav-discover" aria-current="page"><span class="nav-ind"><span class="ms">explore</span></span>Discover</button>
-    <button class="nav-item" id="nav-search"><span class="nav-ind"><span class="ms">search</span></span>Search</button>
-    <button class="nav-item" id="nav-lists"><span class="nav-ind"><span class="ms">bookmarks</span></span>Lists</button>
+    <button class="nav-item" id="nav-discover" aria-current="page"><span class="nav-ind"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.1,90.1,0,0,1,128,218ZM173.32,74.63l-64,32a6,6,0,0,0-2.69,2.69l-32,64A6,6,0,0,0,80,182a6.06,6.06,0,0,0,2.68-.63l64-32a6,6,0,0,0,2.69-2.69l32-64a6,6,0,0,0-8.05-8.05Zm-33.79,64.9L93.42,162.58l23-46.11,46.11-23Z"/></svg></span>Discover</button>
+    <button class="nav-item" id="nav-search"><span class="nav-ind"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z"/></svg></span>Search</button>
+    <button class="nav-item" id="nav-lists"><span class="nav-ind"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M160,58H64A14,14,0,0,0,50,72V224a6,6,0,0,0,9.49,4.88L112,191.37l52.52,37.51A6,6,0,0,0,174,224V72A14,14,0,0,0,160,58Zm2,154.34-46.52-33.22a6,6,0,0,0-7,0L62,212.34V72a2,2,0,0,1,2-2h96a2,2,0,0,1,2,2ZM206,40V192a6,6,0,0,1-12,0V40a2,2,0,0,0-2-2H88a6,6,0,0,1,0-12H192A14,14,0,0,1,206,40Z"/></svg></span>Lists</button>
   </nav>
 
   <section class="detail" id="detail" aria-hidden="true" aria-label="Film details">
     <div class="dbar" id="d-bar">
-      <button class="icon-btn" id="d-close" aria-label="Close details"><span class="ms">keyboard_arrow_up</span></button>
+      <button class="icon-btn" id="d-close" aria-label="Close details"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M212.24,164.24a6,6,0,0,1-8.48,0L128,88.49,52.24,164.24a6,6,0,0,1-8.48-8.48l80-80a6,6,0,0,1,8.48,0l80,80A6,6,0,0,1,212.24,164.24Z"/></svg></button>
       <span style="flex:1"></span>
-      <button class="icon-btn" id="d-list" aria-label="Save to a list"><span class="ms">bookmark_add</span></button>
-      <button class="icon-btn" id="d-fav" aria-label="Add to favorites" aria-pressed="false"><span class="ms">favorite</span></button>
+      <button class="icon-btn" id="d-seen" aria-label="Mark as seen"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M245.48,125.57c-.34-.78-8.66-19.23-27.24-37.81C201,70.54,171.38,50,128,50S55,70.54,37.76,87.76c-18.58,18.58-26.9,37-27.24,37.81a6,6,0,0,0,0,4.88c.34.77,8.66,19.22,27.24,37.8C55,185.47,84.62,206,128,206s73-20.53,90.24-37.75c18.58-18.58,26.9-37,27.24-37.8A6,6,0,0,0,245.48,125.57ZM128,194c-31.38,0-58.78-11.42-81.45-33.93A134.77,134.77,0,0,1,22.69,128,134.56,134.56,0,0,1,46.55,95.94C69.22,73.42,96.62,62,128,62s58.78,11.42,81.45,33.94A134.56,134.56,0,0,1,233.31,128C226.94,140.21,195,194,128,194Zm0-112a46,46,0,1,0,46,46A46.06,46.06,0,0,0,128,82Zm0,80a34,34,0,1,1,34-34A34,34,0,0,1,128,162Z"/></svg></button>
+      <button class="icon-btn" id="d-list" aria-label="Save to a list"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M184,34H72A14,14,0,0,0,58,48V224a6,6,0,0,0,9.18,5.09l60.81-38,60.83,38A6,6,0,0,0,198,224V48A14,14,0,0,0,184,34Zm2,179.17-54.83-34.26a6,6,0,0,0-6.36,0L70,213.17V48a2,2,0,0,1,2-2H184a2,2,0,0,1,2,2Z"/></svg></button>
+      <button class="icon-btn" id="d-fav" aria-label="Add to favorites" aria-pressed="false"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M178,42c-21,0-39.26,9.47-50,25.34C117.26,51.47,99,42,78,42a60.07,60.07,0,0,0-60,60c0,29.2,18.2,59.59,54.1,90.31a334.68,334.68,0,0,0,53.06,37,6,6,0,0,0,5.68,0,334.68,334.68,0,0,0,53.06-37C219.8,161.59,238,131.2,238,102A60.07,60.07,0,0,0,178,42ZM128,217.11C111.59,207.64,30,157.72,30,102A48.05,48.05,0,0,1,78,54c20.28,0,37.31,10.83,44.45,28.27a6,6,0,0,0,11.1,0C140.69,64.83,157.72,54,178,54a48.05,48.05,0,0,1,48,48C226,157.72,144.41,207.64,128,217.11Z"/></svg></button>
     </div>
     <div class="detail-scroll" id="d-scroll"></div>
     <div class="d-bottom g">
@@ -564,14 +850,22 @@ img{max-width:100%}
     <i class="sheet-handle" aria-hidden="true"></i>
     <div class="g"><h2 id="sheet-t">Save to list</h2><p class="sheet-film" id="sheet-film"></p></div>
     <div class="sheet-lists" id="sheet-lists"></div>
-    <button class="sheet-new" id="sheet-new"><span class="ms" aria-hidden="true">add</span>New list</button>
+    <button class="sheet-new" id="sheet-new"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M222,128a6,6,0,0,1-6,6H134v82a6,6,0,0,1-12,0V134H40a6,6,0,0,1,0-12h82V40a6,6,0,0,1,12,0v82h82A6,6,0,0,1,222,128Z"/></svg>New list</button>
     <div class="sheet-foot g"><button class="btn filled" id="sheet-done">Done</button></div>
+  </section>
+  <section class="sheet tall" id="psheet" role="dialog" aria-modal="true" aria-labelledby="psheet-t" hidden>
+    <i class="sheet-handle" aria-hidden="true"></i>
+    <div class="g"><h2 id="psheet-t">Your streaming services</h2><p class="sheet-film" id="psheet-sub"></p>
+      <label class="searchbar compact"><svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z"/></svg><input id="pq" type="search" placeholder="Find a service" autocomplete="off" aria-label="Find a service"></label></div>
+    <div class="sheet-lists" id="psheet-list"></div>
+    <div class="sheet-foot g"><button class="btn filled" id="psheet-done">Done</button></div>
   </section>
   <div class="scrim top" id="dscrim" hidden></div>
   <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-t" hidden>
     <h2 id="dlg-t"></h2>
     <p id="dlg-p"></p>
     <div class="input-wrap" id="dlg-field"><input id="dlg-input" maxlength="40" autocomplete="off" aria-labelledby="dlg-t"></div>
+    <div class="dlg-date" id="dlg-datefield" hidden><div class="input-wrap"><input id="dlg-date" type="date" aria-label="Date you saw it"></div><div class="chips" id="dlg-quick"></div></div>
     <small id="dlg-err" role="alert"></small>
     <div class="dlg-actions"><button class="btn text" id="dlg-cancel">Cancel</button><button class="btn text" id="dlg-ok">Create</button></div>
   </section>
@@ -584,6 +878,7 @@ img{max-width:100%}
 "use strict";
 /* ================= Reference data ================= */
 const API="https://api.themoviedb.org/3", IMG="https://image.tmdb.org/t/p/";
+const img=(size,path)=>window.__CLAP_IMG?window.__CLAP_IMG(size,path):IMG+size+path;
 /* TMDB movie genre ids */
 const GENRES=[[18,"Drama"],[35,"Comedy"],[53,"Thriller"],[878,"Sci-fi"],[27,"Horror"],[10749,"Romance"],[16,"Animation"],[28,"Action"],[80,"Crime"],[12,"Adventure"],[14,"Fantasy"],[9648,"Mystery"],[99,"Documentary"],[36,"History"],[10402,"Music"],[10752,"War"],[37,"Western"],[10751,"Family"]];
 const GNAME=Object.fromEntries(GENRES);
@@ -629,24 +924,28 @@ const DEFAULT_PLATS=[/^netflix$/i,/^amazon prime video$/i,/^canal\+$/i];
 
 /* ================= State ================= */
 const KEY="cesoir.tmdb.v1";
-const DEFAULTS={mood:["thoughtful"],who:"duo",genres:[],fame:2,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,only:false};
+const DEFAULTS={mood:["thoughtful"],who:"duo",genres:[],fame:2,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,added:[],shown:null,only:false,hideSeen:true};
+const TOP_PLATS=10;
 let CFG={key:"",region:"FR",lang:"en-US"};
-let S, lists=[{id:"fav",name:"Favorites",films:[]}], meta={}, theme=null, view="setup", discoverSub="settings", openList=null;
-let PROVIDERS=[], PROV_BY_ID=new Map(), BW_KW=null, showAllPlats=false;
+let seen={}, diaryRange="month", S, lists=[{id:"fav",name:"Favorites",films:[]}], meta={}, theme=null, view="setup", discoverSub="settings", openList=null;
+let PROVIDERS=[], PROV_BY_ID=new Map(), BW_KW=null;
 let ranked=[], round=1, pool=null, searchSeq=0;
 const FILMS=new Map();
-function fromPlain(p){return{mood:new Set(p.mood),who:p.who,genres:new Set(p.genres),fame:p.fame,era:p.era.slice(),image:p.image,len:p.len,lang:p.lang,plats:p.plats?new Set(p.plats):null,only:p.only}}
-function toPlain(){return{mood:[...S.mood],who:S.who,genres:[...S.genres],fame:S.fame,era:S.era,image:S.image,len:S.len,lang:S.lang,plats:S.plats?[...S.plats]:null,only:S.only}}
+function fromPlain(p){return{mood:new Set(p.mood),who:p.who,genres:new Set(p.genres),fame:p.fame,era:p.era.slice(),image:p.image,len:p.len,lang:p.lang,plats:p.plats?new Set(p.plats):null,added:new Set(p.added||[]),shown:p.shown?new Set(p.shown):null,only:p.only,hideSeen:p.hideSeen!==false}}
+function plainOf(st){return{mood:[...st.mood],who:st.who,genres:[...st.genres],fame:st.fame,era:st.era.slice(),image:st.image,len:st.len,lang:st.lang,plats:st.plats?[...st.plats]:null,added:[...st.added],shown:st.shown?[...st.shown]:null,only:st.only,hideSeen:st.hideSeen}}
+function toPlain(){return plainOf(S)}
+const cloneState=st=>fromPlain(plainOf(st));
 S=fromPlain(DEFAULTS);
-try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){if(d.cfg)CFG=Object.assign(CFG,d.cfg);if(d.s)S=fromPlain(Object.assign({},DEFAULTS,d.s));if(Array.isArray(d.lists)&&d.lists.length)lists=d.lists;if(d.meta)meta=d.meta;if(Array.isArray(d.favs))d.favs.forEach(f=>{meta[f.id]=f;if(!lists[0].films.includes(f.id))lists[0].films.push(f.id)});if(d.theme)theme=d.theme}}catch(e){}
+try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){if(d.cfg)CFG=Object.assign(CFG,d.cfg);if(d.s)S=fromPlain(Object.assign({},DEFAULTS,d.s));if(Array.isArray(d.lists)&&d.lists.length)lists=d.lists;if(d.meta)meta=d.meta;if(Array.isArray(d.favs))d.favs.forEach(f=>{meta[f.id]=f;if(!lists[0].films.includes(f.id))lists[0].films.push(f.id)});if(d.theme&&d.themeMode===2)theme=d.theme;if(d.seen&&typeof d.seen==="object")seen=d.seen}}catch(e){}
 if(!lists.some(l=>l.id==="fav"))lists.unshift({id:"fav",name:"Favorites",films:[]});
-{const keep=new Set(lists.flatMap(l=>l.films));Object.keys(meta).forEach(k=>{if(!keep.has(+k))delete meta[k]})}
-function save(){try{localStorage.setItem(KEY,JSON.stringify({cfg:CFG,s:toPlain(),lists,meta,theme}))}catch(e){}}
+{const keep=new Set([...lists.flatMap(l=>l.films),...Object.keys(seen).map(Number)]);Object.keys(meta).forEach(k=>{if(!keep.has(+k))delete meta[k]})}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({cfg:CFG,s:toPlain(),lists,meta,theme,themeMode:2,seen}))}catch(e){}}
 
 /* ================= Helpers ================= */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const icon=(n,fill)=>`<span class="ms${fill?" fill":""}" aria-hidden="true">${n}</span>`;
+const ICONS={"movie":["<path d=\"M216,106H86.68L209.53,73.57a6,6,0,0,0,4.26-7.38l-8.16-30a13.94,13.94,0,0,0-17-9.72L36.32,66.67a13.77,13.77,0,0,0-8.48,6.47,13.57,13.57,0,0,0-1.36,10.42L34,111.34c0,.22,0,.44,0,.66v88a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V112A6,6,0,0,0,216,106ZM125.75,55.48l33,19.07-42.43,11.2-33-19.07Zm66-17.41a1.92,1.92,0,0,1,2.34,1.26l6.57,24.18L175.26,70.2l-33-19.07ZM38.23,79.14a1.85,1.85,0,0,1,1.15-.87L66.86,71l33,19.08L44.66,104.68l-6.6-24.27A1.63,1.63,0,0,1,38.23,79.14ZM210,200a2,2,0,0,1-2,2H48a2,2,0,0,1-2-2V118H210Z\"/>","<path d=\"M216,104H102.09L210,75.51a8,8,0,0,0,5.68-9.84l-8.16-30a15.93,15.93,0,0,0-19.42-11.13L35.81,64.74a15.75,15.75,0,0,0-9.7,7.4,15.51,15.51,0,0,0-1.55,12L32,111.56c0,.14,0,.29,0,.44v88a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V112A8,8,0,0,0,216,104ZM192.16,40l6,22.07L164.57,71,136.44,54.72ZM77.55,70.27l28.12,16.24-59.6,15.73-6-22.08Z\"/>"],"settings":["<path d=\"M128,82a46,46,0,1,0,46,46A46.06,46.06,0,0,0,128,82Zm0,80a34,34,0,1,1,34-34A34,34,0,0,1,128,162Zm108-54.4a6,6,0,0,0-2.92-4L202.64,86.22l-.42-.71L202.1,51.2A6,6,0,0,0,200,46.64a110.12,110.12,0,0,0-36.07-20.31,6,6,0,0,0-4.84.45L128.46,43.86h-1L96.91,26.76a6,6,0,0,0-4.86-.44A109.92,109.92,0,0,0,56,46.68a6,6,0,0,0-2.12,4.55l-.16,34.34c-.14.23-.28.47-.41.71L22.91,103.57A6,6,0,0,0,20,107.62a104.81,104.81,0,0,0,0,40.78,6,6,0,0,0,2.92,4l30.42,17.33.42.71.12,34.31A6,6,0,0,0,56,209.36a110.12,110.12,0,0,0,36.07,20.31,6,6,0,0,0,4.84-.45l30.61-17.08h1l30.56,17.1A6.09,6.09,0,0,0,162,230a5.83,5.83,0,0,0,1.93-.32,109.92,109.92,0,0,0,36-20.36,6,6,0,0,0,2.12-4.55l.16-34.34c.14-.23.28-.47.41-.71l30.42-17.29a6,6,0,0,0,2.92-4.05A104.81,104.81,0,0,0,236,107.6Zm-11.25,35.79L195.32,160.1a6.07,6.07,0,0,0-2.28,2.3c-.59,1-1.21,2.11-1.86,3.14a6,6,0,0,0-.91,3.16l-.16,33.21a98.15,98.15,0,0,1-27.52,15.53L133,200.88a6,6,0,0,0-2.93-.77h-.14c-1.24,0-2.5,0-3.74,0a6,6,0,0,0-3.07.76L93.45,217.43a98,98,0,0,1-27.56-15.49l-.12-33.17a6,6,0,0,0-.91-3.16c-.64-1-1.27-2.08-1.86-3.14a6,6,0,0,0-2.27-2.3L31.3,143.4a93,93,0,0,1,0-30.79L60.68,95.9A6.07,6.07,0,0,0,63,93.6c.59-1,1.21-2.11,1.86-3.14a6,6,0,0,0,.91-3.16l.16-33.21A98.15,98.15,0,0,1,93.41,38.56L123,55.12a5.81,5.81,0,0,0,3.07.76c1.24,0,2.5,0,3.74,0a6,6,0,0,0,3.07-.76l29.65-16.56a98,98,0,0,1,27.56,15.49l.12,33.17a6,6,0,0,0,.91,3.16c.64,1,1.27,2.08,1.86,3.14a6,6,0,0,0,2.27,2.3L224.7,112.6A93,93,0,0,1,224.73,143.39Z\"/>"],"dark_mode":["<path d=\"M232.13,143.64a6,6,0,0,0-6-1.49A90.07,90.07,0,0,1,113.86,29.85a6,6,0,0,0-7.49-7.48A102.88,102.88,0,0,0,54.48,58.68,102,102,0,0,0,197.32,201.52a102.88,102.88,0,0,0,36.31-51.89A6,6,0,0,0,232.13,143.64Zm-42,48.29a90,90,0,0,1-126-126A90.9,90.9,0,0,1,99.65,37.66,102.06,102.06,0,0,0,218.34,156.35,90.9,90.9,0,0,1,190.1,191.93Z\"/>"],"light_mode":["<path d=\"M122,40V16a6,6,0,0,1,12,0V40a6,6,0,0,1-12,0Zm68,88a62,62,0,1,1-62-62A62.07,62.07,0,0,1,190,128Zm-12,0a50,50,0,1,0-50,50A50.06,50.06,0,0,0,178,128ZM59.76,68.24a6,6,0,1,0,8.48-8.48l-16-16a6,6,0,0,0-8.48,8.48Zm0,119.52-16,16a6,6,0,1,0,8.48,8.48l16-16a6,6,0,1,0-8.48-8.48ZM192,70a6,6,0,0,0,4.24-1.76l16-16a6,6,0,0,0-8.48-8.48l-16,16A6,6,0,0,0,192,70Zm4.24,117.76a6,6,0,0,0-8.48,8.48l16,16a6,6,0,0,0,8.48-8.48ZM46,128a6,6,0,0,0-6-6H16a6,6,0,0,0,0,12H40A6,6,0,0,0,46,128Zm82,82a6,6,0,0,0-6,6v24a6,6,0,0,0,12,0V216A6,6,0,0,0,128,210Zm112-88H216a6,6,0,0,0,0,12h24a6,6,0,0,0,0-12Z\"/>"],"arrow_back":["<path d=\"M222,128a6,6,0,0,1-6,6H54.49l61.75,61.76a6,6,0,1,1-8.48,8.48l-72-72a6,6,0,0,1,0-8.48l72-72a6,6,0,0,1,8.48,8.48L54.49,122H216A6,6,0,0,1,222,128Z\"/>"],"refresh":["<path d=\"M222,48V96a6,6,0,0,1-6,6H168a6,6,0,0,1,0-12h33.52L183.47,72a81.51,81.51,0,0,0-57.53-24h-.46A81.5,81.5,0,0,0,68.19,71.28a6,6,0,1,1-8.38-8.58,93.38,93.38,0,0,1,65.67-26.76H126a93.45,93.45,0,0,1,66,27.53l18,18V48a6,6,0,0,1,12,0ZM187.81,184.72a81.5,81.5,0,0,1-57.29,23.34h-.46a81.51,81.51,0,0,1-57.53-24L54.48,166H88a6,6,0,0,0,0-12H40a6,6,0,0,0-6,6v48a6,6,0,0,0,12,0V174.48l18,18.05a93.45,93.45,0,0,0,66,27.53h.52a93.38,93.38,0,0,0,65.67-26.76,6,6,0,1,0-8.38-8.58Z\"/>"],"shuffle":["<path d=\"M236.24,179.76a6,6,0,0,1,0,8.48l-24,24a6,6,0,0,1-8.48-8.48L217.52,190H200.94a70.16,70.16,0,0,1-57-29.31l-41.71-58.4A58.11,58.11,0,0,0,55.06,78H32a6,6,0,0,1,0-12H55.06a70.16,70.16,0,0,1,57,29.31l41.71,58.4A58.11,58.11,0,0,0,200.94,178h16.58l-13.76-13.76a6,6,0,0,1,8.48-8.48Zm-92.06-74.41a5.91,5.91,0,0,0,3.48,1.12,6,6,0,0,0,4.89-2.51l1.19-1.67A58.11,58.11,0,0,1,200.94,78h16.58L203.76,91.76a6,6,0,1,0,8.48,8.48l24-24a6,6,0,0,0,0-8.48l-24-24a6,6,0,0,0-8.48,8.48L217.52,66H200.94a70.16,70.16,0,0,0-57,29.31L142.78,97A6,6,0,0,0,144.18,105.35Zm-32.36,45.3a6,6,0,0,0-8.37,1.39l-1.19,1.67A58.11,58.11,0,0,1,55.06,178H32a6,6,0,0,0,0,12H55.06a70.16,70.16,0,0,0,57-29.31l1.19-1.67A6,6,0,0,0,111.82,150.65Z\"/>"],"restart_alt":["<path d=\"M222,128a94,94,0,0,1-92.74,94H128a93.43,93.43,0,0,1-64.5-25.65,6,6,0,1,1,8.24-8.72A82,82,0,1,0,70,70l-.19.19L39.44,98H72a6,6,0,0,1,0,12H24a6,6,0,0,1-6-6V56a6,6,0,0,1,12,0V90.34L61.63,61.4A94,94,0,0,1,222,128Z\"/>"],"sentiment_very_satisfied":["<path d=\"M173.19,155c-9.92,17.16-26.39,27-45.19,27s-35.27-9.84-45.19-27a6,6,0,0,1,10.38-6c7.84,13.54,20.2,21,34.81,21s27-7.46,34.81-21a6,6,0,1,1,10.38,6ZM230,128A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128ZM92,118a10,10,0,1,0-10-10A10,10,0,0,0,92,118Zm72-20a10,10,0,1,0,10,10A10,10,0,0,0,164,98Z\"/>"],"theater_comedy":["<path d=\"M188.47,124a6,6,0,1,1-8.94,8c-3.06-3.42-9.74-6-15.53-6s-12.47,2.58-15.53,6a6,6,0,0,1-8.94-8c5.35-6,15.19-10,24.47-10S183.12,118,188.47,124Zm-80.94,8a6,6,0,1,0,8.94-8c-5.35-6-15.19-10-24.47-10s-19.12,4-24.47,10a6,6,0,1,0,8.94,8c3.06-3.42,9.74-6,15.53-6S104.47,128.58,107.53,132Zm58.73,31.43a6,6,0,0,0-8.46.67,38.89,38.89,0,0,1-59.6,0,6,6,0,1,0-9.13,7.79,50.9,50.9,0,0,0,77.86,0A6,6,0,0,0,166.26,163.43ZM222,48v55.77c0,35.45-9.53,68.86-26.83,94.06C177.4,223.74,153.54,238,128,238s-49.4-14.26-67.17-40.16C43.53,172.64,34,139.23,34,103.78V48A14,14,0,0,1,53.06,35C67.25,40.46,95.86,49.7,128,49.7S188.75,40.46,202.94,35A14,14,0,0,1,222,48Zm-12,0a2,2,0,0,0-.87-1.66,1.93,1.93,0,0,0-1.85-.21C192.31,52,162.1,61.7,128,61.7S63.69,52,48.72,46.14a2,2,0,0,0-1.85.21A2,2,0,0,0,46,48v55.76C46,171.17,82.79,226,128,226s82-54.83,82-122.22Z\"/>"],"bolt":["<path d=\"M213.84,118.63a6,6,0,0,0-3.73-4.25L150.88,92.17l15-75a6,6,0,0,0-10.27-5.27l-112,120a6,6,0,0,0,2.28,9.71l59.23,22.21-15,75a6,6,0,0,0,3.14,6.52A6.07,6.07,0,0,0,96,246a6,6,0,0,0,4.39-1.91l112-120A6,6,0,0,0,213.84,118.63ZM106,220.46l11.85-59.28a6,6,0,0,0-3.77-6.8l-55.6-20.85,91.46-98L138.12,94.82a6,6,0,0,0,3.77,6.8l55.6,20.85Z\"/>"],"psychology":["<path d=\"M246,124a54.13,54.13,0,0,0-32-49.33V72a46,46,0,0,0-86-22.67A46,46,0,0,0,42,72v2.67a54,54,0,0,0,0,98.63V176a46,46,0,0,0,86,22.67A46,46,0,0,0,214,176v-2.7A54.07,54.07,0,0,0,246,124ZM88,210a34,34,0,0,1-34-32.94A53.67,53.67,0,0,0,64,178h8a6,6,0,0,0,0-12H64A42,42,0,0,1,50,84.39a6,6,0,0,0,4-5.66V72a34,34,0,0,1,68,0v73.05A45.89,45.89,0,0,0,88,130a6,6,0,0,0,0,12,34,34,0,0,1,0,68Zm104-44h-8a6,6,0,0,0,0,12h8a53.67,53.67,0,0,0,10-.94A34,34,0,1,1,168,142a6,6,0,0,0,0-12,45.89,45.89,0,0,0-34,15.05V72a34,34,0,0,1,68,0v6.73a6,6,0,0,0,4,5.66A42,42,0,0,1,192,166Zm14-54a6,6,0,0,1-6,6h-4a34,34,0,0,1-34-34V80a6,6,0,0,1,12,0v4a22,22,0,0,0,22,22h4A6,6,0,0,1,206,112ZM60,118H56a6,6,0,0,1,0-12h4A22,22,0,0,0,82,84V80a6,6,0,0,1,12,0v4A34,34,0,0,1,60,118Z\"/>"],"water_drop":["<path d=\"M172.53,49.06a252.86,252.86,0,0,0-41.09-38,6,6,0,0,0-6.88,0,252.86,252.86,0,0,0-41.09,38C56.34,80.26,42,113.09,42,144a86,86,0,0,0,172,0C214,113.09,199.66,80.26,172.53,49.06ZM128,218a74.09,74.09,0,0,1-74-74c0-59.62,59-108.93,74-120.51C143,35.07,202,84.38,202,144A74.09,74.09,0,0,1,128,218Zm53.92-65A55.58,55.58,0,0,1,137,197.92a7,7,0,0,1-1,.08,6,6,0,0,1-1-11.92c17.38-2.92,32.13-17.68,35.08-35.08a6,6,0,1,1,11.84,2Z\"/>"],"favorite":["<path d=\"M178,42c-21,0-39.26,9.47-50,25.34C117.26,51.47,99,42,78,42a60.07,60.07,0,0,0-60,60c0,29.2,18.2,59.59,54.1,90.31a334.68,334.68,0,0,0,53.06,37,6,6,0,0,0,5.68,0,334.68,334.68,0,0,0,53.06-37C219.8,161.59,238,131.2,238,102A60.07,60.07,0,0,0,178,42ZM128,217.11C111.59,207.64,30,157.72,30,102A48.05,48.05,0,0,1,78,54c20.28,0,37.31,10.83,44.45,28.27a6,6,0,0,0,11.1,0C140.69,64.83,157.72,54,178,54a48.05,48.05,0,0,1,48,48C226,157.72,144.41,207.64,128,217.11Z\"/>","<path d=\"M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z\"/>"],"skull":["<path d=\"M92,106a26,26,0,1,0,26,26A26,26,0,0,0,92,106Zm0,40a14,14,0,1,1,14-14A14,14,0,0,1,92,146Zm72-40a26,26,0,1,0,26,26A26,26,0,0,0,164,106Zm0,40a14,14,0,1,1,14-14A14,14,0,0,1,164,146ZM128,18C71.76,18,26,62,26,116c0,33.77,18.3,65.31,48,83.15V216a14,14,0,0,0,14,14h80a14,14,0,0,0,14-14V199.15c29.7-17.84,48-49.38,48-83.15C230,62,184.24,18,128,18Zm45.09,172.44a6,6,0,0,0-3.09,5.25V216a2,2,0,0,1-2,2H150V192a6,6,0,0,0-12,0v26H118V192a6,6,0,0,0-12,0v26H88a2,2,0,0,1-2-2V195.69a6,6,0,0,0-3.09-5.25C55.21,175.09,38,146.56,38,116c0-47.42,40.37-86,90-86s90,38.58,90,86C218,146.56,200.79,175.09,173.09,190.44Z\"/>"],"cyclone":["<path d=\"M246,144a6,6,0,0,1-12,0,98.11,98.11,0,0,0-98-98,90.1,90.1,0,0,0-90,90,82.1,82.1,0,0,0,82,82,74.09,74.09,0,0,0,74-74,66.08,66.08,0,0,0-66-66,58.07,58.07,0,0,0-58,58,50.06,50.06,0,0,0,50,50,42,42,0,0,0,42-42,34,34,0,0,0-34-34,26,26,0,0,0-26,26,18,18,0,0,0,18,18,10,10,0,0,0,10-10,2,2,0,0,0-2-2,6,6,0,0,1,0-12,14,14,0,0,1,14,14,22,22,0,0,1-22,22,30,30,0,0,1-30-30,38,38,0,0,1,38-38,46.06,46.06,0,0,1,46,46,54.06,54.06,0,0,1-54,54,62.07,62.07,0,0,1-62-62,70.08,70.08,0,0,1,70-70,78.09,78.09,0,0,1,78,78,86.1,86.1,0,0,1-86,86,94.11,94.11,0,0,1-94-94A102.12,102.12,0,0,1,136,34,110.13,110.13,0,0,1,246,144Z\"/>"],"weekend":["<path d=\"M238,107.37V72a14,14,0,0,0-14-14H32A14,14,0,0,0,18,72v35.37A14,14,0,0,0,10,120v48a14,14,0,0,0,14,14H34v18a6,6,0,0,0,12,0V182H210v18a6,6,0,0,0,12,0V182h10a14,14,0,0,0,14-14V120A14,14,0,0,0,238,107.37ZM226,72v34H216a14,14,0,0,0-14,14v18H134V70h90A2,2,0,0,1,226,72ZM32,70h90v68H54V120a14,14,0,0,0-14-14H30V72A2,2,0,0,1,32,70Zm202,98a2,2,0,0,1-2,2H24a2,2,0,0,1-2-2V120a2,2,0,0,1,2-2H40a2,2,0,0,1,2,2v24a6,6,0,0,0,6,6H208a6,6,0,0,0,6-6V120a2,2,0,0,1,2-2h16a2,2,0,0,1,2,2Z\"/>"],"person":["<path d=\"M229.19,213c-15.81-27.32-40.63-46.49-69.47-54.62a70,70,0,1,0-63.44,0C67.44,166.5,42.62,185.67,26.81,213a6,6,0,1,0,10.38,6C56.4,185.81,90.34,166,128,166s71.6,19.81,90.81,53a6,6,0,1,0,10.38-6ZM70,96a58,58,0,1,1,58,58A58.07,58.07,0,0,1,70,96Z\"/>"],"group":["<path d=\"M112.6,158.43a58,58,0,1,0-57.2,0A93.83,93.83,0,0,0,5.21,196.72a6,6,0,0,0,10.05,6.56,82,82,0,0,1,137.48,0,6,6,0,0,0,10-6.56A93.83,93.83,0,0,0,112.6,158.43ZM38,108a46,46,0,1,1,46,46A46.06,46.06,0,0,1,38,108Zm211,97a6,6,0,0,1-8.3-1.74A81.8,81.8,0,0,0,172,166a6,6,0,0,1,0-12,46,46,0,1,0-17.08-88.73,6,6,0,1,1-4.46-11.14,58,58,0,0,1,50.14,104.3,93.83,93.83,0,0,1,50.19,38.29A6,6,0,0,1,249,205Z\"/>"],"groups":["<path d=\"M243.6,148.8a6,6,0,0,1-8.4-1.2A53.58,53.58,0,0,0,192,126a6,6,0,0,1,0-12,26,26,0,1,0-25.18-32.5,6,6,0,0,1-11.62-3,38,38,0,1,1,59.91,39.63A65.69,65.69,0,0,1,244.8,140.4,6,6,0,0,1,243.6,148.8ZM189.19,213a6,6,0,0,1-2.19,8.2,5.9,5.9,0,0,1-3,.81,6,6,0,0,1-5.2-3,59,59,0,0,0-101.62,0,6,6,0,1,1-10.38-6A70.1,70.1,0,0,1,103,182.55a46,46,0,1,1,50.1,0A70.1,70.1,0,0,1,189.19,213ZM128,178a34,34,0,1,0-34-34A34,34,0,0,0,128,178ZM70,120a6,6,0,0,0-6-6A26,26,0,1,1,89.18,81.49a6,6,0,1,0,11.62-3,38,38,0,1,0-59.91,39.63A65.69,65.69,0,0,0,11.2,140.4a6,6,0,1,0,9.6,7.2A53.58,53.58,0,0,1,64,126,6,6,0,0,0,70,120Z\"/>"],"family_restroom":["<path d=\"M28.4,124.8a6,6,0,0,0,8.4-1.2,54,54,0,0,1,86.4,0,6,6,0,0,0,8.4,1.19,5.59,5.59,0,0,0,1.19-1.19h0a54,54,0,0,1,86.4,0,6,6,0,0,0,9.6-7.21,65.74,65.74,0,0,0-29.69-22.26,38,38,0,1,0-46.22,0A65.32,65.32,0,0,0,128,110.7a65.32,65.32,0,0,0-24.89-16.57,38,38,0,1,0-46.22,0A65.69,65.69,0,0,0,27.2,116.4,6,6,0,0,0,28.4,124.8ZM176,38a26,26,0,1,1-26,26A26,26,0,0,1,176,38ZM80,38A26,26,0,1,1,54,64,26,26,0,0,1,80,38ZM199.11,198.13a38,38,0,1,0-46.22,0A65.32,65.32,0,0,0,128,214.7a65.32,65.32,0,0,0-24.89-16.57,38,38,0,1,0-46.22,0A65.69,65.69,0,0,0,27.2,220.4a6,6,0,1,0,9.6,7.2,54,54,0,0,1,86.4,0,6,6,0,0,0,8.4,1.19,5.59,5.59,0,0,0,1.19-1.19h0a54,54,0,0,1,86.4,0,6,6,0,0,0,9.6-7.21A65.74,65.74,0,0,0,199.11,198.13ZM80,142a26,26,0,1,1-26,26A26,26,0,0,1,80,142Zm96,0a26,26,0,1,1-26,26A26,26,0,0,1,176,142Z\"/>"],"check":["<path d=\"M228.24,76.24l-128,128a6,6,0,0,1-8.48,0l-56-56a6,6,0,0,1,8.48-8.48L96,191.51,219.76,67.76a6,6,0,0,1,8.48,8.48Z\"/>"],"add":["<path d=\"M222,128a6,6,0,0,1-6,6H134v82a6,6,0,0,1-12,0V134H40a6,6,0,0,1,0-12h82V40a6,6,0,0,1,12,0v82h82A6,6,0,0,1,222,128Z\"/>"],"expand_more":["<path d=\"M212.24,100.24l-80,80a6,6,0,0,1-8.48,0l-80-80a6,6,0,0,1,8.48-8.48L128,167.51l75.76-75.75a6,6,0,0,1,8.48,8.48Z\"/>"],"expand_less":["<path d=\"M212.24,164.24a6,6,0,0,1-8.48,0L128,88.49,52.24,164.24a6,6,0,0,1-8.48-8.48l80-80a6,6,0,0,1,8.48,0l80,80A6,6,0,0,1,212.24,164.24Z\"/>"],"live_tv":["<path d=\"M216,66H142.48l37.76-37.76a6,6,0,0,0-8.48-8.48L128,63.51,84.24,19.76a6,6,0,1,0-8.48,8.48L113.52,66H40A14,14,0,0,0,26,80V200a14,14,0,0,0,14,14H216a14,14,0,0,0,14-14V80A14,14,0,0,0,216,66Zm2,134a2,2,0,0,1-2,2H40a2,2,0,0,1-2-2V80a2,2,0,0,1,2-2H216a2,2,0,0,1,2,2Z\"/>"],"movie_filter":["<path d=\"M232,218H176a102,102,0,1,0-48,12H232a6,6,0,0,0,0-12ZM38,128a90,90,0,1,1,90,90A90.1,90.1,0,0,1,38,128Zm90-26a22,22,0,1,0-22-22A22,22,0,0,0,128,102Zm0-32a10,10,0,1,1-10,10A10,10,0,0,1,128,70Zm22,106a22,22,0,1,0-22,22A22,22,0,0,0,150,176Zm-32,0a10,10,0,1,1,10,10A10,10,0,0,1,118,176Zm58-26a22,22,0,1,0-22-22A22,22,0,0,0,176,150Zm0-32a10,10,0,1,1-10,10A10,10,0,0,1,176,118ZM80,106a22,22,0,1,0,22,22A22,22,0,0,0,80,106Zm0,32a10,10,0,1,1,10-10A10,10,0,0,1,80,138Z\"/>"],"hourglass_top":["<path d=\"M198,75.64V40a14,14,0,0,0-14-14H72A14,14,0,0,0,58,40V76a14.06,14.06,0,0,0,5.6,11.2L118,128,63.6,168.8A14.06,14.06,0,0,0,58,180v36a14,14,0,0,0,14,14H184a14,14,0,0,0,14-14V180.36a14.08,14.08,0,0,0-5.56-11.17L138,128l54.49-41.19A14.08,14.08,0,0,0,198,75.64ZM186,180.36V216a2,2,0,0,1-2,2H72a2,2,0,0,1-2-2V180a2,2,0,0,1,.8-1.6L128,135.51l57.22,43.25A2,2,0,0,1,186,180.36Zm0-104.72a2,2,0,0,1-.79,1.6L128,120.49,70.8,77.6A2,2,0,0,1,70,76V40a2,2,0,0,1,2-2H184a2,2,0,0,1,2,2Z\"/>"],"link":["<path d=\"M238,88.18a52.42,52.42,0,0,1-15.4,35.66l-34.75,34.75A52.28,52.28,0,0,1,150.62,174h-.05A52.63,52.63,0,0,1,98,119.9a6,6,0,0,1,6-5.84h.17a6,6,0,0,1,5.83,6.16A40.62,40.62,0,0,0,150.58,162h0a40.4,40.4,0,0,0,28.73-11.9l34.75-34.74A40.63,40.63,0,0,0,156.63,57.9l-11,11a6,6,0,0,1-8.49-8.49l11-11a52.62,52.62,0,0,1,74.43,0A52.83,52.83,0,0,1,238,88.18Zm-127.62,98.9-11,11A40.36,40.36,0,0,1,70.6,210h0a40.63,40.63,0,0,1-28.7-69.36L76.62,105.9A40.63,40.63,0,0,1,146,135.77a6,6,0,0,0,5.83,6.16H152a6,6,0,0,0,6-5.84A52.63,52.63,0,0,0,68.14,97.42L33.38,132.16A52.63,52.63,0,0,0,70.56,222h0a52.26,52.26,0,0,0,37.22-15.42l11-11a6,6,0,1,0-8.49-8.48Z\"/>"],"visibility":["<path d=\"M245.48,125.57c-.34-.78-8.66-19.23-27.24-37.81C201,70.54,171.38,50,128,50S55,70.54,37.76,87.76c-18.58,18.58-26.9,37-27.24,37.81a6,6,0,0,0,0,4.88c.34.77,8.66,19.22,27.24,37.8C55,185.47,84.62,206,128,206s73-20.53,90.24-37.75c18.58-18.58,26.9-37,27.24-37.8A6,6,0,0,0,245.48,125.57ZM128,194c-31.38,0-58.78-11.42-81.45-33.93A134.77,134.77,0,0,1,22.69,128,134.56,134.56,0,0,1,46.55,95.94C69.22,73.42,96.62,62,128,62s58.78,11.42,81.45,33.94A134.56,134.56,0,0,1,233.31,128C226.94,140.21,195,194,128,194Zm0-112a46,46,0,1,0,46,46A46.06,46.06,0,0,0,128,82Zm0,80a34,34,0,1,1,34-34A34,34,0,0,1,128,162Z\"/>"],"visibility_off":["<path d=\"M52.44,36A6,6,0,0,0,43.56,44L64.44,67c-37.28,21.9-53.23,57-53.92,58.57a6,6,0,0,0,0,4.88c.34.77,8.66,19.22,27.24,37.8C55,185.47,84.62,206,128,206a124.91,124.91,0,0,0,52.57-11.25l23,25.29a6,6,0,0,0,8.88-8.08Zm48.62,71.32,45,49.52a34,34,0,0,1-45-49.52ZM128,194c-31.38,0-58.78-11.42-81.45-33.93A134.57,134.57,0,0,1,22.69,128c4.29-8.2,20.1-35.18,50-51.91L92.89,98.3a46,46,0,0,0,61.35,67.48l17.81,19.6A113.47,113.47,0,0,1,128,194Zm6.4-99.4a6,6,0,0,1,2.25-11.79,46.17,46.17,0,0,1,37.15,40.87,6,6,0,0,1-5.42,6.53l-.56,0a6,6,0,0,1-6-5.45A34.1,34.1,0,0,0,134.4,94.6Zm111.08,35.85c-.41.92-10.37,23-32.86,43.12a6,6,0,1,1-8-8.94A134.07,134.07,0,0,0,233.31,128a134.67,134.67,0,0,0-23.86-32.07C186.78,73.42,159.38,62,128,62a120.19,120.19,0,0,0-19.69,1.6,6,6,0,1,1-2-11.83A131.12,131.12,0,0,1,128,50c43.38,0,73,20.54,90.24,37.76,18.58,18.58,26.9,37,27.24,37.81A6,6,0,0,1,245.48,130.45Z\"/>"],"error":["<path d=\"M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.1,90.1,0,0,1,128,218Zm-6-82V80a6,6,0,0,1,12,0v56a6,6,0,0,1-12,0Zm16,36a10,10,0,1,1-10-10A10,10,0,0,1,138,172Z\"/>"],"open_in_new":["<path d=\"M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z\"/>"],"key":["<path d=\"M215.15,40.85A78,78,0,0,0,86.2,121.31l-56.1,56.1a13.94,13.94,0,0,0-4.1,9.9V216a14,14,0,0,0,14,14H72a6,6,0,0,0,6-6V206H96a6,6,0,0,0,6-6V182h18a6,6,0,0,0,4.24-1.76l10.45-10.44A77.59,77.59,0,0,0,160,174h.1A78,78,0,0,0,215.15,40.85ZM226,98.16c-1.12,35.16-30.67,63.8-65.88,63.84a65.93,65.93,0,0,1-24.51-4.67,6,6,0,0,0-6.64,1.26L117.51,170H96a6,6,0,0,0-6,6v18H72a6,6,0,0,0-6,6v18H40a2,2,0,0,1-2-2V187.31a2,2,0,0,1,.58-1.41l58.83-58.83a6,6,0,0,0,1.26-6.64A65.61,65.61,0,0,1,94,95.92C94,60.71,122.68,31.16,157.83,30A66,66,0,0,1,226,98.16ZM190,76a10,10,0,1,1-10-10A10,10,0,0,1,190,76Z\"/>"],"wifi_off":["<path d=\"M138,204a10,10,0,1,1-10-10A10,10,0,0,1,138,204ZM52.44,36A6,6,0,0,0,43.56,44L61.33,63.58a169.41,169.41,0,0,0-41.14,25,6,6,0,1,0,7.62,9.27A157.58,157.58,0,0,1,69.91,73l26.48,29.13a122.21,122.21,0,0,0-44.12,22.19,6,6,0,0,0,7.46,9.41,110,110,0,0,1,45.87-21.47l31.13,34.25A74.4,74.4,0,0,0,128,146a73.44,73.44,0,0,0-43.53,14.15A6,6,0,0,0,88,171a5.93,5.93,0,0,0,3.53-1.15,62,62,0,0,1,59.76-7.31L203.56,220a6,6,0,0,0,8.88-8.08ZM235.81,88.55A170.32,170.32,0,0,0,128,50a173.45,173.45,0,0,0-21.76,1.38,6,6,0,1,0,1.52,11.9A160.58,160.58,0,0,1,128,62,158.26,158.26,0,0,1,228.19,97.82a6,6,0,1,0,7.62-9.27Zm-39.54,45.2A6,6,0,0,0,200,135a6,6,0,0,0,3.73-10.7,122.26,122.26,0,0,0-50.9-23.81,6,6,0,1,0-2.43,11.75A110,110,0,0,1,196.27,133.75Z\"/>"],"movie_off":["<path d=\"M216,42H40A14,14,0,0,0,26,56V200a14,14,0,0,0,14,14H216a14,14,0,0,0,14-14V56A14,14,0,0,0,216,42ZM38,86h84v84H38Zm96-12V54h36V74Zm-12,0H86V54h36Zm0,108v20H86V182Zm12,0h36v20H134Zm0-12V86h84v84ZM218,56V74H182V54h34A2,2,0,0,1,218,56ZM40,54H74V74H38V56A2,2,0,0,1,40,54ZM38,200V182H74v20H40A2,2,0,0,1,38,200Zm178,2H182V182h36v18A2,2,0,0,1,216,202Z\"/>"],"tune":["<path d=\"M40,86H74.6a30,30,0,0,0,58.8,0H216a6,6,0,0,0,0-12H133.4a30,30,0,0,0-58.8,0H40a6,6,0,0,0,0,12Zm64-24A18,18,0,1,1,86,80,18,18,0,0,1,104,62ZM216,170H197.4a30,30,0,0,0-58.8,0H40a6,6,0,0,0,0,12h98.6a30,30,0,0,0,58.8,0H216a6,6,0,0,0,0-12Zm-48,24a18,18,0,1,1,18-18A18,18,0,0,1,168,194Z\"/>"],"replay":["<path d=\"M222,128a94,94,0,0,1-92.74,94H128a93.43,93.43,0,0,1-64.5-25.65,6,6,0,1,1,8.24-8.72A82,82,0,1,0,70,70l-.19.19L39.44,98H72a6,6,0,0,1,0,12H24a6,6,0,0,1-6-6V56a6,6,0,0,1,12,0V90.34L61.63,61.4A94,94,0,0,1,222,128Z\"/>"],"auto_awesome":["<path d=\"M196.89,130.94,144.4,111.6,125.06,59.11a13.92,13.92,0,0,0-26.12,0L79.6,111.6,27.11,130.94a13.92,13.92,0,0,0,0,26.12L79.6,176.4l19.34,52.49a13.92,13.92,0,0,0,26.12,0L144.4,176.4l52.49-19.34a13.92,13.92,0,0,0,0-26.12Zm-4.15,14.86-55.08,20.3a6,6,0,0,0-3.56,3.56l-20.3,55.08a1.92,1.92,0,0,1-3.6,0L89.9,169.66a6,6,0,0,0-3.56-3.56L31.26,145.8a1.92,1.92,0,0,1,0-3.6l55.08-20.3a6,6,0,0,0,3.56-3.56l20.3-55.08a1.92,1.92,0,0,1,3.6,0l20.3,55.08a6,6,0,0,0,3.56,3.56l55.08,20.3a1.92,1.92,0,0,1,0,3.6ZM146,40a6,6,0,0,1,6-6h18V16a6,6,0,0,1,12,0V34h18a6,6,0,0,1,0,12H182V64a6,6,0,0,1-12,0V46H152A6,6,0,0,1,146,40ZM246,88a6,6,0,0,1-6,6H230v10a6,6,0,0,1-12,0V94H208a6,6,0,0,1,0-12h10V72a6,6,0,0,1,12,0V82h10A6,6,0,0,1,246,88Z\"/>","<path d=\"M208,144a15.78,15.78,0,0,1-10.42,14.94L146,178l-19,51.62a15.92,15.92,0,0,1-29.88,0L78,178l-51.62-19a15.92,15.92,0,0,1,0-29.88L78,110l19-51.62a15.92,15.92,0,0,1,29.88,0L146,110l51.62,19A15.78,15.78,0,0,1,208,144ZM152,48h16V64a8,8,0,0,0,16,0V48h16a8,8,0,0,0,0-16H184V16a8,8,0,0,0-16,0V32H152a8,8,0,0,0,0,16Zm88,32h-8V72a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16h8v8a8,8,0,0,0,16,0V96h8a8,8,0,0,0,0-16Z\"/>"],"keyboard_double_arrow_down":["<path d=\"M212.24,131.76a6,6,0,0,1,0,8.48l-80,80a6,6,0,0,1-8.48,0l-80-80a6,6,0,0,1,8.48-8.48L128,207.51l75.76-75.75A6,6,0,0,1,212.24,131.76Zm-88.48,8.48a6,6,0,0,0,8.48,0l80-80a6,6,0,0,0-8.48-8.48L128,127.51,52.24,51.76a6,6,0,0,0-8.48,8.48Z\"/>"],"keyboard_arrow_up":["<path d=\"M212.24,164.24a6,6,0,0,1-8.48,0L128,88.49,52.24,164.24a6,6,0,0,1-8.48-8.48l80-80a6,6,0,0,1,8.48,0l80,80A6,6,0,0,1,212.24,164.24Z\"/>"],"calendar_month":["<path d=\"M208,34H182V24a6,6,0,0,0-12,0V34H86V24a6,6,0,0,0-12,0V34H48A14,14,0,0,0,34,48V208a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V48A14,14,0,0,0,208,34ZM48,46H74V56a6,6,0,0,0,12,0V46h84V56a6,6,0,0,0,12,0V46h26a2,2,0,0,1,2,2V82H46V48A2,2,0,0,1,48,46ZM208,210H48a2,2,0,0,1-2-2V94H210V208A2,2,0,0,1,208,210Z\"/>"],"schedule":["<path d=\"M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.1,90.1,0,0,1,128,218Zm62-90a6,6,0,0,1-6,6H128a6,6,0,0,1-6-6V72a6,6,0,0,1,12,0v50h50A6,6,0,0,1,190,128Z\"/>"],"translate":["<path d=\"M245.37,213.32l-56-112a6,6,0,0,0-10.74,0l-22.3,44.6A90,90,0,0,1,105,127.19,101.73,101.73,0,0,0,133.82,62H160a6,6,0,0,0,0-12H102V32a6,6,0,0,0-12,0V50H32a6,6,0,0,0,0,12h89.79A89.71,89.71,0,0,1,96,119.23,89.81,89.81,0,0,1,75.11,86,6,6,0,1,0,63.8,90,101.66,101.66,0,0,0,87,127.2,89.56,89.56,0,0,1,32,146a6,6,0,0,0,0,12,101.55,101.55,0,0,0,64-22.63,102.11,102.11,0,0,0,54.53,22.17l-27.89,55.78a6,6,0,0,0,10.74,5.36L147.71,190h72.58l14.34,28.68A6,6,0,0,0,240,222a5.87,5.87,0,0,0,2.68-.64A6,6,0,0,0,245.37,213.32ZM153.71,178,184,117.42,214.29,178Z\"/>"],"star":["<path d=\"M237.28,97.87A14.18,14.18,0,0,0,224.76,88l-60.25-4.87-23.22-56.2a14.37,14.37,0,0,0-26.58,0L91.49,83.11,31.24,88a14.18,14.18,0,0,0-12.52,9.89A14.43,14.43,0,0,0,23,113.32L69,152.93l-14,59.25a14.4,14.4,0,0,0,5.59,15,14.1,14.1,0,0,0,15.91.6L128,196.12l51.58,31.71a14.1,14.1,0,0,0,15.91-.6,14.4,14.4,0,0,0,5.59-15l-14-59.25L233,113.32A14.43,14.43,0,0,0,237.28,97.87Zm-12.14,6.37-48.69,42a6,6,0,0,0-1.92,5.92l14.88,62.79a2.35,2.35,0,0,1-.95,2.57,2.24,2.24,0,0,1-2.6.1L131.14,184a6,6,0,0,0-6.28,0L70.14,217.61a2.24,2.24,0,0,1-2.6-.1,2.35,2.35,0,0,1-1-2.57l14.88-62.79a6,6,0,0,0-1.92-5.92l-48.69-42a2.37,2.37,0,0,1-.73-2.65,2.28,2.28,0,0,1,2.07-1.65l63.92-5.16a6,6,0,0,0,5.06-3.69l24.63-59.6a2.35,2.35,0,0,1,4.38,0l24.63,59.6a6,6,0,0,0,5.06,3.69l63.92,5.16a2.28,2.28,0,0,1,2.07,1.65A2.37,2.37,0,0,1,225.14,104.24Z\"/>","<path d=\"M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z\"/>"],"check_circle":["<path d=\"M172.24,99.76a6,6,0,0,1,0,8.48l-56,56a6,6,0,0,1-8.48,0l-24-24a6,6,0,0,1,8.48-8.48L112,151.51l51.76-51.75A6,6,0,0,1,172.24,99.76ZM230,128A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128Z\"/>"],"info":["<path d=\"M142,176a6,6,0,0,1-6,6,14,14,0,0,1-14-14V128a2,2,0,0,0-2-2,6,6,0,0,1,0-12,14,14,0,0,1,14,14v40a2,2,0,0,0,2,2A6,6,0,0,1,142,176ZM124,94a10,10,0,1,0-10-10A10,10,0,0,0,124,94Zm106,34A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128Z\"/>"],"shopping_bag":["<path d=\"M216,42H40A14,14,0,0,0,26,56V200a14,14,0,0,0,14,14H216a14,14,0,0,0,14-14V56A14,14,0,0,0,216,42Zm2,158a2,2,0,0,1-2,2H40a2,2,0,0,1-2-2V56a2,2,0,0,1,2-2H216a2,2,0,0,1,2,2ZM174,88a46,46,0,0,1-92,0,6,6,0,0,1,12,0,34,34,0,0,0,68,0,6,6,0,0,1,12,0Z\"/>"],"play_arrow":["<path d=\"M231.36,116.19,87.28,28.06a14,14,0,0,0-14.18-.27A13.69,13.69,0,0,0,66,39.87V216.13a13.69,13.69,0,0,0,7.1,12.08,14,14,0,0,0,14.18-.27l144.08-88.13a13.82,13.82,0,0,0,0-23.62Zm-6.26,13.38L81,217.7a2,2,0,0,1-2.06,0,1.78,1.78,0,0,1-1-1.61V39.87a1.78,1.78,0,0,1,1-1.61A2.06,2.06,0,0,1,80,38a2,2,0,0,1,1,.31L225.1,126.43a1.82,1.82,0,0,1,0,3.14Z\"/>","<path d=\"M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z\"/>"],"travel_explore":["<path d=\"M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm90,102a89.55,89.55,0,0,1-7.46,35.86l-46.69-28.71a13.94,13.94,0,0,0-5.46-2l-22.82-3.07A14.06,14.06,0,0,0,121.06,138h-9.92a2,2,0,0,1-1.8-1.13l-3.8-7.86a13.94,13.94,0,0,0-9.66-7.59l-10.71-2.3L94.4,103a2,2,0,0,1,1.74-1h16.71a13.9,13.9,0,0,0,6.76-1.75l12.25-6.75a14.73,14.73,0,0,0,2.62-1.88l26.91-24.33a13.93,13.93,0,0,0,2.83-17.21L161,44.25A90.16,90.16,0,0,1,218,128ZM144.6,39.54l9.15,16.39a2,2,0,0,1-.41,2.46L126.43,82.72a1.84,1.84,0,0,1-.37.27l-12.25,6.76a2,2,0,0,1-1,.25H96.14A14,14,0,0,0,84,97L73.18,115.91a2,2,0,0,1-.19-.35L61.5,84.89a2,2,0,0,1,0-1.48L72.68,57.06A89.9,89.9,0,0,1,144.6,39.54ZM38,128A89.52,89.52,0,0,1,49.38,84.23a13.85,13.85,0,0,0,.89,4.87l11.49,30.67a13.94,13.94,0,0,0,10.16,8.78l21.44,4.6a2,2,0,0,1,1.38,1.09l3.8,7.86a14.07,14.07,0,0,0,12.6,7.9h4.56l-8.49,19a14,14,0,0,0,2.51,15.2l.1.11,19.68,20.26a2,2,0,0,1,.46,1.7L127.7,218A90.1,90.1,0,0,1,38,128Zm102.08,89.19,1.67-8.6a14.07,14.07,0,0,0-3.47-12.16l-.1-.11L118.5,176.06a2,2,0,0,1-.33-2.14l13.7-30.73A2,2,0,0,1,134,142l22.82,3.08a2,2,0,0,1,.78.27L205,174.55A90.18,90.18,0,0,1,140.08,217.19Z\"/>","<path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm88,104a87.62,87.62,0,0,1-6.4,32.94l-44.7-27.49a15.92,15.92,0,0,0-6.24-2.23l-22.82-3.08a16.11,16.11,0,0,0-16,7.86h-8.72l-3.8-7.86a15.91,15.91,0,0,0-11-8.67l-8-1.73L96.14,104h16.71a16.06,16.06,0,0,0,7.73-2l12.25-6.76a16.62,16.62,0,0,0,3-2.14l26.91-24.34A15.93,15.93,0,0,0,166,49.1l-.36-.65A88.11,88.11,0,0,1,216,128ZM40,128a87.53,87.53,0,0,1,8.54-37.8l11.34,30.27a16,16,0,0,0,11.62,10l21.43,4.61L96.74,143a16.09,16.09,0,0,0,14.4,9h1.48l-7.23,16.23a16,16,0,0,0,2.86,17.37l.14.14L128,205.94l-1.94,10A88.11,88.11,0,0,1,40,128Z\"/>"],"trending_down":["<path d=\"M238,128v64a6,6,0,0,1-6,6H168a6,6,0,0,1,0-12h49.52L136,104.49l-35.76,35.75a6,6,0,0,1-8.48,0l-72-72a6,6,0,0,1,8.48-8.48L96,127.51l35.76-35.75a6,6,0,0,1,8.48,0L226,177.52V128a6,6,0,0,1,12,0Z\"/>"],"label":["<path d=\"M241.91,137.42,142.59,38.1a13.94,13.94,0,0,0-9.9-4.1H40a6,6,0,0,0-6,6v92.69a13.94,13.94,0,0,0,4.1,9.9l99.32,99.32a14,14,0,0,0,19.8,0l84.69-84.69A14,14,0,0,0,241.91,137.42Zm-8.49,11.31-84.69,84.69a2,2,0,0,1-2.83,0L46.59,134.1a2,2,0,0,1-.59-1.41V46h86.69a2,2,0,0,1,1.41.59l99.32,99.31A2,2,0,0,1,233.42,148.73ZM94,84A10,10,0,1,1,84,74,10,10,0,0,1,94,84Z\"/>"],"insights":["<path d=\"M230,208a6,6,0,0,1-6,6H32a6,6,0,0,1-6-6V48a6,6,0,0,1,12,0V161.52l53.76-53.76a6,6,0,0,1,8.48,0L128,135.51,185.52,78H160a6,6,0,0,1,0-12h40a6,6,0,0,1,6,6v40a6,6,0,0,1-12,0V86.48l-61.76,61.76a6,6,0,0,1-8.48,0L96,120.49l-58,58V202H224A6,6,0,0,1,230,208Z\"/>"],"contrast":["<path d=\"M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm6,12.2a89.86,89.86,0,0,1,20,3.63V214.17a89.86,89.86,0,0,1-20,3.63Zm32,8.23a90.48,90.48,0,0,1,20,12.81V196.76a90.48,90.48,0,0,1-20,12.81ZM38,128a90.12,90.12,0,0,1,84-89.8V217.8A90.12,90.12,0,0,1,38,128Zm160,56.5V71.5a89.81,89.81,0,0,1,0,113Z\"/>"],"explore":["<path d=\"M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.1,90.1,0,0,1,128,218ZM173.32,74.63l-64,32a6,6,0,0,0-2.69,2.69l-32,64A6,6,0,0,0,80,182a6.06,6.06,0,0,0,2.68-.63l64-32a6,6,0,0,0,2.69-2.69l32-64a6,6,0,0,0-8.05-8.05Zm-33.79,64.9L93.42,162.58l23-46.11,46.11-23Z\"/>"],"search":["<path d=\"M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z\"/>"],"bookmarks":["<path d=\"M160,58H64A14,14,0,0,0,50,72V224a6,6,0,0,0,9.49,4.88L112,191.37l52.52,37.51A6,6,0,0,0,174,224V72A14,14,0,0,0,160,58Zm2,154.34-46.52-33.22a6,6,0,0,0-7,0L62,212.34V72a2,2,0,0,1,2-2h96a2,2,0,0,1,2,2ZM206,40V192a6,6,0,0,1-12,0V40a2,2,0,0,0-2-2H88a6,6,0,0,1,0-12H192A14,14,0,0,1,206,40Z\"/>"],"bookmark":["<path d=\"M184,34H72A14,14,0,0,0,58,48V224a6,6,0,0,0,9.18,5.09l60.81-38,60.83,38A6,6,0,0,0,198,224V48A14,14,0,0,0,184,34Zm2,179.17-54.83-34.26a6,6,0,0,0-6.36,0L70,213.17V48a2,2,0,0,1,2-2H184a2,2,0,0,1,2,2Z\"/>","<path d=\"M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Z\"/>"],"bookmark_add":["<path d=\"M184,34H72A14,14,0,0,0,58,48V224a6,6,0,0,0,9.18,5.09l60.81-38,60.83,38A6,6,0,0,0,198,224V48A14,14,0,0,0,184,34Zm2,179.17-54.83-34.26a6,6,0,0,0-6.36,0L70,213.17V48a2,2,0,0,1,2-2H184a2,2,0,0,1,2,2Z\"/>","<path d=\"M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Z\"/>"],"bookmark_added":["<path d=\"M184,34H72A14,14,0,0,0,58,48V224a6,6,0,0,0,9.18,5.09l60.81-38,60.83,38A6,6,0,0,0,198,224V48A14,14,0,0,0,184,34Zm2,179.17-54.83-34.26a6,6,0,0,0-6.36,0L70,213.17V48a2,2,0,0,1,2-2H184a2,2,0,0,1,2,2Z\"/>","<path d=\"M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Z\"/>"],"close":["<path d=\"M204.24,195.76a6,6,0,1,1-8.48,8.48L128,136.49,60.24,204.24a6,6,0,0,1-8.48-8.48L119.51,128,51.76,60.24a6,6,0,0,1,8.48-8.48L128,119.51l67.76-67.75a6,6,0,0,1,8.48,8.48L136.49,128Z\"/>"],"edit":["<path d=\"M225.9,74.78,181.21,30.09a14,14,0,0,0-19.8,0L38.1,153.41a13.94,13.94,0,0,0-4.1,9.9V208a14,14,0,0,0,14,14H92.69a13.94,13.94,0,0,0,9.9-4.1L225.9,94.58a14,14,0,0,0,0-19.8ZM94.1,209.41a2,2,0,0,1-1.41.59H48a2,2,0,0,1-2-2V163.31a2,2,0,0,1,.59-1.41L136,72.48,183.51,120ZM217.41,86.1,192,111.51,144.49,64,169.9,38.58a2,2,0,0,1,2.83,0l44.68,44.69a2,2,0,0,1,0,2.83Z\"/>"],"delete":["<path d=\"M216,50H174V40a22,22,0,0,0-22-22H104A22,22,0,0,0,82,40V50H40a6,6,0,0,0,0,12H50V208a14,14,0,0,0,14,14H192a14,14,0,0,0,14-14V62h10a6,6,0,0,0,0-12ZM94,40a10,10,0,0,1,10-10h48a10,10,0,0,1,10,10V50H94ZM194,208a2,2,0,0,1-2,2H64a2,2,0,0,1-2-2V62H194ZM110,104v64a6,6,0,0,1-12,0V104a6,6,0,0,1,12,0Zm48,0v64a6,6,0,0,1-12,0V104a6,6,0,0,1,12,0Z\"/>"],"search_off":["<path d=\"M150,112a6,6,0,0,1-6,6H80a6,6,0,0,1,0-12h64A6,6,0,0,1,150,112Zm78.24,116.24a6,6,0,0,1-8.48,0l-51.38-51.38a86.15,86.15,0,1,1,8.48-8.48l51.38,51.38A6,6,0,0,1,228.24,228.24ZM112,186a74,74,0,1,0-74-74A74.09,74.09,0,0,0,112,186Z\"/>"],"seen":["<path d=\"M245.48,125.57c-.34-.78-8.66-19.23-27.24-37.81C201,70.54,171.38,50,128,50S55,70.54,37.76,87.76c-18.58,18.58-26.9,37-27.24,37.81a6,6,0,0,0,0,4.88c.34.77,8.66,19.22,27.24,37.8C55,185.47,84.62,206,128,206s73-20.53,90.24-37.75c18.58-18.58,26.9-37,27.24-37.8A6,6,0,0,0,245.48,125.57ZM128,194c-31.38,0-58.78-11.42-81.45-33.93A134.77,134.77,0,0,1,22.69,128,134.56,134.56,0,0,1,46.55,95.94C69.22,73.42,96.62,62,128,62s58.78,11.42,81.45,33.94A134.56,134.56,0,0,1,233.31,128C226.94,140.21,195,194,128,194Zm0-112a46,46,0,1,0,46,46A46.06,46.06,0,0,0,128,82Zm0,80a34,34,0,1,1,34-34A34,34,0,0,1,128,162Z\"/>","<path d=\"M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z\"/>"],"calendar_check":["<path d=\"M208,34H182V24a6,6,0,0,0-12,0V34H86V24a6,6,0,0,0-12,0V34H48A14,14,0,0,0,34,48V208a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V48A14,14,0,0,0,208,34ZM48,46H74V56a6,6,0,0,0,12,0V46h84V56a6,6,0,0,0,12,0V46h26a2,2,0,0,1,2,2V82H46V48A2,2,0,0,1,48,46ZM208,210H48a2,2,0,0,1-2-2V94H210V208A2,2,0,0,1,208,210Zm-39.76-86.24a6,6,0,0,1,0,8.48l-48,48a6,6,0,0,1-8.48,0l-24-24a6,6,0,0,1,8.48-8.48L116,167.51l43.76-43.75A6,6,0,0,1,168.24,123.76Z\"/>"]};
+const icon=(n,fill)=>{const d=ICONS[n];if(!d){console.warn("[Clap] missing icon",n);return ""}return `<svg class="ms${fill?" fill":""}" viewBox="0 0 256 256" aria-hidden="true" focusable="false">${fill&&d[1]?d[1]:d[0]}</svg>`};
 const rt=m=>m?`${Math.floor(m/60)}h ${String(m%60).padStart(2,"0")}`:"";
 const nf=new Intl.NumberFormat("en-GB");
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -655,7 +954,7 @@ function regionName(code){try{return new Intl.DisplayNames(["en"],{type:"region"
 function posterHTML(f,size,mini){
   const alt=`Poster of ${f.t}`;
   if(!f.poster)return `<span class="pimg none${mini?" mini":""}" role="img" aria-label="${esc(alt)}"><span class="pfb">${esc(f.t)}</span></span>`;
-  return `<span class="pimg${mini?" mini":""}"><img src="${IMG}${size}${f.poster}" alt="${esc(alt)}" loading="lazy" decoding="async" draggable="false" onerror="this.parentNode.classList.add('broken')"><span class="pfb">${esc(f.t)}</span></span>`;
+  return `<span class="pimg${mini?" mini":""}"><img src="${img(size,f.poster)}" alt="${esc(alt)}" loading="lazy" decoding="async" draggable="false" onerror="this.parentNode.classList.add('broken')"><span class="pfb">${esc(f.t)}</span></span>`;
 }
 function searchUrl(name,title){for(const[re,u]of PLATFORM_SEARCH)if(re.test(name))return u.endsWith("=")?u+encodeURIComponent(title):u;return null}
 
@@ -694,6 +993,10 @@ async function loadCatalogMeta(){
   BW_KW=exact?exact.id:null;
   if(!S.plats){S.plats=new Set(PROVIDERS.filter(p=>DEFAULT_PLATS.some(re=>re.test(p.n))).map(p=>p.id))}
   else S.plats=new Set([...S.plats].filter(id=>PROV_BY_ID.has(id)));
+  const topIds=new Set(PROVIDERS.slice(0,TOP_PLATS).map(p=>p.id));
+  if(!S.shown)S.shown=new Set([...topIds,...S.added]);
+  S.plats.forEach(id=>S.shown.add(id));
+  S.shown=new Set([...S.shown].filter(id=>PROV_BY_ID.has(id)));
 }
 
 /* ================= Query building & scoring ================= */
@@ -758,17 +1061,16 @@ function toggleTheme(){theme=effTheme()==="dark"?"light":"dark";applyTheme();sav
 
 /* ================= Top bar & navigation ================= */
 function renderTopbar(){
-  const dark=effTheme()==="dark";
-  const themeBtn=`<button class="icon-btn" data-act="theme" aria-label="${dark?"Switch to light mode":"Switch to dark mode"}">${icon(dark?"light_mode":"dark_mode")}</button>`;
-  const brand=`<div class="brand"><span class="brand-mark">${icon("movie",1)}</span><b>CLAP</b></div>`;
+  const brand=`<div class="brand"><b>Clap</b></div>`;
   let h="";
-  if(view==="setup")h=brand+themeBtn;
-  else if(view==="settings")h=brand+`<button class="icon-btn" data-act="config" aria-label="Catalog settings">${icon("settings")}</button>`+themeBtn;
-  else if(view==="results")h=`<button class="icon-btn" data-act="edit" aria-label="Back to settings">${icon("arrow_back")}</button><h1>Tonight's picks</h1><button class="icon-btn" data-act="refresh" aria-label="Show 10 more">${icon("refresh")}</button>${themeBtn}`;
-  else if(view==="search")h=`<h1 style="padding-left:12px">Search</h1>${themeBtn}`;
+  if(view==="setup")h=setupEditing?`<button class="icon-btn" data-act="edit" aria-label="Back">${icon("arrow_back")}</button><h1>Settings</h1>`:brand;
+  else if(view==="settings")h=brand+`<button class="icon-btn" data-act="config" aria-label="Settings">${icon("settings")}</button>`;
+  else if(view==="results")h=`<button class="icon-btn" data-act="edit" aria-label="Back to settings">${icon("arrow_back")}</button><h1>Tonight's picks</h1><button class="icon-btn" data-act="refresh" aria-label="Show 10 more">${icon("refresh")}</button>`;
+  else if(view==="search")h=`<h1 style="padding-left:12px">Search</h1>`;
+  else if(openList==="__seen")h=`<button class="icon-btn" data-act="listsback" aria-label="Back to lists">${icon("arrow_back")}</button><h1>Seen</h1>`;
   else{const l=openList&&lists.find(x=>x.id===openList);
     h=l?`<button class="icon-btn" data-act="listsback" aria-label="Back to lists">${icon("arrow_back")}</button><h1>${esc(l.name)}</h1>${l.id==="fav"?"":`<button class="icon-btn" data-act="renamelist" aria-label="Rename list">${icon("edit")}</button><button class="icon-btn" data-act="deletelist" aria-label="Delete list">${icon("delete")}</button>`}`
-      :`<h1 style="padding-left:12px">Lists</h1>${themeBtn}`}
+      :`<h1 style="padding-left:12px">Lists</h1>`}
   $("#topbar").innerHTML=h;
 }
 $("#topbar").addEventListener("click",e=>{
@@ -802,7 +1104,16 @@ $("#nav-lists").onclick=()=>{if(view==="lists")openList=null;go("lists")};
 
 /* ================= Setup ================= */
 $("#f-region").innerHTML=REGIONS.map(r=>`<option value="${r}">${esc(regionName(r))}</option>`).join("");
+let setupEditing=false;
+const THEME_OPTS=[["system","contrast","System"],["light","light_mode","Light"],["dark","dark_mode","Dark"]];
+function renderThemeSeg(){const cur=theme||"system";$("#theme-seg").innerHTML=THEME_OPTS.map(([k,i,n])=>`<button type="button" data-themeopt="${k}" aria-pressed="${k===cur}">${icon(i)}${n}</button>`).join("")}
+$("#theme-seg").addEventListener("click",e=>{const b=e.target.closest("[data-themeopt]");if(!b)return;const k=b.dataset.themeopt;theme=k==="system"?null:k;applyTheme();save();renderThemeSeg();$(`[data-themeopt="${k}"]`).focus()});
 function openSetup(editing){
+  setupEditing=!!editing;
+  $("#appearance").hidden=!editing;$("#catalog-h").hidden=!editing;$("#setup-steps").hidden=!!editing;$("#su-eb").hidden=!!editing;$("#su-sub").hidden=!!editing;
+  $("#su-h").hidden=!!editing;$("#su-h").parentElement.hidden=!!editing;
+  $("#f-go").innerHTML=icon(editing?"check":"link")+(editing?"Save":"Connect");
+  renderThemeSeg();
   $("#f-key").value=CFG.key;$("#f-region").value=CFG.region;$("#f-lang").value=CFG.lang;
   $("#f-cancel").hidden=!editing;$("#f-forget").hidden=!editing||!CFG.key;
   $("#setup-err").hidden=true;go("setup");
@@ -819,16 +1130,16 @@ $("#setup-form").addEventListener("submit",async e=>{
   CFG={key,region:$("#f-region").value,lang:$("#f-lang").value};
   const btn=$("#f-go");btn.disabled=true;btn.innerHTML=icon("hourglass_top")+"Connecting…";$("#setup-err").hidden=true;
   try{
-    if(prev.region!==CFG.region)S.plats=null;
+    if(prev.region!==CFG.region){S.plats=null;S.added=new Set();S.shown=null}
     await loadCatalogMeta();
     FILMS.clear();ranked=[];trending=null;$("#search-res").innerHTML="";
-    save();buildSettings();go("settings");snack("Connected to TMDB");
+    const wasEditing=setupEditing;save();buildSettings();go("settings");snack(wasEditing?"Settings saved":"Connected to TMDB");
   }catch(err){CFG=prev;console.error("[Clap] connect failed",err);showSetupErr(err instanceof ApiError?errText(err):"Something went wrong after connecting: "+(err&&err.message||err))}
-  finally{btn.disabled=false;btn.innerHTML=icon("link")+"Connect"}
+  finally{btn.disabled=false;btn.innerHTML=icon(setupEditing?"check":"link")+(setupEditing?"Save":"Connect")}
 });
 function showSetupErr(t){$("#setup-err-t").textContent=t;$("#setup-err").hidden=false;$("#setup-err").scrollIntoView({block:"center",behavior:"smooth"})}
 if(window.self!==window.top||location.protocol==="about:"){
-  const w=document.createElement("div");w.className="alert";w.innerHTML='<span class="ms">open_in_new</span><span>You are viewing a preview. Download this file and open it directly in your browser, otherwise it can\'t reach TMDB.</span>';
+  const w=document.createElement("div");w.className="alert";w.id="frame-warn";w.innerHTML='<svg class="ms" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z"/></svg><span>You are viewing a preview. Download this file and open it directly in your browser, otherwise it can\'t reach TMDB.</span>';
   $("#setup-form").insertBefore(w,$("#setup-form").children[1]);
 }
 
@@ -838,15 +1149,17 @@ function buildSettings(){
   $("#moods").innerHTML=MOODS.map(m=>`<button class="mood" data-mood="${m.k}" aria-pressed="false">${icon(m.i)}<span>${m.n}</span></button>`).join("");
   $("#genres").innerHTML=GENRES.map(([id,n])=>`<button class="chip plain" data-genre="${id}" aria-pressed="false">${n}</button>`).join("");
   $("#era-presets").innerHTML=ERA_PRESETS.map((p,i)=>`<button class="chip plain" data-era="${i}" aria-pressed="false">${p.n}</button>`).join("");
-  $("#plat-hint").textContent=`Select your subscriptions in ${regionName(CFG.region)}.`;
+  $("#plat-hint").textContent=`Your services in ${regionName(CFG.region)}. Tap to select, × to remove, or add the ones you subscribe to.`;
   renderPlats();
 }
 function renderPlats(){
   const sel=S.plats||new Set();
-  let list=PROVIDERS.slice(0,10);
-  if(showAllPlats)list=PROVIDERS;else PROVIDERS.forEach(p=>{if(sel.has(p.id)&&!list.includes(p))list.push(p)});
-  $("#plats").innerHTML=list.map(p=>`<button class="chip has-logo" data-plat="${p.id}" aria-pressed="${sel.has(p.id)}">${p.logo?`<img src="${IMG}w92${p.logo}" alt="">`:icon("live_tv")}<span class="n">${esc(p.n)}</span>${sel.has(p.id)?icon("check"):""}</button>`).join("")
-    +(PROVIDERS.length>10?`<button class="chip ghost" data-act="allplats">${icon(showAllPlats?"expand_less":"add")}${showAllPlats?"Fewer":"All "+PROVIDERS.length+" services"}</button>`:"");
+  const chip=p=>`<button class="chip has-logo" data-plat="${p.id}" aria-pressed="${sel.has(p.id)}">${p.logo?`<img src="${img("w92",p.logo)}" alt="">`:icon("live_tv")}<span class="n">${esc(p.n)}</span>${sel.has(p.id)?icon("check"):""}</button>`;
+  const shown=PROVIDERS.filter(p=>S.shown&&S.shown.has(p.id));
+  const missingTop=PROVIDERS.slice(0,TOP_PLATS).some(p=>!S.shown||!S.shown.has(p.id));
+  $("#plats").innerHTML=(shown.length?"":`<p class="plats-empty">No services yet. Add the ones you subscribe to.</p>`)+shown.map(p=>`<span class="chip-pair">${chip(p).replace('class="chip has-logo"','class="chip has-logo extra"')}<button class="chip-x" data-unplat="${p.id}" aria-label="Remove ${esc(p.n)} from your services">${icon("close")}</button></span>`).join("")
+    +`<button class="chip ghost" data-act="addplats" id="add-plat">${icon("add")}Add a service</button>`
+    +(missingTop?`<button class="plats-restore" data-act="restoreplats">${icon("restart_alt")}Restore the ${TOP_PLATS} suggestions</button>`:"");
 }
 function syncSettings(){
   document.querySelectorAll("[data-mood]").forEach(b=>b.setAttribute("aria-pressed",S.mood.has(b.dataset.mood)));
@@ -862,7 +1175,7 @@ function syncSettings(){
   const fm=$("#fame");fm.value=S.fame;fm.style.setProperty("--fill",((S.fame-1)/3*100)+"%");
   $("#fame-val").textContent=FAME[S.fame-1].t;$("#fame-note").textContent=FAME[S.fame-1].d;
   document.querySelectorAll("#fame-ticks span").forEach((s,i)=>s.classList.toggle("on",i===S.fame-1));
-  $("#only").setAttribute("aria-checked",S.only);
+  $("#only").setAttribute("aria-checked",S.only);$("#hideseen").setAttribute("aria-checked",S.hideSeen);
   const[a,b]=S.era;$("#era-a").value=a;$("#era-b").value=b;
   $("#dual").style.setProperty("--a",(a-1920)/106*100+"%");$("#dual").style.setProperty("--b",(b-1920)/106*100+"%");
   $("#era-a-t").textContent=a;$("#era-b-t").textContent=b===2026?"Today":b;
@@ -891,16 +1204,23 @@ $("#v-settings").addEventListener("click",e=>{
   if(d.mood)toggleSet(S.mood,d.mood);
   else if(d.genre)toggleSet(S.genres,+d.genre);
   else if(d.plat){if(!S.plats)S.plats=new Set();toggleSet(S.plats,+d.plat)}
-  else if(d.act==="allplats"){showAllPlats=!showAllPlats;renderPlats();return}
+  else if(d.act==="addplats"){openPlatPicker();return}
+  else if(d.unplat){const id=+d.unplat,p=PROV_BY_ID.get(id),was=S.plats&&S.plats.has(id);
+    S.shown.delete(id);S.added.delete(id);if(S.plats)S.plats.delete(id);syncSettings();
+    const add=$("#add-plat");if(add)add.focus({preventScroll:true});
+    snack(`${p?p.n:"Service"} removed`,()=>{S.shown.add(id);if(was)S.plats.add(id);syncSettings()});return}
+  else if(d.act==="restoreplats"){const before=new Set(S.shown);PROVIDERS.slice(0,TOP_PLATS).forEach(p=>S.shown.add(p.id));syncSettings();
+    snack("Suggestions restored",()=>{S.shown=before;syncSettings()});return}
   else if(d.who)S.who=d.who;
   else if(d.image)S.image=d.image;
   else if(d.len)S.len=d.len;
   else if(d.lang)S.lang=d.lang;
   else if(d.era!==undefined){const p=ERA_PRESETS[+d.era];S.era=[p.a,p.b]}
   else if(t.id==="only")S.only=!S.only;
+  else if(t.id==="hideseen")S.hideSeen=!S.hideSeen;
   else if(t.id==="acc"){const open=t.getAttribute("aria-expanded")!=="true";t.setAttribute("aria-expanded",open);$("#acc-panel").hidden=!open;return}
   else if(t.id==="reset"){const plats=S.plats;S=fromPlain(Object.assign({},DEFAULTS,{mood:[]}));S.plats=plats;snack("Settings cleared. Your platforms are kept.")}
-  else if(t.id==="shuffle")shuffle();
+  else if(t.id==="shuffle"){surprise();return}
   else if(t.id==="go"){search();return}
   else return;
   syncSettings();
@@ -914,12 +1234,47 @@ function eraInput(which){
 $("#era-a").addEventListener("input",()=>eraInput("a"));
 $("#era-b").addEventListener("input",()=>eraInput("b"));
 function pick(arr,n){const c=arr.slice(),out=[];while(out.length<n&&c.length)out.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);return out}
-function shuffle(){
-  S.mood=new Set(pick(MOODS.map(m=>m.k),1+Math.round(Math.random())));
-  S.genres=new Set();
-  S.fame=1+Math.floor(Math.random()*3);
-  const p=ERA_PRESETS[Math.floor(Math.random()*ERA_PRESETS.length)];S.era=[p.a,p.b];
-  snack("New settings drawn. Tweak them or search.");
+/* Surprise me: draw random settings, check with TMDB that they give enough films, widen if needed, then search. */
+const SURPRISE_GOOD=10,SURPRISE_MIN=5;
+function drawCandidate(){
+  const c=cloneState(S);
+  c.mood=new Set(pick(MOODS.map(m=>m.k),1+Math.round(Math.random())));
+  c.genres=new Set();
+  c.fame=1+Math.floor(Math.random()*3);
+  const p=ERA_PRESETS[Math.floor(Math.random()*ERA_PRESETS.length)];c.era=[p.a,p.b];
+  return c;
+}
+async function countFor(c){const keep=S;S=c;let params;try{params=buildParams(1)}finally{S=keep}const r=await tmdb("/discover/movie",params);return r.total_results||0}
+let surprising=false;
+async function surprise(){
+  if(surprising)return;surprising=true;
+  const btn=$("#shuffle"),label=btn.innerHTML;btn.disabled=true;btn.innerHTML=icon("hourglass_top")+"Finding films…";
+  try{
+    let best=null,bestN=-1;
+    for(let i=0;i<6&&bestN<SURPRISE_GOOD;i++){const c=drawCandidate(),n=await countFor(c);if(n>bestN){best=c;bestN=n}}
+    const widened=[];
+    const steps=[["the period",c=>{c.era=[1920,2026]}],["how well known",c=>{c.fame=1}],["the length",c=>{c.len="any"}],["the language",c=>{c.lang="any"}],["the image",c=>{c.image="any"}],["your platforms",c=>{c.only=false}],["the mood",c=>{c.mood=new Set([pick(MOODS.map(m=>m.k),1)[0]])}]];
+    for(const [name,fn] of steps){
+      if(bestN>=SURPRISE_MIN)break;
+      const c=cloneState(best),before=JSON.stringify(plainOf(c));fn(c);if(JSON.stringify(plainOf(c))===before)continue;
+      const n=await countFor(c);if(n>bestN){best=c;bestN=n;widened.push(name)}
+    }
+    const before=plainOf(S);S=best;syncSettings();
+    const after=plainOf(S),diff=k=>JSON.stringify(before[k])!==JSON.stringify(after[k]);
+    const marks=[];
+    if(diff("mood"))marks.push("#moods");
+    if(diff("genres"))marks.push("#genres");
+    if(diff("fame"))marks.push("#fame");
+    if(diff("only"))marks.push("#plats");
+    if(diff("era")||diff("len")||diff("lang")||diff("image"))marks.push("#acc");
+    const vs=$("#v-settings");vs.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    document.querySelectorAll(".set.drawn").forEach(x=>x.classList.remove("drawn"));
+    void vs.offsetWidth;
+    marks.forEach(sel=>{const sec=$(sel)&&$(sel).closest(".set");if(sec)sec.classList.add("drawn")});
+    setTimeout(()=>document.querySelectorAll(".set.drawn").forEach(x=>x.classList.remove("drawn")),2600);
+    snack((widened.length?`Surprise! Widened ${widened.join(", ")}`:"Surprise! New settings drawn")+` · ${nf.format(bestN)} films`,()=>search(),"Show films",7000);
+  }catch(e){snack(errText(e))}
+  finally{surprising=false;btn.disabled=false;btn.innerHTML=label}
 }
 
 /* ================= Search & results ================= */
@@ -932,6 +1287,7 @@ async function fetchMore(pages){
   res.forEach(r=>(r.results||[]).forEach(m=>{
     if(pool.seen.has(m.id))return;pool.seen.add(m.id);
     if(S.lang==="world"&&(m.original_language==="fr"||m.original_language==="en"))return;
+    if(S.hideSeen&&seen[m.id])return;
     batch.push(scoreFilm(norm(m)));
   }));
   batch.sort((x,y)=>y.pct-x.pct||y.f.vc-x.f.vc);
@@ -940,7 +1296,7 @@ async function fetchMore(pages){
 }
 async function enrich(f){
   if(f.enriched)return f;
-  const d=await tmdb("/movie/"+f.id,{language:CFG.lang,append_to_response:"credits,watch/providers"});
+  const d=await tmdb("/movie/"+f.id,{language:CFG.lang,append_to_response:"credits,watch/providers,external_ids"});
   const crew=(d.credits&&d.credits.crew)||[];
   Object.assign(f,{
     t:d.title||f.t,ot:d.original_title,y:(d.release_date||"").slice(0,4)||f.y,
@@ -955,6 +1311,7 @@ async function enrich(f){
   if(w){const flat=[],seen=new Set();[...mapP(w.flatrate),...mapP(w.free),...mapP(w.ads)].forEach(p=>{if(!seen.has(p.id)){seen.add(p.id);flat.push(p)}});
     f.prov={link:w.link,flat,rent:mapP(w.rent),buy:mapP(w.buy)}}
   else f.prov={link:null,flat:[],rent:[],buy:[]};
+  f.wd=(d.external_ids&&d.external_ids.wikidata_id)||null;
   f.enriched=true;FILMS.set(f.id,f);
   if(meta[f.id]){remember(f.id);save()}
   return f;
@@ -989,20 +1346,97 @@ async function renderRound(seq){
   const rescored=slice.map(r=>scoreFilm(r.f)).sort((x,y)=>y.pct-x.pct);
   ranked.splice(start,rescored.length,...rescored);
   const first=round===1,more=ranked.length>start+10||pool.page<pool.total;
+  const hero=first?rescored[0]:null,rest=first?rescored.slice(1):rescored;
   v.innerHTML=`
     <div class="sum-chips g" aria-label="Your settings">${summaryChips()}</div>
-    <div class="round-head g">
-      <div>${first?"":`<span class="round-pill">${icon("trending_down")}Round ${round} · looser matches</span>`}
-        <h2>${first?"Top "+rescored.length+" for tonight":"Next "+rescored.length+" picks"}</h2>
-        <p>Picks ${start+1}–${start+rescored.length} from ${nf.format(pool.results)} matching films</p></div>
-      <span class="pos" id="pos">1 / ${rescored.length}</span>
-    </div>
-    <div class="carousel" id="car" role="list">${rescored.map((r,i)=>cardHTML(r,i)).join("")}</div>
-    <div class="dots" id="dots" aria-hidden="true">${rescored.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div>
+    ${first?`<p class="ranked-from g">Ranked from ${nf.format(pool.results)} matching films</p>`
+      :`<div class="round-head g"><div><span class="round-pill">${icon("trending_down")}Round ${round} · looser matches</span>
+        <h2>Next ${rescored.length} picks</h2><p>Picks ${start+1}–${start+rescored.length} from ${nf.format(pool.results)} matching films</p></div></div>`}
+    ${hero?pickHTML(hero):""}
+    <section class="runners g" aria-labelledby="ru-t">
+      <h3 class="sec-title" id="ru-t">${first?"Also good tonight":"Ranked for you"}</h3>
+      <ol class="rlist" start="${first?start+2:start+1}">${rest.map((r,i)=>rowRankHTML(r,(first?start+2:start+1)+i)).join("")}</ol>
+    </section>
     <div class="refresh-row g">
       ${more?`<button class="btn tonal" data-act="refresh">${icon("refresh")}Show 10 more</button><p>The next round goes further down the ranking, so expect weaker matches.</p>`:`<p>That's the last round for these settings.</p><button class="btn outlined" data-act="restart">${icon("replay")}Back to best matches</button>`}
     </div>`;
-  bindCarousel();
+  if(hero)resolveDeepLinks(hero.f).then(()=>{const a=document.querySelector(".pick-actions a.btn.filled");if(a&&ranked[0]&&ranked[0].f===hero.f)a.href=watchTarget(hero.f).url});
+}
+/* ----- Deep links: open the film's own page on each platform (via Wikidata identifiers) ----- */
+const DEEP=[[/netflix/i,/netflix[.]com/i],[/prime video|amazon/i,/primevideo[.]com|amazon[.]/i],[/disney/i,/disneyplus[.]com/i],[/apple tv/i,/tv[.]apple[.]com/i],[/mubi/i,/mubi[.]com/i],[/^max$|hbo/i,/(^|[/.])max[.]com|hbomax[.]com/i],[/canal\+/i,/canalplus[.]com|mycanal/i],[/paramount/i,/paramountplus[.]com/i],[/arte/i,/arte[.]tv/i]];
+const DEEP_RE="netflix[.]com|primevideo[.]com|amazon[.]|disneyplus[.]com|tv[.]apple[.]com|mubi[.]com|max[.]com|hbomax[.]com|canalplus[.]com|mycanal|paramountplus[.]com|arte[.]tv";
+function resolveDeepLinks(f){
+  if(f.deep)return Promise.resolve(f.deep);
+  if(f.deepP)return f.deepP;
+  f.deepP=(async()=>{
+    const out={};
+    if(f.wd&&/^Q\d+$/.test(f.wd)){
+      const q=`SELECT ?fmt ?v WHERE { ?prop wikibase:propertyType wikibase:ExternalId ; wdt:P1630 ?fmt ; wikibase:directClaim ?pd . FILTER(REGEX(STR(?fmt), "${DEEP_RE}", "i")) wd:${f.wd} ?pd ?v . }`;
+      const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),8000);
+      try{
+        const r=await fetch("https://query.wikidata.org/sparql?format=json&query="+encodeURIComponent(q),{signal:ctl.signal,headers:{accept:"application/sparql-results+json"}});
+        if(r.ok){const j=await r.json();
+          for(const b of (j.results&&j.results.bindings)||[]){
+            const fmt=b.fmt&&b.fmt.value,v=b.v&&b.v.value;if(!fmt||!v||!fmt.includes("$1"))continue;
+            for(const [nameRe,hostRe] of DEEP){if(hostRe.test(fmt)&&!out[nameRe.source])out[nameRe.source]=fmt.replace("$1",encodeURI(v))}
+          }}
+      }catch(e){}finally{clearTimeout(t)}
+    }
+    f.deep=out;return out;
+  })();
+  return f.deepP;
+}
+function deepFor(f,name){if(!f.deep)return null;for(const [nameRe] of DEEP){if(nameRe.test(name))return f.deep[nameRe.source]||null}return null}
+
+/* ----- Tonight's pick (hero) and ranked runners-up ----- */
+function watchTarget(f){
+  const sel=S.plats||new Set(),flat=((f.prov&&f.prov.flat)||[]).slice().sort((a,b)=>(sel.has(b.id)?1:0)-(sel.has(a.id)?1:0));
+  const tmdbWatch=(f.prov&&f.prov.link)||`https://www.themoviedb.org/movie/${f.id}/watch?locale=${CFG.region}`;
+  const best=flat[0];return best?{url:deepFor(f,best.n)||tmdbWatch,label:"Watch on "+best.n.replace(/^Amazon /,"").replace(/ Plus$/,"+"),play:true}:{url:tmdbWatch,label:"See where to watch",play:false};
+}
+function platLogos(f,max){
+  const flat=(f.prov&&f.prov.flat)||[],mine=flat.filter(p=>S.plats&&S.plats.has(p.id)),show=(mine.length?mine:flat).slice(0,max);
+  if(!show.length)return `<span class="noplat">${f.prov&&(f.prov.rent.length||f.prov.buy.length)?"To rent or buy":"Not streaming in "+esc(regionName(CFG.region))}</span>`;
+  return show.map(p=>p.logo?`<img src="${img("w92",p.logo)}" alt="${esc(p.n)}" title="${esc(p.n)}">`:"").join("")+`<span>${mine.length?"On your platforms":"Streaming"}</span>`;
+}
+function pickHTML(r){
+  const f=r.f,fav=isFav(f.id),saved=inAnyCustom(f.id),w=watchTarget(f);
+  const why=r.why.filter(x=>!/^Rated /.test(x)).slice(0,3);
+  return `<article class="pick g" aria-labelledby="pick-t">
+    <p class="pick-eyebrow">${icon("auto_awesome",1)}Tonight's pick<span class="pct">${r.pct}% match</span></p>
+    <div class="pick-main">
+      <button class="pick-poster" data-open="${f.id}" aria-label="Details for ${esc(f.t)}">${posterHTML(f,"w500")}</button>
+      <div class="pick-info">
+        <h2 id="pick-t">${esc(f.t)}</h2>
+        <p class="pick-meta"><b>${esc(f.y||"")}</b>${f.d?" · "+esc(f.d):""}${f.r?" · "+rt(f.r):""}</p>
+        ${f.vc?`<p class="pick-rate">${icon("star",1)}${f.va.toFixed(1)} · ${nf.format(f.vc)} votes</p>`:""}
+        <div class="pick-plats">${platLogos(f,3)}</div>
+      </div>
+    </div>
+    ${why.length?`<ul class="pick-why">${why.map(x=>`<li>${icon("check_circle")}<span>${esc(x)}</span></li>`).join("")}</ul>`:""}
+    <p class="pick-desc">${esc(f.s||"No synopsis available in this language yet.")}</p>
+    <button class="pick-more" data-open="${f.id}">Read more about this film${icon("arrow_back")}</button>
+    <div class="pick-actions">
+      <a class="btn filled" href="${esc(w.url)}" target="_blank" rel="noopener">${icon(w.play?"play_arrow":"travel_explore",1)}<span>${esc(w.label)}</span></a>
+      <button class="icon-btn" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button>
+      <button class="icon-btn" data-seen="${f.id}" aria-pressed="${!!seen[f.id]}" aria-label="${seen[f.id]?"Seen. Change the date":"Mark as seen"}">${icon("seen",!!seen[f.id])}</button>
+      <button class="icon-btn" data-fav="${f.id}" aria-pressed="${fav}" aria-label="${fav?"Remove from favorites":"Add to favorites"}">${icon("favorite",fav)}</button>
+    </div>
+  </article>`;
+}
+function rowRankHTML(r,rank){
+  const f=r.f,saved=inAnyCustom(f.id),why=r.why.find(x=>!/^Rated /.test(x))||r.why[0]||"";
+  return `<li class="ritem">
+    <button class="ritem-open" data-open="${f.id}">
+      <span class="rank" aria-hidden="true">${rank}</span>
+      <span class="thumb">${posterHTML(f,"w185",true)}</span>
+      <span class="rtxt"><b>${esc(f.t)}</b>
+        <small><em>${r.pct}%</em> · ${esc(f.y||"")}${f.d?" · "+esc(f.d):""}</small>${seenTag(f.id)}
+        ${why?`<small class="rwhy">${esc(why)}</small>`:""}
+        <span class="rplat">${platLogos(f,3)}</span></span>
+    </button>
+    <button class="icon-btn" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button>
+  </li>`;
 }
 function summaryChips(){
   const c=[];
@@ -1022,7 +1456,7 @@ function cardHTML(r,i){
   const flat=(f.prov&&f.prov.flat)||[];
   const mine=flat.filter(p=>S.plats&&S.plats.has(p.id));
   const show=(mine.length?mine:flat).slice(0,4);
-  const platLine=show.length?show.map(p=>p.logo?`<img src="${IMG}w92${p.logo}" alt="${esc(p.n)}" title="${esc(p.n)}">`:"").join("")+`<small>${mine.length?"On your platforms":"Streaming"}</small>`:`<small>${f.prov&&(f.prov.rent.length||f.prov.buy.length)?"To rent or buy":"Not streaming in "+esc(regionName(CFG.region))}</small>`;
+  const platLine=show.length?show.map(p=>p.logo?`<img src="${img("w92",p.logo)}" alt="${esc(p.n)}" title="${esc(p.n)}">`:"").join("")+`<small>${mine.length?"On your platforms":"Streaming"}</small>`:`<small>${f.prov&&(f.prov.rent.length||f.prov.buy.length)?"To rent or buy":"Not streaming in "+esc(regionName(CFG.region))}</small>`;
   return `<article class="card${i?"":" active"}" role="listitem" data-id="${f.id}" aria-label="${esc(f.t)}">
     <div class="card-poster" data-swipe="${f.id}">${posterHTML(f,"w500")}
       <span class="match" aria-label="${r.pct}% match">${icon("auto_awesome",1)}${r.pct}%</span>
@@ -1052,6 +1486,7 @@ $("#v-results").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;const d=b.dataset;
   if(d.fav){toggleFav(+d.fav);return}
   if(d.addlist){openSheet(+d.addlist);return}
+  if(d.seen){openSeenDialog(+d.seen);return}
   if(d.more){const p=$("#desc-"+d.more);const open=!p.classList.contains("open");p.classList.toggle("open",open);b.setAttribute("aria-expanded",open);b.querySelector("span").textContent=open?"Show less":"Read more";return}
   if(d.open){openDetail(+d.open);return}
   if(d.act==="edit")go("settings");
@@ -1075,7 +1510,9 @@ function swipe(el,dir,cb,moveEl){
 
 /* ================= Detail ================= */
 let detailId=null;
-async function openDetail(id){
+let detailFrom=null;
+async function openDetail(id,from){
+  detailFrom=from||null;
   detailId=id;
   let f=FILMS.get(id);
   const d=$("#detail");$("#d-scroll").scrollTop=0;
@@ -1094,7 +1531,7 @@ function renderDetail(f){
   const sel=S.plats||new Set();
   const flat=f.prov.flat.slice().sort((a,b)=>(sel.has(b.id)?1:0)-(sel.has(a.id)?1:0));
   const tmdbWatch=f.prov.link||`https://www.themoviedb.org/movie/${f.id}/watch?locale=${CFG.region}`;
-  const row=(p,sub,mine)=>{const u=searchUrl(p.n,f.t)||tmdbWatch;return `<div class="wrow${mine?" mine":""}"><span class="wav">${p.logo?`<img src="${IMG}w92${p.logo}" alt="">`:icon("live_tv")}</span><div class="wtxt"><b>${esc(p.n)}</b><small>${sub}</small></div><a class="btn ${mine?"filled":"outlined"}" href="${esc(u)}" target="_blank" rel="noopener">Open${icon("open_in_new")}</a></div>`};
+  const row=(p,sub,mine)=>{const dl=deepFor(f,p.n),u=dl||tmdbWatch,how=f.deep?(dl?"Opens the film":"Film page via JustWatch"):"Finding the film page…";return `<div class="wrow${mine?" mine":""}"><span class="wav">${p.logo?`<img src="${img("w92",p.logo)}" alt="">`:icon("live_tv")}</span><div class="wtxt"><b>${esc(p.n)}</b><small>${sub} · ${how}</small></div><a class="btn ${mine?"filled":"outlined"}" href="${esc(u)}" target="_blank" rel="noopener">Open${icon("open_in_new")}</a></div>`};
   let rows=flat.map(p=>row(p,sel.has(p.id)?"In your subscriptions":"Subscription",sel.has(p.id))).join("");
   const rb=[];const seen=new Set();[...f.prov.rent,...f.prov.buy].forEach(p=>{if(!seen.has(p.id)){seen.add(p.id);rb.push(p.n)}});
   if(rb.length)rows+=`<div class="wrow"><span class="wav">${icon("shopping_bag")}</span><div class="wtxt"><b>Rent or buy</b><small>${esc(rb.slice(0,4).join(", "))}${rb.length>4?" and more":""}</small></div><a class="btn outlined" href="${esc(tmdbWatch)}" target="_blank" rel="noopener">Prices${icon("open_in_new")}</a></div>`;
@@ -1102,7 +1539,7 @@ function renderDetail(f){
   const why=r?(r.why.length?r.why:["Closest match left for these settings"]):[];
   const moods=MOODS.filter(m=>m.g.some(g=>f.g.includes(g))).slice(0,3);
   $("#d-scroll").innerHTML=`
-    <div class="d-backdrop">${f.backdrop?`<img src="${IMG}w780${f.backdrop}" alt="">`:""}</div>
+    <div class="d-backdrop">${f.backdrop?`<img src="${img("w780",f.backdrop)}" alt="">`:""}</div>
     <div class="g">
       <div class="d-head">
         <div class="d-poster">${posterHTML(f,"w342")}</div>
@@ -1120,27 +1557,32 @@ function renderDetail(f){
         ${f.ol?`<span>${icon("translate")}${esc(langName(f.ol))}</span>`:""}
         ${f.vc?`<span>${icon("star",1)}${f.va.toFixed(1)} · ${nf.format(f.vc)} votes</span>`:""}
       </div>
+      <div id="d-seenline">${seenLine(f.id)}</div>
     </div>
     <div class="d-sec g"><div class="chips">${f.g.filter(g=>GNAME[g]).map(g=>`<span class="assist">${esc(GNAME[g])}</span>`).join("")}${moods.map(m=>`<span class="assist">${icon(m.i)}${m.n}</span>`).join("")}</div></div>
     <div class="d-sec g"><h3>Story</h3><p>${esc(f.s||"No synopsis available in this language yet.")}</p></div>
     ${why.length?`<div class="d-sec g"><h3>Why it fits tonight</h3><ul class="why">${why.map(w=>`<li>${icon("check_circle")}<span>${esc(w)}</span></li>`).join("")}</ul></div>`:""}
     <div class="d-sec g" style="padding-bottom:24px"><h3>Where to watch in ${esc(regionName(CFG.region))}</h3><div class="watch">${rows}</div>
-      <p class="note">${icon("info")}<span>Availability from JustWatch via TMDB. “Open” goes to the platform's search; on a phone it opens the app if installed.</span></p></div>`;
+      <p class="note">${icon("info")}<span>Availability from JustWatch via TMDB. “Open” goes straight to the film on the platform when its page is known, otherwise to the film's JustWatch listing. On a phone, the platform's app opens if it's installed.</span></p></div>`;
   const best=flat[0];
-  const mainUrl=best?(searchUrl(best.n,f.t)||tmdbWatch):tmdbWatch;
-  $("#d-actions").innerHTML=`<button class="btn tonal" data-addlist="${f.id}" style="flex:none">${icon("bookmark_add")}Save</button><a class="btn filled" href="${esc(mainUrl)}" target="_blank" rel="noopener">${icon(best?"play_arrow":"travel_explore",1)}<span>${best?"Watch on "+esc(best.n):"See all watch options"}</span></a>`;
+  const mainUrl=best?(deepFor(f,best.n)||tmdbWatch):tmdbWatch;
+  const svd=inAnyCustom(f.id);
+  $("#d-actions").innerHTML=detailFrom==="search"?`<button class="btn tonal" data-addlist="${f.id}">${icon(svd?"bookmark_added":"bookmark_add",svd)}${svd?"Saved · change lists":"Add to a list"}</button>`:`<button class="btn tonal" data-addlist="${f.id}" style="flex:none">${icon("bookmark_add")}Save</button><a class="btn filled" href="${esc(mainUrl)}" target="_blank" rel="noopener">${icon(best?"play_arrow":"travel_explore",1)}<span>${best?"Watch on "+esc(best.n.replace(/^Amazon /,"").replace(/ Plus$/,"+")):"See all watch options"}</span></a>`;
   syncDetailFav();
+  if(!f.deep)resolveDeepLinks(f).then(()=>{if(detailId===f.id&&$("#detail").classList.contains("open")){const sc=$("#d-scroll").scrollTop;renderDetail(f);$("#d-scroll").scrollTop=sc}});
 }
 function closeDetail(){const d=$("#detail");d.classList.remove("open");d.setAttribute("aria-hidden","true");
   const back=document.querySelector(`[data-open="${detailId}"]`);if(back)back.focus({preventScroll:true});detailId=null}
-function syncDetailFav(){if(detailId==null)return;const s=inAnyCustom(detailId),L=$("#d-list");L.innerHTML=icon(s?"bookmark_added":"bookmark_add",s);L.setAttribute("aria-label",s?"Saved in a list. Change lists":"Save to a list");const b=$("#d-fav"),on=isFav(detailId);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites");b.innerHTML=icon("favorite",on);b.style.color=on?"#FFB4AB":""}
+function syncDetailFav(){if(detailId==null)return;if(detailFrom==="search"){const B=$("#d-actions [data-addlist]"),sv2=inAnyCustom(detailId);if(B)B.innerHTML=icon(sv2?"bookmark_added":"bookmark_add",sv2)+(sv2?"Saved · change lists":"Add to a list")}const sv=!!seen[detailId],E=$("#d-seen");E.innerHTML=icon("seen",sv);E.setAttribute("aria-pressed",sv);E.setAttribute("aria-label",sv?"Seen. Change the date":"Mark as seen");E.classList.toggle("on",sv);const SL=$("#d-seenline");if(SL)SL.innerHTML=seenLine(detailId);const s=inAnyCustom(detailId),L=$("#d-list");L.innerHTML=icon(s?"bookmark_added":"bookmark_add",s);L.setAttribute("aria-label",s?"Saved in a list. Change lists":"Save to a list");const b=$("#d-fav"),on=isFav(detailId);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites");b.innerHTML=icon("favorite",on);b.style.color=on?"#f2a283":""}
 $("#d-close").onclick=closeDetail;
 $("#d-fav").onclick=()=>{if(detailId!=null)toggleFav(detailId)};
 $("#d-list").onclick=()=>{if(detailId!=null)openSheet(detailId)};
+$("#d-seen").onclick=()=>{if(detailId!=null)openSeenDialog(detailId)};
+$("#d-scroll").addEventListener("click",e=>{const b=e.target.closest("[data-seenact]");if(!b||detailId==null)return;if(b.dataset.seenact==="edit")openSeenDialog(detailId);else unsee(detailId)});
 $("#d-actions").addEventListener("click",e=>{const b=e.target.closest("[data-addlist]");if(b)openSheet(+b.dataset.addlist)});
 swipe($("#d-grab"),"up",closeDetail,null);
 swipe($("#d-bar"),"up",closeDetail,null);
-document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!$("#dialog").hidden)closeDialog();else if(!$("#sheet").hidden)closeSheet();else if($("#detail").classList.contains("open"))closeDetail()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!$("#dialog").hidden)closeDialog();else if(!$("#psheet").hidden)closePlatPicker();else if(!$("#sheet").hidden)closeSheet();else if($("#detail").classList.contains("open"))closeDetail()});
 
 /* ================= Lists & favorites ================= */
 const favList=()=>lists.find(l=>l.id==="fav");
@@ -1160,7 +1602,7 @@ function toggleFav(id){
   snack(had?"Removed from favorites":"Added to favorites",()=>setInList(l,id,had));
 }
 function syncFavUI(){
-  document.querySelectorAll("[data-fav]").forEach(b=>{const on=isFav(+b.dataset.fav);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites")});
+  document.querySelectorAll("[data-fav]").forEach(b=>{const on=isFav(+b.dataset.fav);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites");if(b.classList.contains("icon-btn"))b.innerHTML=icon("favorite",on)});
   document.querySelectorAll(".icon-btn[data-addlist]").forEach(b=>{const on=inAnyCustom(+b.dataset.addlist);b.innerHTML=icon(on?"bookmark_added":"bookmark_add",on);b.setAttribute("aria-label",on?"Saved in a list. Change lists":"Save to a list")});
   syncDetailFav();
   if(view==="lists")renderLists();
@@ -1168,20 +1610,26 @@ function syncFavUI(){
 }
 function collage(l){
   const ids=l.films.slice(-3).reverse();
-  return `<span class="collage" aria-hidden="true">${[0,1,2].map(i=>{const m=meta[ids[i]];return m&&m.poster?`<img src="${IMG}w185${m.poster}" alt="" loading="lazy">`:`<span class="cph">${i===0&&!ids.length?icon(l.id==="fav"?"favorite":"bookmark"):""}</span>`}).join("")}</span>`;
+  return `<span class="collage" aria-hidden="true">${[0,1,2].map(i=>{const m=meta[ids[i]];return m&&m.poster?`<img src="${img("w185",m.poster)}" alt="" loading="lazy">`:`<span class="cph">${i===0&&!ids.length?icon(l.id==="fav"?"favorite":"bookmark"):""}</span>`}).join("")}</span>`;
 }
 function renderLists(){
   const v=$("#v-lists");
+  if(openList==="__seen"){renderDiary();return}
   const l=openList&&lists.find(x=>x.id===openList);
   if(openList&&!l)openList=null;
   if(l){
     const ids=l.films.slice().reverse();
     v.innerHTML=ids.length?`<div class="g"><p class="fav-count">${plural(ids.length,"film")}, newest first</p><div class="list">${ids.map(id=>{const m=meta[id]||{id,t:"Film"};
-      return `<div class="item"><button class="item-open" data-open="${id}"><span class="thumb">${posterHTML(m,"w185",true)}</span><span class="item-txt"><b>${esc(m.t)}</b><small>${esc(m.y||"")}${m.d?" · "+esc(m.d):""}</small></span></button><button class="icon-btn" data-remove="${id}" aria-label="Remove ${esc(m.t)} from ${esc(l.name)}">${icon("close")}</button></div>`}).join("")}</div></div>`
+      return `<div class="item"><button class="item-open" data-open="${id}"><span class="thumb">${posterHTML(m,"w185",true)}</span><span class="item-txt"><b>${esc(m.t)}</b><small>${esc(m.y||"")}${m.d?" · "+esc(m.d):""}</small>${seenTag(id)}</span></button><button class="icon-btn" data-remove="${id}" aria-label="Remove ${esc(m.t)} from ${esc(l.name)}">${icon("close")}</button></div>`}).join("")}</div></div>`
       :`<div class="empty g"><div class="halo">${icon(l.id==="fav"?"favorite":"bookmark")}</div><h2>No films in ${esc(l.name)} yet</h2><p>${l.id==="fav"?"Tap the heart on a film to add it here.":"Search or discover a film, then tap the bookmark to add it here."}</p><button class="btn filled" data-act="gosearch">${icon("search")}Search films</button></div>`;
     return;
   }
-  v.innerHTML=`<div class="g lists-head"><div><h2>Your lists</h2><p>${plural(lists.length,"list")}</p></div><button class="btn tonal" data-act="newlist">${icon("add")}New list</button></div>
+  const c=seenCounts();
+  v.innerHTML=`<div class="g"><button class="seen-card" data-list="__seen">
+      <span class="seen-ic">${icon("seen",1)}</span>
+      <span class="seen-txt"><b>Seen</b><small>${c.all?`${c.week} this week · ${c.month} this month · ${c.year} this year`:"Your film diary. Mark a film as seen to start it."}</small></span>
+      <span class="seen-num" aria-label="${plural(c.all,"film")} seen">${c.all}</span></button></div>
+    <div class="g lists-head"><div><h2>Your lists</h2><p>${plural(lists.length,"list")}</p></div><button class="btn tonal" data-act="newlist">${icon("add")}New list</button></div>
     <div class="g list-grid">${lists.map(l=>`<button class="lcard" data-list="${l.id}">${collage(l)}<span class="lname">${l.id==="fav"?icon("favorite",1):""}<span class="t">${esc(l.name)}</span></span><span class="lcount">${plural(l.films.length,"film")}</span></button>`).join("")}</div>`;
 }
 $("#v-lists").addEventListener("click",e=>{
@@ -1192,7 +1640,71 @@ $("#v-lists").addEventListener("click",e=>{
     setInList(l,id,false);snack(`Removed from ${l.name}`,()=>{if(!l.films.includes(id)){l.films.splice(idx,0,id);save();syncFavUI()}});return}
   if(d.act==="newlist")openNameDialog(null,false);
   if(d.act==="gosearch")go("search");
+  if(d.range){diaryRange=d.range;renderDiary();return}
+  if(d.seenedit){openSeenDialog(+d.seenedit);return}
 });
+
+/* ================= Seen diary ================= */
+const pad=n=>String(n).padStart(2,"0");
+const isoOf=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const todayISO=()=>isoOf(new Date());
+const dOf=iso=>new Date(iso+"T12:00:00");
+const fmtDay=(iso,o)=>dOf(iso).toLocaleDateString("en-GB",o||{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+function rangeStart(r){
+  const t=new Date();t.setHours(12,0,0,0);
+  if(r==="week"){const k=(t.getDay()+6)%7;t.setDate(t.getDate()-k);return isoOf(t)}
+  if(r==="month")return `${t.getFullYear()}-${pad(t.getMonth()+1)}-01`;
+  if(r==="year")return `${t.getFullYear()}-01-01`;
+  return "0000-00-00";
+}
+function seenCounts(){const all=Object.values(seen),c=r=>all.filter(v=>v>=rangeStart(r)).length;return{all:all.length,week:c("week"),month:c("month"),year:c("year")}}
+function seenTag(id){return seen[id]?`<small class="seen-tag">${icon("seen",1)}Seen ${esc(fmtDay(seen[id],{day:"numeric",month:"short",year:dOf(seen[id]).getFullYear()===new Date().getFullYear()?undefined:"numeric"}))}</small>`:""}
+function seenLine(id){
+  if(!seen[id])return `<button class="seen-mark" data-seenact="edit">${icon("seen")}Mark as seen</button>`;
+  return `<p class="seen-line">${icon("calendar_check")}<span>Seen on <b>${esc(fmtDay(seen[id]))}</b></span></p><p class="seen-acts"><button data-seenact="edit">Change date</button><button data-seenact="remove">Remove from Seen</button></p>`;
+}
+function renderQuick(){
+  const t=new Date(),y=new Date();y.setDate(t.getDate()-1);
+  const opts=[["Today",isoOf(t)],["Yesterday",isoOf(y)]];
+  $("#dlg-quick").innerHTML=opts.map(([n,v])=>`<button type="button" class="chip" data-qd="${v}" aria-pressed="${$("#dlg-date").value===v}">${n}</button>`).join("");
+}
+$("#dlg-quick").addEventListener("click",e=>{const b=e.target.closest("[data-qd]");if(!b)return;$("#dlg-date").value=b.dataset.qd;$("#dlg-err").textContent="";renderQuick()});
+$("#dlg-date").addEventListener("input",renderQuick);
+$("#dlg-date").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();confirmDialog()}});
+function openSeenDialog(id){
+  remember(id);const m=meta[id]||FILMS.get(id);if(!m)return;const had=seen[id];
+  $("#snack").classList.remove("show");
+  openDialog({title:had?"Change the date":"When did you see it?",text:m.t+(m.y?` (${m.y})`:""),date:true,value:had||todayISO(),ok:had?"Save":"Mark as seen",
+    onOk:v=>{seen[id]=v;save();syncSeenUI();
+      snack(had?"Date updated":`Marked as seen · ${fmtDay(v,{day:"numeric",month:"short"})}`,had?null:()=>{delete seen[id];save();syncSeenUI()})}});
+}
+function unsee(id){const v=seen[id];if(!v)return;delete seen[id];save();syncSeenUI();snack("Removed from Seen",()=>{seen[id]=v;save();syncSeenUI()})}
+function syncSeenUI(){
+  document.querySelectorAll("[data-seen]").forEach(b=>{const on=!!seen[+b.dataset.seen];b.innerHTML=icon("seen",on);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Seen. Change the date":"Mark as seen")});
+  syncDetailFav();
+  if(view==="lists")renderLists();
+  if(view==="search"){if(qState.q)renderSearch();else if(trending)renderTrending()}
+}
+function renderDiary(){
+  const v=$("#v-lists"),from=rangeStart(diaryRange);
+  const rows=Object.entries(seen).filter(([,d])=>d>=from).map(([id,d])=>({id:+id,d})).sort((a,b)=>b.d.localeCompare(a.d)||b.id-a.id);
+  const R=[["week","This week"],["month","This month"],["year","This year"],["all","All"]];
+  const label={week:"this week",month:"this month",year:"this year",all:"in total"}[diaryRange];
+  let body="";
+  if(!rows.length){
+    body=`<div class="empty g"><div class="halo">${icon("seen")}</div><h2>${Object.keys(seen).length?"Nothing "+label:"Your diary is empty"}</h2><p>Open a film and tap the eye to mark it as seen, with the date you watched it.</p>${Object.keys(seen).length&&diaryRange!=="all"?`<button class="btn outlined" data-range="all">Show all</button>`:`<button class="btn filled" data-act="gosearch">${icon("search")}Search films</button>`}</div>`;
+  }else{
+    let cur="";
+    body=`<div class="g diary">`+rows.map(({id,d})=>{
+      const m=meta[id]||{id,t:"Film"},mk=d.slice(0,7);let head="";
+      if(mk!==cur){cur=mk;head=`<h3 class="diary-month">${esc(dOf(d).toLocaleDateString("en-GB",{month:"long",year:"numeric"}))}</h3>`}
+      return head+`<div class="drow"><span class="dday" aria-hidden="true"><b>${dOf(d).getDate()}</b><small>${esc(dOf(d).toLocaleDateString("en-GB",{weekday:"short"}))}</small></span>
+        <button class="item-open" data-open="${id}" aria-label="${esc(m.t)}, seen ${esc(fmtDay(d))}"><span class="thumb">${posterHTML(m,"w185",true)}</span><span class="item-txt"><b>${esc(m.t)}</b><small>${esc(m.y||"")}${m.d?" · "+esc(m.d):""}</small></span></button>
+        <button class="icon-btn" data-seenedit="${id}" aria-label="Change the date for ${esc(m.t)}">${icon("calendar_check")}</button></div>`}).join("")+`</div>`;
+  }
+  v.innerHTML=`<div class="g diary-top"><div class="seg" role="group" aria-label="Period">${R.map(([k,n])=>`<button data-range="${k}" aria-pressed="${k===diaryRange}">${n}</button>`).join("")}</div>
+    <p class="diary-count"><b>${plural(rows.length,"film")}</b> seen ${label}</p></div>`+body;
+}
 
 /* ----- Save-to-list sheet ----- */
 let sheetFilm=null;
@@ -1224,20 +1736,58 @@ $("#sheet-lists").addEventListener("click",e=>{
 });
 $("#sheet-new").onclick=()=>openNameDialog(null,true);
 $("#sheet-done").onclick=closeSheet;
-$("#scrim").onclick=closeSheet;
+$("#scrim").onclick=()=>{if(!$("#psheet").hidden)closePlatPicker();else closeSheet()};
+
+/* ----- Add-a-service sheet ----- */
+const fold=t=>String(t).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+function openPlatPicker(){
+  $("#pq").value="";renderPlatPicker();
+  $("#scrim").hidden=false;const sh=$("#psheet");sh.hidden=false;$("#psheet-list").scrollTop=0;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>sh.classList.add("open")));
+}
+function renderPlatPicker(){
+  const q=fold($("#pq").value.trim());
+  const list=q?PROVIDERS.filter(p=>fold(p.n).includes(q)):PROVIDERS;
+  $("#psheet-sub").textContent=`${PROVIDERS.length} services available in ${regionName(CFG.region)}. Tick the ones you subscribe to.`;
+  $("#psheet-list").innerHTML=list.length?list.map(p=>{const on=!!S.shown&&S.shown.has(p.id);
+    return `<button class="srow" role="checkbox" aria-checked="${on}" data-pp="${p.id}"><span class="wav sm">${p.logo?`<img src="${img("w92",p.logo)}" alt="">`:icon("live_tv")}</span><span class="lbl">${esc(p.n)}</span><span class="cbox">${on?icon("check"):""}</span></button>`}).join("")
+    :`<p class="sheet-empty">No service called “${esc($("#pq").value.trim())}” in ${esc(regionName(CFG.region))}.</p>`;
+}
+function closePlatPicker(){
+  const sh=$("#psheet");sh.classList.remove("open");$("#scrim").hidden=true;
+  setTimeout(()=>{if(!sh.classList.contains("open"))sh.hidden=true},300);
+  const add=$("#add-plat");if(add)add.focus({preventScroll:true});
+}
+$("#psheet-list").addEventListener("click",e=>{
+  const b=e.target.closest("[data-pp]");if(!b)return;const id=+b.dataset.pp;
+  if(!S.plats)S.plats=new Set();
+  if(!S.shown)S.shown=new Set();
+  if(S.shown.has(id)){S.shown.delete(id);S.added.delete(id);S.plats.delete(id)}else{S.shown.add(id);S.plats.add(id)}
+  renderPlatPicker();syncSettings();
+  const nb=$(`#psheet-list [data-pp="${id}"]`);if(nb)nb.focus({preventScroll:true});
+});
+$("#pq").addEventListener("input",renderPlatPicker);
+$("#psheet-done").onclick=closePlatPicker;
 
 /* ----- Dialog ----- */
 let dlg=null;
 function openDialog(o){
   dlg=o;$("#dlg-t").textContent=o.title;$("#dlg-p").textContent=o.text||"";$("#dlg-p").hidden=!o.text;
-  $("#dlg-field").hidden=!o.field;$("#dlg-input").value=o.value||"";$("#dlg-err").textContent="";
+  $("#dlg-field").hidden=!o.field;$("#dlg-input").value=o.field?o.value||"":"";$("#dlg-err").textContent="";
+  $("#dlg-datefield").hidden=!o.date;if(o.date){const t=todayISO();$("#dlg-date").value=o.value||t;$("#dlg-date").max=t;renderQuick()}
   $("#dlg-ok").textContent=o.ok;$("#dlg-ok").classList.toggle("danger",!!o.danger);
   $("#dscrim").hidden=false;$("#dialog").hidden=false;
-  setTimeout(()=>(o.field?$("#dlg-input"):$("#dlg-cancel")).focus(),30);
+  setTimeout(()=>(o.field?$("#dlg-input"):o.date?$("#dlg-date"):$("#dlg-cancel")).focus(),30);
 }
 function closeDialog(){$("#dialog").hidden=true;$("#dscrim").hidden=true;dlg=null}
 function confirmDialog(){
   if(!dlg)return;
+  if(dlg.date){
+    const v=$("#dlg-date").value;
+    if(!v){$("#dlg-err").textContent="Pick the date you saw it.";return}
+    if(v>todayISO()){$("#dlg-err").textContent="That date is in the future. Pick today or earlier.";return}
+    const fn=dlg.onOk;closeDialog();fn(v);return;
+  }
   if(dlg.field){
     const name=$("#dlg-input").value.trim().replace(/\s+/g," ");
     if(!name){$("#dlg-err").textContent="Give the list a name.";return}
@@ -1269,7 +1819,7 @@ $("#q-clear").onclick=()=>{$("#q").value="";$("#q-clear").hidden=true;runSearch(
 function rowHTML(f){
   const saved=inAnyCustom(f.id);
   const sub=[f.y,(f.g||[]).map(g=>GNAME[g]).filter(Boolean).slice(0,2).join(", ")].filter(Boolean).join(" · ");
-  return `<div class="item"><button class="item-open" data-open="${f.id}"><span class="thumb">${posterHTML(f,"w185",true)}</span><span class="item-txt"><b>${esc(f.t)}</b>${sub?`<small>${esc(sub)}</small>`:""}${f.ot&&f.ot!==f.t?`<small class="orig">${esc(f.ot)}</small>`:""}${f.vc?`<small class="rate">${icon("star",1)}${f.va.toFixed(1)} · ${nf.format(f.vc)} votes</small>`:""}</span></button><button class="icon-btn" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button></div>`;
+  return `<div class="item"><button class="item-open" data-open="${f.id}"><span class="thumb">${posterHTML(f,"w185",true)}</span><span class="item-txt"><b>${esc(f.t)}</b>${sub?`<small>${esc(sub)}</small>`:""}${f.ot&&f.ot!==f.t?`<small class="orig">${esc(f.ot)}</small>`:""}${f.vc?`<small class="rate">${icon("star",1)}${f.va.toFixed(1)} · ${nf.format(f.vc)} votes</small>`:""}${seenTag(f.id)}</span></button><button class="icon-btn" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button></div>`;
 }
 const loadingHTML=t=>`<div class="loading g"><div class="lin"></div><p>${esc(t)}</p></div>`;
 async function runSearch(q,more){
@@ -1301,7 +1851,7 @@ function renderSearch(){
 }
 $("#v-search").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b||b.id==="q-clear")return;const d=b.dataset;
-  if(d.open){openDetail(+d.open);return}
+  if(d.open){openDetail(+d.open,"search");return}
   if(d.addlist){openSheet(+d.addlist);return}
   if(d.act==="qmore"){b.disabled=true;runSearch(qState.q,true)}
   if(d.act==="qretry")runSearch($("#q").value.trim());
@@ -1311,10 +1861,10 @@ $("#v-search").addEventListener("click",e=>{
 let snackT=null,snackFn=null;
 function snack(msg,undo,label,sticky){
   $("#snack-t").textContent=msg;snackFn=undo||null;$("#snack-a").hidden=!undo;$("#snack-a").textContent=label||"Undo";
-  $("#snack").classList.add("show");clearTimeout(snackT);if(!sticky)snackT=setTimeout(()=>$("#snack").classList.remove("show"),3200);
+  $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1619";
+const APP_VERSION="2026.11.17-1736";
 let updateShown=false;
 async function checkUpdate(){
   if(updateShown||location.protocol!=="https:")return;
