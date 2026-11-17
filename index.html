@@ -917,6 +917,7 @@ const PLATFORM_SEARCH=[
   [/mubi/i,"https://mubi.com/search/films?query="],
   [/^max$|hbo max/i,"https://play.max.com/search?q="],
   [/arte/i,"https://www.arte.tv/fr/search/?q="],
+  [/youtube/i,"https://www.youtube.com/results?search_query="],
   [/canal\+/i,"https://www.canalplus.com/"],
   [/paramount/i,"https://www.paramountplus.com/"]
 ];
@@ -924,15 +925,23 @@ const DEFAULT_PLATS=[/^netflix$/i,/^amazon prime video$/i,/^canal\+$/i];
 
 /* ================= State ================= */
 const KEY="cesoir.tmdb.v1";
-const DEFAULTS={mood:["thoughtful"],who:"duo",genres:[],fame:2,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,added:[],shown:null,only:false,hideSeen:true};
+const DEFAULTS={mood:["thoughtful"],who:"duo",genres:[],fame:2,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,added:[],shown:null,shownV:0,only:false,hideSeen:true};
 const TOP_PLATS=10;
+/* Default streaming services, in this order (TMDB names vary slightly, so each has alternatives) */
+const DEFAULT_SERVICES=[[/^canal\+$/i],[/^netflix$/i],[/^amazon prime video$/i,/^prime video$/i],[/^disney ?(plus|\+)$/i],[/^apple tv ?(plus|\+)$/i,/^apple tv$/i],[/^youtube premium$/i],[/^arte$/i],[/^france ?[.]?tv$/i,/^france ?télévisions$/i],[/^m6 ?\+$/i,/^6play$/i],[/^mubi$/i]];
+let DEF_IDS=[];
+function defaultShown(){
+  const ids=[];
+  DEFAULT_SERVICES.forEach(alts=>{for(const re of alts){const p=PROVIDERS.find(x=>re.test(x.n.trim())&&!ids.includes(x.id));if(p){ids.push(p.id);break}}});
+  return ids.length?ids:PROVIDERS.slice(0,TOP_PLATS).map(p=>p.id);
+}
 let CFG={key:"",region:"FR",lang:"en-US"};
 let seen={}, diaryRange="month", S, lists=[{id:"fav",name:"Favorites",films:[]}], meta={}, theme=null, view="setup", discoverSub="settings", openList=null;
 let PROVIDERS=[], PROV_BY_ID=new Map(), BW_KW=null;
 let ranked=[], round=1, pool=null, searchSeq=0;
 const FILMS=new Map();
-function fromPlain(p){return{mood:new Set(p.mood),who:p.who,genres:new Set(p.genres),fame:p.fame,era:p.era.slice(),image:p.image,len:p.len,lang:p.lang,plats:p.plats?new Set(p.plats):null,added:new Set(p.added||[]),shown:p.shown?new Set(p.shown):null,only:p.only,hideSeen:p.hideSeen!==false}}
-function plainOf(st){return{mood:[...st.mood],who:st.who,genres:[...st.genres],fame:st.fame,era:st.era.slice(),image:st.image,len:st.len,lang:st.lang,plats:st.plats?[...st.plats]:null,added:[...st.added],shown:st.shown?[...st.shown]:null,only:st.only,hideSeen:st.hideSeen}}
+function fromPlain(p){return{mood:new Set(p.mood),who:p.who,genres:new Set(p.genres),fame:p.fame,era:p.era.slice(),image:p.image,len:p.len,lang:p.lang,plats:p.plats?new Set(p.plats):null,added:new Set(p.added||[]),shown:p.shown?new Set(p.shown):null,only:p.only,hideSeen:p.hideSeen!==false,shownV:p.shownV||0}}
+function plainOf(st){return{mood:[...st.mood],who:st.who,genres:[...st.genres],fame:st.fame,era:st.era.slice(),image:st.image,len:st.len,lang:st.lang,plats:st.plats?[...st.plats]:null,added:[...st.added],shown:st.shown?[...st.shown]:null,only:st.only,hideSeen:st.hideSeen,shownV:st.shownV||0}}
 function toPlain(){return plainOf(S)}
 const cloneState=st=>fromPlain(plainOf(st));
 S=fromPlain(DEFAULTS);
@@ -994,7 +1003,8 @@ async function loadCatalogMeta(){
   if(!S.plats){S.plats=new Set(PROVIDERS.filter(p=>DEFAULT_PLATS.some(re=>re.test(p.n))).map(p=>p.id))}
   else S.plats=new Set([...S.plats].filter(id=>PROV_BY_ID.has(id)));
   const topIds=new Set(PROVIDERS.slice(0,TOP_PLATS).map(p=>p.id));
-  if(!S.shown)S.shown=new Set([...topIds,...S.added]);
+  DEF_IDS=defaultShown();
+  if(!S.shown||S.shownV!==2){const keep=[...(S.plats||[]),...S.added];S.shown=new Set([...DEF_IDS,...keep]);S.shownV=2}
   S.plats.forEach(id=>S.shown.add(id));
   S.shown=new Set([...S.shown].filter(id=>PROV_BY_ID.has(id)));
 }
@@ -1155,11 +1165,12 @@ function buildSettings(){
 function renderPlats(){
   const sel=S.plats||new Set();
   const chip=p=>`<button class="chip has-logo" data-plat="${p.id}" aria-pressed="${sel.has(p.id)}">${p.logo?`<img src="${img("w92",p.logo)}" alt="">`:icon("live_tv")}<span class="n">${esc(p.n)}</span>${sel.has(p.id)?icon("check"):""}</button>`;
-  const shown=PROVIDERS.filter(p=>S.shown&&S.shown.has(p.id));
-  const missingTop=PROVIDERS.slice(0,TOP_PLATS).some(p=>!S.shown||!S.shown.has(p.id));
+  const rank=id=>{const i=DEF_IDS.indexOf(id);return i<0?1000+PROVIDERS.findIndex(p=>p.id===id):i};
+  const shown=PROVIDERS.filter(p=>S.shown&&S.shown.has(p.id)).sort((a,b)=>rank(a.id)-rank(b.id));
+  const missingTop=DEF_IDS.some(id=>!S.shown||!S.shown.has(id));
   $("#plats").innerHTML=(shown.length?"":`<p class="plats-empty">No services yet. Add the ones you subscribe to.</p>`)+shown.map(p=>`<span class="chip-pair">${chip(p).replace('class="chip has-logo"','class="chip has-logo extra"')}<button class="chip-x" data-unplat="${p.id}" aria-label="Remove ${esc(p.n)} from your services">${icon("close")}</button></span>`).join("")
     +`<button class="chip ghost" data-act="addplats" id="add-plat">${icon("add")}Add a service</button>`
-    +(missingTop?`<button class="plats-restore" data-act="restoreplats">${icon("restart_alt")}Restore the ${TOP_PLATS} suggestions</button>`:"");
+    +(missingTop?`<button class="plats-restore" data-act="restoreplats">${icon("restart_alt")}Restore the ${DEF_IDS.length} suggestions</button>`:"");
 }
 function syncSettings(){
   document.querySelectorAll("[data-mood]").forEach(b=>b.setAttribute("aria-pressed",S.mood.has(b.dataset.mood)));
@@ -1209,7 +1220,7 @@ $("#v-settings").addEventListener("click",e=>{
     S.shown.delete(id);S.added.delete(id);if(S.plats)S.plats.delete(id);syncSettings();
     const add=$("#add-plat");if(add)add.focus({preventScroll:true});
     snack(`${p?p.n:"Service"} removed`,()=>{S.shown.add(id);if(was)S.plats.add(id);syncSettings()});return}
-  else if(d.act==="restoreplats"){const before=new Set(S.shown);PROVIDERS.slice(0,TOP_PLATS).forEach(p=>S.shown.add(p.id));syncSettings();
+  else if(d.act==="restoreplats"){const before=new Set(S.shown);DEF_IDS.forEach(id=>S.shown.add(id));syncSettings();
     snack("Suggestions restored",()=>{S.shown=before;syncSettings()});return}
   else if(d.who)S.who=d.who;
   else if(d.image)S.image=d.image;
@@ -1296,7 +1307,7 @@ async function fetchMore(pages){
 }
 async function enrich(f){
   if(f.enriched)return f;
-  const d=await tmdb("/movie/"+f.id,{language:CFG.lang,append_to_response:"credits,watch/providers,external_ids"});
+  const d=await tmdb("/movie/"+f.id,{language:CFG.lang,append_to_response:"credits,watch/providers"});
   const crew=(d.credits&&d.credits.crew)||[];
   Object.assign(f,{
     t:d.title||f.t,ot:d.original_title,y:(d.release_date||"").slice(0,4)||f.y,
@@ -1311,7 +1322,6 @@ async function enrich(f){
   if(w){const flat=[],seen=new Set();[...mapP(w.flatrate),...mapP(w.free),...mapP(w.ads)].forEach(p=>{if(!seen.has(p.id)){seen.add(p.id);flat.push(p)}});
     f.prov={link:w.link,flat,rent:mapP(w.rent),buy:mapP(w.buy)}}
   else f.prov={link:null,flat:[],rent:[],buy:[]};
-  f.wd=(d.external_ids&&d.external_ids.wikidata_id)||null;
   f.enriched=true;FILMS.set(f.id,f);
   if(meta[f.id]){remember(f.id);save()}
   return f;
@@ -1360,39 +1370,49 @@ async function renderRound(seq){
     <div class="refresh-row g">
       ${more?`<button class="btn tonal" data-act="refresh">${icon("refresh")}Show 10 more</button><p>The next round goes further down the ranking, so expect weaker matches.</p>`:`<p>That's the last round for these settings.</p><button class="btn outlined" data-act="restart">${icon("replay")}Back to best matches</button>`}
     </div>`;
-  if(hero)resolveDeepLinks(hero.f).then(()=>{const a=document.querySelector(".pick-actions a.btn.filled");if(a&&ranked[0]&&ranked[0].f===hero.f)a.href=watchTarget(hero.f).url});
 }
-/* ----- Deep links: open the film's own page on each platform (via Wikidata identifiers) ----- */
-const DEEP=[[/netflix/i,/netflix[.]com/i],[/prime video|amazon/i,/primevideo[.]com|amazon[.]/i],[/disney/i,/disneyplus[.]com/i],[/apple tv/i,/tv[.]apple[.]com/i],[/mubi/i,/mubi[.]com/i],[/^max$|hbo/i,/(^|[/.])max[.]com|hbomax[.]com/i],[/canal\+/i,/canalplus[.]com|mycanal/i],[/paramount/i,/paramountplus[.]com/i],[/arte/i,/arte[.]tv/i]];
-const DEEP_RE="netflix[.]com|primevideo[.]com|amazon[.]|disneyplus[.]com|tv[.]apple[.]com|mubi[.]com|max[.]com|hbomax[.]com|canalplus[.]com|mycanal|paramountplus[.]com|arte[.]tv";
-function resolveDeepLinks(f){
-  if(f.deep)return Promise.resolve(f.deep);
-  if(f.deepP)return f.deepP;
-  f.deepP=(async()=>{
-    const out={};
-    if(f.wd&&/^Q\d+$/.test(f.wd)){
-      const q=`SELECT ?fmt ?v WHERE { ?prop wikibase:propertyType wikibase:ExternalId ; wdt:P1630 ?fmt ; wikibase:directClaim ?pd . FILTER(REGEX(STR(?fmt), "${DEEP_RE}", "i")) wd:${f.wd} ?pd ?v . }`;
-      const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),8000);
-      try{
-        const r=await fetch("https://query.wikidata.org/sparql?format=json&query="+encodeURIComponent(q),{signal:ctl.signal,headers:{accept:"application/sparql-results+json"}});
-        if(r.ok){const j=await r.json();
-          for(const b of (j.results&&j.results.bindings)||[]){
-            const fmt=b.fmt&&b.fmt.value,v=b.v&&b.v.value;if(!fmt||!v||!fmt.includes("$1"))continue;
-            for(const [nameRe,hostRe] of DEEP){if(hostRe.test(fmt)&&!out[nameRe.source])out[nameRe.source]=fmt.replace("$1",encodeURI(v))}
-          }}
-      }catch(e){}finally{clearTimeout(t)}
+/* ----- Platform apps: open the app if installed, otherwise its store page (phones); the website on computers ----- */
+const UA=navigator.userAgent,IS_ANDROID=/android/i.test(UA),IS_IOS=/iphone|ipad|ipod/i.test(UA)||(/macintosh/i.test(UA)&&navigator.maxTouchPoints>1);
+const APPS=[
+  {re:/netflix/i,ios:"nflx://",iosId:"363590051",android:"com.netflix.mediaclient"},
+  {re:/prime video|amazon video/i,ios:"aiv://",iosId:"545519333",android:"com.amazon.avod.thirdpartyclient"},
+  {re:/disney/i,ios:"disneyplus://",iosId:"1446075923",android:"com.disney.disneyplus"},
+  {re:/^max$|hbo max/i,ios:"wbdstreaming://",iosId:"971265422",android:"com.wbd.stream"},
+  {re:/apple tv/i,ios:"videos://",android:"com.apple.atve.androidtv.appletv"},
+  {re:/canal\+/i,android:"com.canal.android.canal"},
+  {re:/mubi/i,android:"com.mubi"},
+  {re:/arte/i,android:"tv.arte.plus7"},
+  {re:/paramount/i,android:"com.cbs.ca"},
+  {re:/youtube/i,ios:"youtube://",android:"com.google.android.youtube"},
+  {re:/france ?[.]?tv|france télévisions/i,android:"fr.francetv.pluzz"},
+  {re:/m6 ?\+|6play/i,android:"fr.m6.m6replay"}
+];
+const appFor=name=>APPS.find(a=>a.re.test(name))||null;
+function openPlatform(name,webUrl){
+  const a=appFor(name);
+  if(IS_ANDROID){
+    const store=`https://play.google.com/store/search?q=${encodeURIComponent(name)}&c=apps`;
+    location.href=a&&a.android?`intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${a.android};S.browser_fallback_url=${encodeURIComponent(store)};end`:store;
+    return;
+  }
+  if(IS_IOS){
+    if(a&&a.ios){
+      let left=false;const gone=()=>{left=true};
+      document.addEventListener("visibilitychange",gone,{once:true});window.addEventListener("pagehide",gone,{once:true});
+      setTimeout(()=>{if(!left&&!document.hidden)location.href=a.iosId?`https://apps.apple.com/app/id${a.iosId}`:webUrl},1600);
+      location.href=a.ios;return;
     }
-    f.deep=out;return out;
-  })();
-  return f.deepP;
+    location.href=webUrl;return;   // universal link: opens the app if installed, otherwise the website
+  }
+  window.open(webUrl,"_blank","noopener");
 }
-function deepFor(f,name){if(!f.deep)return null;for(const [nameRe] of DEEP){if(nameRe.test(name))return f.deep[nameRe.source]||null}return null}
+document.addEventListener("click",e=>{const el=e.target.closest("a[data-app]");if(!el||!(IS_ANDROID||IS_IOS))return;e.preventDefault();openPlatform(el.dataset.app,el.href)},true);
 
 /* ----- Tonight's pick (hero) and ranked runners-up ----- */
 function watchTarget(f){
   const sel=S.plats||new Set(),flat=((f.prov&&f.prov.flat)||[]).slice().sort((a,b)=>(sel.has(b.id)?1:0)-(sel.has(a.id)?1:0));
   const tmdbWatch=(f.prov&&f.prov.link)||`https://www.themoviedb.org/movie/${f.id}/watch?locale=${CFG.region}`;
-  const best=flat[0];return best?{url:deepFor(f,best.n)||tmdbWatch,label:"Watch on "+best.n.replace(/^Amazon /,"").replace(/ Plus$/,"+"),play:true}:{url:tmdbWatch,label:"See where to watch",play:false};
+  const best=flat[0];return best?{url:searchUrl(best.n,f.t)||tmdbWatch,label:"Watch on "+best.n.replace(/^Amazon /,"").replace(/ Plus$/,"+"),play:true,app:best.n}:{url:tmdbWatch,label:"See where to watch",play:false};
 }
 function platLogos(f,max){
   const flat=(f.prov&&f.prov.flat)||[],mine=flat.filter(p=>S.plats&&S.plats.has(p.id)),show=(mine.length?mine:flat).slice(0,max);
@@ -1417,7 +1437,7 @@ function pickHTML(r){
     <p class="pick-desc">${esc(f.s||"No synopsis available in this language yet.")}</p>
     <button class="pick-more" data-open="${f.id}">Read more about this film${icon("arrow_back")}</button>
     <div class="pick-actions">
-      <a class="btn filled" href="${esc(w.url)}" target="_blank" rel="noopener">${icon(w.play?"play_arrow":"travel_explore",1)}<span>${esc(w.label)}</span></a>
+      <a class="btn filled" href="${esc(w.url)}"${w.app?` data-app="${esc(w.app)}"`:""} target="_blank" rel="noopener">${icon(w.play?"play_arrow":"travel_explore",1)}<span>${esc(w.label)}</span></a>
       <button class="icon-btn" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button>
       <button class="icon-btn" data-seen="${f.id}" aria-pressed="${!!seen[f.id]}" aria-label="${seen[f.id]?"Seen. Change the date":"Mark as seen"}">${icon("seen",!!seen[f.id])}</button>
       <button class="icon-btn" data-fav="${f.id}" aria-pressed="${fav}" aria-label="${fav?"Remove from favorites":"Add to favorites"}">${icon("favorite",fav)}</button>
@@ -1531,7 +1551,7 @@ function renderDetail(f){
   const sel=S.plats||new Set();
   const flat=f.prov.flat.slice().sort((a,b)=>(sel.has(b.id)?1:0)-(sel.has(a.id)?1:0));
   const tmdbWatch=f.prov.link||`https://www.themoviedb.org/movie/${f.id}/watch?locale=${CFG.region}`;
-  const row=(p,sub,mine)=>{const dl=deepFor(f,p.n),u=dl||tmdbWatch,how=f.deep?(dl?"Opens the film":"Film page via JustWatch"):"Finding the film page…";return `<div class="wrow${mine?" mine":""}"><span class="wav">${p.logo?`<img src="${img("w92",p.logo)}" alt="">`:icon("live_tv")}</span><div class="wtxt"><b>${esc(p.n)}</b><small>${sub} · ${how}</small></div><a class="btn ${mine?"filled":"outlined"}" href="${esc(u)}" target="_blank" rel="noopener">Open${icon("open_in_new")}</a></div>`};
+  const row=(p,sub,mine)=>{const u=searchUrl(p.n,f.t)||tmdbWatch;return `<div class="wrow${mine?" mine":""}"><span class="wav">${p.logo?`<img src="${img("w92",p.logo)}" alt="">`:icon("live_tv")}</span><div class="wtxt"><b>${esc(p.n)}</b><small>${sub}</small></div><a class="btn ${mine?"filled":"outlined"}" href="${esc(u)}" data-app="${esc(p.n)}" target="_blank" rel="noopener">Open${icon("open_in_new")}</a></div>`};
   let rows=flat.map(p=>row(p,sel.has(p.id)?"In your subscriptions":"Subscription",sel.has(p.id))).join("");
   const rb=[];const seen=new Set();[...f.prov.rent,...f.prov.buy].forEach(p=>{if(!seen.has(p.id)){seen.add(p.id);rb.push(p.n)}});
   if(rb.length)rows+=`<div class="wrow"><span class="wav">${icon("shopping_bag")}</span><div class="wtxt"><b>Rent or buy</b><small>${esc(rb.slice(0,4).join(", "))}${rb.length>4?" and more":""}</small></div><a class="btn outlined" href="${esc(tmdbWatch)}" target="_blank" rel="noopener">Prices${icon("open_in_new")}</a></div>`;
@@ -1563,13 +1583,12 @@ function renderDetail(f){
     <div class="d-sec g"><h3>Story</h3><p>${esc(f.s||"No synopsis available in this language yet.")}</p></div>
     ${why.length?`<div class="d-sec g"><h3>Why it fits tonight</h3><ul class="why">${why.map(w=>`<li>${icon("check_circle")}<span>${esc(w)}</span></li>`).join("")}</ul></div>`:""}
     <div class="d-sec g" style="padding-bottom:24px"><h3>Where to watch in ${esc(regionName(CFG.region))}</h3><div class="watch">${rows}</div>
-      <p class="note">${icon("info")}<span>Availability from JustWatch via TMDB. “Open” goes straight to the film on the platform when its page is known, otherwise to the film's JustWatch listing. On a phone, the platform's app opens if it's installed.</span></p></div>`;
+      <p class="note">${icon("info")}<span>Availability from JustWatch via TMDB. On a phone, “Open” launches the platform's app, or takes you to the store to install it. On a computer it opens the platform's website.</span></p></div>`;
   const best=flat[0];
-  const mainUrl=best?(deepFor(f,best.n)||tmdbWatch):tmdbWatch;
+  const mainUrl=best?(searchUrl(best.n,f.t)||tmdbWatch):tmdbWatch;
   const svd=inAnyCustom(f.id);
-  $("#d-actions").innerHTML=detailFrom==="search"?`<button class="btn tonal" data-addlist="${f.id}">${icon(svd?"bookmark_added":"bookmark_add",svd)}${svd?"Saved · change lists":"Add to a list"}</button>`:`<button class="btn tonal" data-addlist="${f.id}" style="flex:none">${icon("bookmark_add")}Save</button><a class="btn filled" href="${esc(mainUrl)}" target="_blank" rel="noopener">${icon(best?"play_arrow":"travel_explore",1)}<span>${best?"Watch on "+esc(best.n.replace(/^Amazon /,"").replace(/ Plus$/,"+")):"See all watch options"}</span></a>`;
+  $("#d-actions").innerHTML=detailFrom==="search"?`<button class="btn tonal" data-addlist="${f.id}">${icon(svd?"bookmark_added":"bookmark_add",svd)}${svd?"Saved · change lists":"Add to a list"}</button>`:`<button class="btn tonal" data-addlist="${f.id}" style="flex:none">${icon("bookmark_add")}Save</button><a class="btn filled" href="${esc(mainUrl)}"${best?` data-app="${esc(best.n)}"`:""} target="_blank" rel="noopener">${icon(best?"play_arrow":"travel_explore",1)}<span>${best?"Watch on "+esc(best.n.replace(/^Amazon /,"").replace(/ Plus$/,"+")):"See all watch options"}</span></a>`;
   syncDetailFav();
-  if(!f.deep)resolveDeepLinks(f).then(()=>{if(detailId===f.id&&$("#detail").classList.contains("open")){const sc=$("#d-scroll").scrollTop;renderDetail(f);$("#d-scroll").scrollTop=sc}});
 }
 function closeDetail(){const d=$("#detail");d.classList.remove("open");d.setAttribute("aria-hidden","true");
   const back=document.querySelector(`[data-open="${detailId}"]`);if(back)back.focus({preventScroll:true});detailId=null}
