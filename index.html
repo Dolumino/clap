@@ -348,10 +348,68 @@ img{max-width:100%}
 .d-actions .btn{height:48px;border-radius:24px;flex:1;min-width:0}
 .d-actions .btn span:last-child{overflow:hidden;text-overflow:ellipsis}
 
-.snack{position:absolute;left:12px;right:12px;bottom:92px;z-index:40;display:flex;align-items:center;gap:8px;min-height:48px;padding:6px 8px 6px 16px;border-radius:6px;background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:14px;box-shadow:var(--shadow-3);transform:translateY(16px);opacity:0;pointer-events:none;transition:all .2s}
+.snack{position:absolute;left:12px;right:12px;bottom:92px;z-index:60;display:flex;align-items:center;gap:8px;min-height:48px;padding:6px 8px 6px 16px;border-radius:6px;background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:14px;box-shadow:var(--shadow-3);transform:translateY(16px);opacity:0;pointer-events:none;transition:all .2s}
 .snack.show{transform:none;opacity:1;pointer-events:auto}
 .snack span{flex:1;min-width:0}
 .snack button{border:0;background:transparent;color:var(--inverse-primary);font-weight:650;font-size:14px;padding:8px 12px;border-radius:20px}
+
+/* Search */
+.search-wrap{position:sticky;top:0;z-index:2;background:var(--surface);padding-block:4px 12px}
+.searchbar{display:flex;align-items:center;gap:8px;height:56px;border-radius:28px;background:var(--surface-high);padding:0 4px 0 16px;color:var(--on-surface-variant)}
+.searchbar:focus-within{outline:2px solid var(--primary)}
+.searchbar input{flex:1;min-width:0;border:0;background:transparent;outline:0;font-size:16px;color:var(--on-surface);height:100%}
+.searchbar input::-webkit-search-cancel-button{display:none}
+.sec-title{margin:4px 0 2px;font-size:14px;font-weight:650;color:var(--on-surface-variant)}
+.item-txt .orig{font-style:italic}
+.item-txt .rate{display:inline-flex;align-items:center;gap:3px;font-variant-numeric:tabular-nums}
+.item-txt .rate .ms{font-size:14px;color:var(--primary)}
+.item .icon-btn[data-addlist]{color:var(--primary)}
+.more-row{display:flex;justify-content:center;padding-block:8px 24px}
+.card-head{display:flex;align-items:flex-start;gap:4px}
+.card-head .card-title{flex:1;min-width:0}
+.icon-btn.sm{width:40px;height:40px;margin:-8px -8px 0 0;color:var(--primary)}
+
+/* Lists */
+.lists-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-block:8px 16px}
+.lists-head h2{margin:0;font-size:24px;font-weight:500;line-height:30px}
+.lists-head p{margin:2px 0 0;font-size:13px;color:var(--on-surface-variant)}
+.list-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-bottom:24px}
+.lcard{display:flex;flex-direction:column;gap:2px;text-align:left;border:1px solid var(--outline-variant);background:var(--surface-low);border-radius:20px;padding:8px 8px 12px;min-width:0}
+.lcard:hover{background:var(--surface-mid)}
+.collage{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:14px;overflow:hidden;aspect-ratio:3/2;margin-bottom:8px}
+.collage img,.collage .cph{width:100%;height:100%;object-fit:cover;display:grid;place-items:center;background:var(--surface-highest);color:var(--primary)}
+.lname{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;padding:0 4px;min-width:0}
+.lname .ms{font-size:18px;color:var(--primary)}
+.lname .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lcount{font-size:12px;color:var(--on-surface-variant);padding:0 4px;font-variant-numeric:tabular-nums}
+
+/* Bottom sheet + dialog */
+.scrim{position:absolute;inset:0;z-index:45;background:rgba(0,0,0,.4)}
+.scrim.top{z-index:54}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:50;background:var(--surface-low);border-radius:28px 28px 0 0;padding:0 0 max(16px,env(safe-area-inset-bottom,0px));max-height:80%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .3s cubic-bezier(.2,0,0,1);box-shadow:var(--shadow-3)}
+.sheet.open{transform:none}
+.sheet-handle{display:block;width:32px;height:4px;border-radius:2px;background:var(--outline);margin:16px auto}
+.sheet h2{margin:0;font-size:22px;font-weight:450;line-height:28px}
+.sheet-film{margin:2px 0 8px;font-size:14px;color:var(--on-surface-variant);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet-lists{overflow-y:auto;display:flex;flex-direction:column;min-height:0}
+.srow,.sheet-new{display:flex;align-items:center;gap:16px;min-height:56px;padding:8px 24px;border:0;background:transparent;text-align:left;width:100%;color:var(--on-surface)}
+.srow:hover,.sheet-new:hover{background:color-mix(in srgb,var(--on-surface) 6%,transparent)}
+.srow>.ms{color:var(--on-surface-variant)}
+.srow[aria-checked="true"]>.ms{color:var(--primary)}
+.srow .lbl{flex:1;min-width:0;font-size:16px;line-height:22px;overflow:hidden;text-overflow:ellipsis}
+.srow small{display:block;font-size:12px;line-height:16px;color:var(--on-surface-variant)}
+.cbox{width:20px;height:20px;border-radius:3px;border:2px solid var(--on-surface-variant);display:grid;place-items:center;flex:none}
+.cbox .ms{font-size:16px}
+.srow[aria-checked="true"] .cbox{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.sheet-new{border-top:1px solid var(--outline-variant);color:var(--primary);font-weight:600;font-size:15px}
+.sheet-foot{display:flex;justify-content:flex-end;padding-top:8px}
+.dialog{position:absolute;left:24px;right:24px;top:50%;transform:translateY(-50%);z-index:55;background:var(--surface-high);border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow-3)}
+.dialog h2{margin:0;font-size:24px;font-weight:400;line-height:32px;text-wrap:balance}
+.dialog p{margin:0;font-size:14px;line-height:20px;color:var(--on-surface-variant)}
+.dialog small{font-size:12px;color:var(--error);min-height:16px;margin-top:-6px}
+.dlg-actions{display:flex;justify-content:flex-end;gap:8px}
+.btn.text.danger{color:var(--error)}
+.btn.text.danger:hover{background:color-mix(in srgb,var(--error) 8%,transparent)}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 @media (max-width:360px){.mood-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.seg button{font-size:12px}.row2{grid-template-columns:1fr}}
@@ -473,17 +531,25 @@ img{max-width:100%}
   </main>
 
   <main class="view" id="v-results" aria-label="Results" hidden></main>
-  <main class="view" id="v-favs" aria-label="Favorites" hidden></main>
+  <main class="view" id="v-search" aria-label="Search" hidden>
+    <div class="search-wrap g">
+      <label class="searchbar"><span class="ms" aria-hidden="true">search</span><input id="q" type="search" placeholder="Search for a film" autocomplete="off" enterkeyhint="search" aria-label="Search for a film"><button type="button" class="icon-btn" id="q-clear" aria-label="Clear search" hidden><span class="ms">close</span></button></label>
+    </div>
+    <div id="search-res"></div>
+  </main>
+  <main class="view" id="v-lists" aria-label="Lists" hidden></main>
 
   <nav class="navbar" id="navbar" aria-label="Main">
     <button class="nav-item" id="nav-discover" aria-current="page"><span class="nav-ind"><span class="ms">explore</span></span>Discover</button>
-    <button class="nav-item" id="nav-favs"><span class="nav-ind"><span class="ms">favorite</span><span class="badge" id="badge" hidden>0</span></span>Favorites</button>
+    <button class="nav-item" id="nav-search"><span class="nav-ind"><span class="ms">search</span></span>Search</button>
+    <button class="nav-item" id="nav-lists"><span class="nav-ind"><span class="ms">bookmarks</span></span>Lists</button>
   </nav>
 
   <section class="detail" id="detail" aria-hidden="true" aria-label="Film details">
     <div class="dbar" id="d-bar">
       <button class="icon-btn" id="d-close" aria-label="Close details"><span class="ms">keyboard_arrow_up</span></button>
       <span style="flex:1"></span>
+      <button class="icon-btn" id="d-list" aria-label="Save to a list"><span class="ms">bookmark_add</span></button>
       <button class="icon-btn" id="d-fav" aria-label="Add to favorites" aria-pressed="false"><span class="ms">favorite</span></button>
     </div>
     <div class="detail-scroll" id="d-scroll"></div>
@@ -491,6 +557,23 @@ img{max-width:100%}
       <button class="d-grab" id="d-grab" aria-label="Close details"><i></i>Swipe up to close</button>
       <div class="d-actions" id="d-actions"></div>
     </div>
+  </section>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-t" hidden>
+    <i class="sheet-handle" aria-hidden="true"></i>
+    <div class="g"><h2 id="sheet-t">Save to list</h2><p class="sheet-film" id="sheet-film"></p></div>
+    <div class="sheet-lists" id="sheet-lists"></div>
+    <button class="sheet-new" id="sheet-new"><span class="ms" aria-hidden="true">add</span>New list</button>
+    <div class="sheet-foot g"><button class="btn filled" id="sheet-done">Done</button></div>
+  </section>
+  <div class="scrim top" id="dscrim" hidden></div>
+  <section class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-t" hidden>
+    <h2 id="dlg-t"></h2>
+    <p id="dlg-p"></p>
+    <div class="input-wrap" id="dlg-field"><input id="dlg-input" maxlength="40" autocomplete="off" aria-labelledby="dlg-t"></div>
+    <small id="dlg-err" role="alert"></small>
+    <div class="dlg-actions"><button class="btn text" id="dlg-cancel">Cancel</button><button class="btn text" id="dlg-ok">Create</button></div>
   </section>
 
   <div class="snack" id="snack" role="status" aria-live="polite"><span id="snack-t"></span><button id="snack-a">Undo</button></div>
@@ -548,15 +631,17 @@ const DEFAULT_PLATS=[/^netflix$/i,/^amazon prime video$/i,/^canal\+$/i];
 const KEY="cesoir.tmdb.v1";
 const DEFAULTS={mood:["thoughtful"],who:"duo",genres:[],fame:2,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,only:false};
 let CFG={key:"",region:"FR",lang:"en-US"};
-let S, favs=new Map(), theme=null, view="setup", discoverSub="settings";
+let S, lists=[{id:"fav",name:"Favorites",films:[]}], meta={}, theme=null, view="setup", discoverSub="settings", openList=null;
 let PROVIDERS=[], PROV_BY_ID=new Map(), BW_KW=null, showAllPlats=false;
 let ranked=[], round=1, pool=null, searchSeq=0;
 const FILMS=new Map();
 function fromPlain(p){return{mood:new Set(p.mood),who:p.who,genres:new Set(p.genres),fame:p.fame,era:p.era.slice(),image:p.image,len:p.len,lang:p.lang,plats:p.plats?new Set(p.plats):null,only:p.only}}
 function toPlain(){return{mood:[...S.mood],who:S.who,genres:[...S.genres],fame:S.fame,era:S.era,image:S.image,len:S.len,lang:S.lang,plats:S.plats?[...S.plats]:null,only:S.only}}
 S=fromPlain(DEFAULTS);
-try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){if(d.cfg)CFG=Object.assign(CFG,d.cfg);if(d.s)S=fromPlain(Object.assign({},DEFAULTS,d.s));if(d.favs)favs=new Map(d.favs.map(f=>[f.id,f]));if(d.theme)theme=d.theme}}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify({cfg:CFG,s:toPlain(),favs:[...favs.values()],theme}))}catch(e){}}
+try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){if(d.cfg)CFG=Object.assign(CFG,d.cfg);if(d.s)S=fromPlain(Object.assign({},DEFAULTS,d.s));if(Array.isArray(d.lists)&&d.lists.length)lists=d.lists;if(d.meta)meta=d.meta;if(Array.isArray(d.favs))d.favs.forEach(f=>{meta[f.id]=f;if(!lists[0].films.includes(f.id))lists[0].films.push(f.id)});if(d.theme)theme=d.theme}}catch(e){}
+if(!lists.some(l=>l.id==="fav"))lists.unshift({id:"fav",name:"Favorites",films:[]});
+{const keep=new Set(lists.flatMap(l=>l.films));Object.keys(meta).forEach(k=>{if(!keep.has(+k))delete meta[k]})}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({cfg:CFG,s:toPlain(),lists,meta,theme}))}catch(e){}}
 
 /* ================= Helpers ================= */
 const $=s=>document.querySelector(s);
@@ -680,7 +765,10 @@ function renderTopbar(){
   if(view==="setup")h=brand+themeBtn;
   else if(view==="settings")h=brand+`<button class="icon-btn" data-act="config" aria-label="Catalog settings">${icon("settings")}</button>`+themeBtn;
   else if(view==="results")h=`<button class="icon-btn" data-act="edit" aria-label="Back to settings">${icon("arrow_back")}</button><h1>Tonight's picks</h1><button class="icon-btn" data-act="refresh" aria-label="Show 10 more">${icon("refresh")}</button>${themeBtn}`;
-  else h=`<h1 style="padding-left:12px">Favorites</h1>${themeBtn}`;
+  else if(view==="search")h=`<h1 style="padding-left:12px">Search</h1>${themeBtn}`;
+  else{const l=openList&&lists.find(x=>x.id===openList);
+    h=l?`<button class="icon-btn" data-act="listsback" aria-label="Back to lists">${icon("arrow_back")}</button><h1>${esc(l.name)}</h1>${l.id==="fav"?"":`<button class="icon-btn" data-act="renamelist" aria-label="Rename list">${icon("edit")}</button><button class="icon-btn" data-act="deletelist" aria-label="Delete list">${icon("delete")}</button>`}`
+      :`<h1 style="padding-left:12px">Lists</h1>${themeBtn}`}
   $("#topbar").innerHTML=h;
 }
 $("#topbar").addEventListener("click",e=>{
@@ -689,21 +777,28 @@ $("#topbar").addEventListener("click",e=>{
   if(a==="edit")go("settings");
   if(a==="refresh")refresh();
   if(a==="config")openSetup(true);
+  if(a==="listsback"){openList=null;renderLists();renderTopbar()}
+  const cur=openList&&lists.find(x=>x.id===openList);
+  if(a==="renamelist"&&cur)openNameDialog(cur);
+  if(a==="deletelist"&&cur)openDialog({title:`Delete “${cur.name}”?`,text:`The list is removed. Its ${cur.films.length} film${cur.films.length===1?"":"s"} stay in your other lists.`,ok:"Delete",danger:true,
+    onOk:()=>{lists=lists.filter(x=>x!==cur);openList=null;save();renderLists();renderTopbar();snack("List deleted")}});
 });
 document.querySelectorAll(".view").forEach(v=>v.addEventListener("scroll",()=>$("#topbar").classList.toggle("scrolled",v.scrollTop>4),{passive:true}));
 function go(v){
   view=v;if(v==="settings"||v==="results")discoverSub=v;
-  for(const id of["setup","settings","results","favs"])$("#v-"+id).hidden=v!==id;
+  for(const id of["setup","settings","results","search","lists"])$("#v-"+id).hidden=v!==id;
   $("#navbar").hidden=v==="setup";
-  $("#nav-discover").setAttribute("aria-current",v==="favs"?"false":"page");
-  $("#nav-favs").setAttribute("aria-current",v==="favs"?"page":"false");
-  if(v==="favs")renderFavs();
+  const tab=v==="search"?"search":v==="lists"?"lists":"discover";
+  for(const t of["discover","search","lists"])$("#nav-"+t).setAttribute("aria-current",t===tab?"page":"false");
+  if(v==="lists")renderLists();
+  if(v==="search"&&!$("#search-res").innerHTML)runSearch($("#q").value.trim());
   if(v==="settings")syncSettings();
   $("#topbar").classList.remove("scrolled");
   renderTopbar();
 }
-$("#nav-discover").onclick=()=>go(view==="favs"?discoverSub:"settings");
-$("#nav-favs").onclick=()=>go("favs");
+$("#nav-discover").onclick=()=>go(view==="search"||view==="lists"?discoverSub:"settings");
+$("#nav-search").onclick=()=>go("search");
+$("#nav-lists").onclick=()=>{if(view==="lists")openList=null;go("lists")};
 
 /* ================= Setup ================= */
 $("#f-region").innerHTML=REGIONS.map(r=>`<option value="${r}">${esc(regionName(r))}</option>`).join("");
@@ -726,7 +821,7 @@ $("#setup-form").addEventListener("submit",async e=>{
   try{
     if(prev.region!==CFG.region)S.plats=null;
     await loadCatalogMeta();
-    FILMS.clear();ranked=[];
+    FILMS.clear();ranked=[];trending=null;$("#search-res").innerHTML="";
     save();buildSettings();go("settings");snack("Connected to TMDB");
   }catch(err){CFG=prev;console.error("[Clap] connect failed",err);showSetupErr(err instanceof ApiError?errText(err):"Something went wrong after connecting: "+(err&&err.message||err))}
   finally{btn.disabled=false;btn.innerHTML=icon("link")+"Connect"}
@@ -860,7 +955,9 @@ async function enrich(f){
   if(w){const flat=[],seen=new Set();[...mapP(w.flatrate),...mapP(w.free),...mapP(w.ads)].forEach(p=>{if(!seen.has(p.id)){seen.add(p.id);flat.push(p)}});
     f.prov={link:w.link,flat,rent:mapP(w.rent),buy:mapP(w.buy)}}
   else f.prov={link:null,flat:[],rent:[],buy:[]};
-  f.enriched=true;FILMS.set(f.id,f);return f;
+  f.enriched=true;FILMS.set(f.id,f);
+  if(meta[f.id]){remember(f.id);save()}
+  return f;
 }
 async function search(){
   const seq=++searchSeq;
@@ -921,7 +1018,7 @@ function summaryChips(){
   return c.map(([i,n])=>`<button class="assist" data-act="edit">${icon(i)}${esc(n)}</button>`).join("");
 }
 function cardHTML(r,i){
-  const f=r.f,fav=favs.has(f.id);
+  const f=r.f,fav=isFav(f.id),saved=inAnyCustom(f.id);
   const flat=(f.prov&&f.prov.flat)||[];
   const mine=flat.filter(p=>S.plats&&S.plats.has(p.id));
   const show=(mine.length?mine:flat).slice(0,4);
@@ -932,7 +1029,7 @@ function cardHTML(r,i){
       <button class="fav-btn" data-fav="${f.id}" aria-pressed="${fav}" aria-label="${fav?"Remove from favorites":"Add to favorites"}">${icon("favorite")}</button>
     </div>
     <div class="card-body">
-      <h3 class="card-title">${esc(f.t)}</h3>
+      <div class="card-head"><h3 class="card-title">${esc(f.t)}</h3><button class="icon-btn sm" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button></div>
       <p class="card-meta"><b>${esc(f.y||"—")}</b> · ${esc(f.d||"")}</p>
       <div class="card-plats">${platLine}</div>
       <p class="desc" id="desc-${f.id}">${esc(f.s||"No synopsis available in this language yet.")}</p>
@@ -954,6 +1051,7 @@ function bindCarousel(){
 $("#v-results").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;const d=b.dataset;
   if(d.fav){toggleFav(+d.fav);return}
+  if(d.addlist){openSheet(+d.addlist);return}
   if(d.more){const p=$("#desc-"+d.more);const open=!p.classList.contains("open");p.classList.toggle("open",open);b.setAttribute("aria-expanded",open);b.querySelector("span").textContent=open?"Show less":"Read more";return}
   if(d.open){openDetail(+d.open);return}
   if(d.act==="edit")go("settings");
@@ -1030,38 +1128,184 @@ function renderDetail(f){
       <p class="note">${icon("info")}<span>Availability from JustWatch via TMDB. “Open” goes to the platform's search; on a phone it opens the app if installed.</span></p></div>`;
   const best=flat[0];
   const mainUrl=best?(searchUrl(best.n,f.t)||tmdbWatch):tmdbWatch;
-  $("#d-actions").innerHTML=`<a class="btn filled" href="${esc(mainUrl)}" target="_blank" rel="noopener">${icon(best?"play_arrow":"travel_explore",1)}<span>${best?"Watch on "+esc(best.n):"See all watch options"}</span></a>`;
+  $("#d-actions").innerHTML=`<button class="btn tonal" data-addlist="${f.id}" style="flex:none">${icon("bookmark_add")}Save</button><a class="btn filled" href="${esc(mainUrl)}" target="_blank" rel="noopener">${icon(best?"play_arrow":"travel_explore",1)}<span>${best?"Watch on "+esc(best.n):"See all watch options"}</span></a>`;
   syncDetailFav();
 }
 function closeDetail(){const d=$("#detail");d.classList.remove("open");d.setAttribute("aria-hidden","true");
   const back=document.querySelector(`[data-open="${detailId}"]`);if(back)back.focus({preventScroll:true});detailId=null}
-function syncDetailFav(){if(detailId==null)return;const b=$("#d-fav"),on=favs.has(detailId);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites");b.innerHTML=icon("favorite",on);b.style.color=on?"#FFB4AB":""}
+function syncDetailFav(){if(detailId==null)return;const s=inAnyCustom(detailId),L=$("#d-list");L.innerHTML=icon(s?"bookmark_added":"bookmark_add",s);L.setAttribute("aria-label",s?"Saved in a list. Change lists":"Save to a list");const b=$("#d-fav"),on=isFav(detailId);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites");b.innerHTML=icon("favorite",on);b.style.color=on?"#FFB4AB":""}
 $("#d-close").onclick=closeDetail;
 $("#d-fav").onclick=()=>{if(detailId!=null)toggleFav(detailId)};
+$("#d-list").onclick=()=>{if(detailId!=null)openSheet(detailId)};
+$("#d-actions").addEventListener("click",e=>{const b=e.target.closest("[data-addlist]");if(b)openSheet(+b.dataset.addlist)});
 swipe($("#d-grab"),"up",closeDetail,null);
 swipe($("#d-bar"),"up",closeDetail,null);
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#detail").classList.contains("open"))closeDetail()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!$("#dialog").hidden)closeDialog();else if(!$("#sheet").hidden)closeSheet();else if($("#detail").classList.contains("open"))closeDetail()});
 
-/* ================= Favorites ================= */
-function toggleFav(id){
-  const had=favs.has(id);const prev=favs.get(id);
-  if(had)favs.delete(id);else{const f=FILMS.get(id);if(!f)return;favs.set(id,{id,t:f.t,y:f.y,poster:f.poster,d:f.d||""})}
+/* ================= Lists & favorites ================= */
+const favList=()=>lists.find(l=>l.id==="fav");
+const isFav=id=>favList().films.includes(id);
+const inAnyCustom=id=>lists.some(l=>l.id!=="fav"&&l.films.includes(id));
+const plural=(n,w)=>`${n} ${w}${n===1?"":"s"}`;
+function remember(id){const f=FILMS.get(id);if(f&&f.t)meta[id]={id,t:f.t,y:f.y,poster:f.poster,d:f.d||(meta[id]&&meta[id].d)||""}}
+function setInList(l,id,on){
+  const has=l.films.includes(id);
+  if(on&&!has){remember(id);if(!meta[id])return;l.films.push(id)}
+  else if(!on&&has)l.films=l.films.filter(x=>x!==id);
   save();syncFavUI();
-  snack(had?"Removed from favorites":"Added to favorites",()=>{if(had)favs.set(id,prev);else favs.delete(id);save();syncFavUI()});
+}
+function toggleFav(id){
+  const l=favList(),had=isFav(id);
+  setInList(l,id,!had);
+  snack(had?"Removed from favorites":"Added to favorites",()=>setInList(l,id,had));
 }
 function syncFavUI(){
-  document.querySelectorAll("[data-fav]").forEach(b=>{const on=favs.has(+b.dataset.fav);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites")});
-  const n=favs.size,bd=$("#badge");bd.hidden=!n;bd.textContent=n;
+  document.querySelectorAll("[data-fav]").forEach(b=>{const on=isFav(+b.dataset.fav);b.setAttribute("aria-pressed",on);b.setAttribute("aria-label",on?"Remove from favorites":"Add to favorites")});
+  document.querySelectorAll(".icon-btn[data-addlist]").forEach(b=>{const on=inAnyCustom(+b.dataset.addlist);b.innerHTML=icon(on?"bookmark_added":"bookmark_add",on);b.setAttribute("aria-label",on?"Saved in a list. Change lists":"Save to a list")});
   syncDetailFav();
-  if(view==="favs")renderFavs();
+  if(view==="lists")renderLists();
+  if(!$("#sheet").hidden)renderSheet();
 }
-function renderFavs(){
-  const v=$("#v-favs");const list=[...favs.values()].reverse();
-  if(!list.length){v.innerHTML=`<div class="empty g"><div class="halo">${icon("favorite")}</div><h2>No favorites yet</h2><p>Tap the heart on any film to keep it here for another night.</p><button class="btn filled" data-act="find">${icon("movie_filter")}Find films</button></div>`;return}
-  v.innerHTML=`<div class="g"><p class="fav-count">${list.length} saved film${list.length>1?"s":""}</p><div class="list">${list.map(f=>`<div class="item"><button class="item-open" data-open="${f.id}"><span class="thumb">${posterHTML(f,"w185",true)}</span><span class="item-txt"><b>${esc(f.t)}</b><small>${esc(f.y||"")}${f.d?" · "+esc(f.d):""}</small></span></button><button class="icon-btn" data-fav="${f.id}" aria-pressed="true" aria-label="Remove from favorites">${icon("favorite",1)}</button></div>`).join("")}</div></div>`;
+function collage(l){
+  const ids=l.films.slice(-3).reverse();
+  return `<span class="collage" aria-hidden="true">${[0,1,2].map(i=>{const m=meta[ids[i]];return m&&m.poster?`<img src="${IMG}w185${m.poster}" alt="" loading="lazy">`:`<span class="cph">${i===0&&!ids.length?icon(l.id==="fav"?"favorite":"bookmark"):""}</span>`}).join("")}</span>`;
 }
-$("#v-favs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
-  if(b.dataset.fav)toggleFav(+b.dataset.fav);else if(b.dataset.open)openDetail(+b.dataset.open);else if(b.dataset.act==="find")go("settings")});
+function renderLists(){
+  const v=$("#v-lists");
+  const l=openList&&lists.find(x=>x.id===openList);
+  if(openList&&!l)openList=null;
+  if(l){
+    const ids=l.films.slice().reverse();
+    v.innerHTML=ids.length?`<div class="g"><p class="fav-count">${plural(ids.length,"film")}, newest first</p><div class="list">${ids.map(id=>{const m=meta[id]||{id,t:"Film"};
+      return `<div class="item"><button class="item-open" data-open="${id}"><span class="thumb">${posterHTML(m,"w185",true)}</span><span class="item-txt"><b>${esc(m.t)}</b><small>${esc(m.y||"")}${m.d?" · "+esc(m.d):""}</small></span></button><button class="icon-btn" data-remove="${id}" aria-label="Remove ${esc(m.t)} from ${esc(l.name)}">${icon("close")}</button></div>`}).join("")}</div></div>`
+      :`<div class="empty g"><div class="halo">${icon(l.id==="fav"?"favorite":"bookmark")}</div><h2>No films in ${esc(l.name)} yet</h2><p>${l.id==="fav"?"Tap the heart on a film to add it here.":"Search or discover a film, then tap the bookmark to add it here."}</p><button class="btn filled" data-act="gosearch">${icon("search")}Search films</button></div>`;
+    return;
+  }
+  v.innerHTML=`<div class="g lists-head"><div><h2>Your lists</h2><p>${plural(lists.length,"list")}</p></div><button class="btn tonal" data-act="newlist">${icon("add")}New list</button></div>
+    <div class="g list-grid">${lists.map(l=>`<button class="lcard" data-list="${l.id}">${collage(l)}<span class="lname">${l.id==="fav"?icon("favorite",1):""}<span class="t">${esc(l.name)}</span></span><span class="lcount">${plural(l.films.length,"film")}</span></button>`).join("")}</div>`;
+}
+$("#v-lists").addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;const d=b.dataset;
+  if(d.list){openList=d.list;renderLists();renderTopbar();$("#v-lists").scrollTop=0;return}
+  if(d.open){openDetail(+d.open);return}
+  if(d.remove){const l=lists.find(x=>x.id===openList);if(!l)return;const id=+d.remove,idx=l.films.indexOf(id);
+    setInList(l,id,false);snack(`Removed from ${l.name}`,()=>{if(!l.films.includes(id)){l.films.splice(idx,0,id);save();syncFavUI()}});return}
+  if(d.act==="newlist")openNameDialog(null,false);
+  if(d.act==="gosearch")go("search");
+});
+
+/* ----- Save-to-list sheet ----- */
+let sheetFilm=null;
+function openSheet(id){
+  $("#snack").classList.remove("show");
+  remember(id);if(!meta[id]&&!FILMS.get(id))return;
+  sheetFilm=id;renderSheet();
+  $("#scrim").hidden=false;$("#sheet").hidden=false;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>$("#sheet").classList.add("open")));
+  setTimeout(()=>{const f=$("#sheet-lists button");if(f)f.focus({preventScroll:true})},320);
+}
+function renderSheet(){
+  if(sheetFilm==null)return;
+  const m=meta[sheetFilm]||FILMS.get(sheetFilm)||{};
+  $("#sheet-film").textContent=m.t?m.t+(m.y?` (${m.y})`:""):"";
+  $("#sheet-lists").innerHTML=lists.map(l=>{const on=l.films.includes(sheetFilm);
+    return `<button class="srow" role="checkbox" aria-checked="${on}" data-toggle="${l.id}">${icon(l.id==="fav"?"favorite":"bookmark",on)}<span class="lbl">${esc(l.name)}<small>${plural(l.films.length,"film")}</small></span><span class="cbox">${on?icon("check"):""}</span></button>`}).join("");
+}
+function closeSheet(){
+  const sh=$("#sheet");sh.classList.remove("open");$("#scrim").hidden=true;
+  setTimeout(()=>{if(!sh.classList.contains("open"))sh.hidden=true},300);
+  const back=sheetFilm!=null&&document.querySelector(`.icon-btn[data-addlist="${sheetFilm}"]`);sheetFilm=null;if(back)back.focus({preventScroll:true});
+}
+$("#sheet-lists").addEventListener("click",e=>{
+  const b=e.target.closest("[data-toggle]");if(!b||sheetFilm==null)return;
+  const l=lists.find(x=>x.id===b.dataset.toggle);const on=!l.films.includes(sheetFilm);
+  setInList(l,sheetFilm,on);
+  const nb=$(`#sheet-lists [data-toggle="${l.id}"]`);if(nb)nb.focus({preventScroll:true});
+});
+$("#sheet-new").onclick=()=>openNameDialog(null,true);
+$("#sheet-done").onclick=closeSheet;
+$("#scrim").onclick=closeSheet;
+
+/* ----- Dialog ----- */
+let dlg=null;
+function openDialog(o){
+  dlg=o;$("#dlg-t").textContent=o.title;$("#dlg-p").textContent=o.text||"";$("#dlg-p").hidden=!o.text;
+  $("#dlg-field").hidden=!o.field;$("#dlg-input").value=o.value||"";$("#dlg-err").textContent="";
+  $("#dlg-ok").textContent=o.ok;$("#dlg-ok").classList.toggle("danger",!!o.danger);
+  $("#dscrim").hidden=false;$("#dialog").hidden=false;
+  setTimeout(()=>(o.field?$("#dlg-input"):$("#dlg-cancel")).focus(),30);
+}
+function closeDialog(){$("#dialog").hidden=true;$("#dscrim").hidden=true;dlg=null}
+function confirmDialog(){
+  if(!dlg)return;
+  if(dlg.field){
+    const name=$("#dlg-input").value.trim().replace(/\s+/g," ");
+    if(!name){$("#dlg-err").textContent="Give the list a name.";return}
+    if(lists.some(l=>l!==dlg.list&&l.name.toLowerCase()===name.toLowerCase())){$("#dlg-err").textContent="You already have a list with this name.";return}
+    const fn=dlg.onOk;closeDialog();fn(name);
+  }else{const fn=dlg.onOk;closeDialog();fn()}
+}
+$("#dlg-ok").onclick=confirmDialog;
+$("#dlg-cancel").onclick=closeDialog;
+$("#dscrim").onclick=closeDialog;
+$("#dlg-input").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();confirmDialog()}});
+function openNameDialog(list,fromSheet){
+  openDialog({title:list?"Rename list":"New list",text:list?"":fromSheet?"Name it the way you like. The film is added right away.":"Name it the way you like, for example “Sunday afternoons” or “Date nights”.",
+    value:list?list.name:"",ok:list?"Save":"Create",field:true,list,
+    onOk:name=>{
+      if(list){list.name=name;save();renderLists();renderTopbar();renderSheet();snack("List renamed");return}
+      const l={id:"l"+Date.now().toString(36),name,films:[]};lists.push(l);
+      if(fromSheet&&sheetFilm!=null){setInList(l,sheetFilm,true)}
+      else{save();renderLists();snack(`“${name}” created`)}
+    }});
+}
+
+/* ================= Search ================= */
+let qTimer=null,qSeq=0,qState={q:"",page:0,total:0,count:0,items:[]},trending=null;
+const searchBox=()=>$("#search-res");
+$("#q").addEventListener("input",()=>{const q=$("#q").value.trim();$("#q-clear").hidden=!$("#q").value;clearTimeout(qTimer);qTimer=setTimeout(()=>runSearch(q),350)});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){clearTimeout(qTimer);runSearch($("#q").value.trim());$("#q").blur()}});
+$("#q-clear").onclick=()=>{$("#q").value="";$("#q-clear").hidden=true;runSearch("");$("#q").focus()};
+function rowHTML(f){
+  const saved=inAnyCustom(f.id);
+  const sub=[f.y,(f.g||[]).map(g=>GNAME[g]).filter(Boolean).slice(0,2).join(", ")].filter(Boolean).join(" · ");
+  return `<div class="item"><button class="item-open" data-open="${f.id}"><span class="thumb">${posterHTML(f,"w185",true)}</span><span class="item-txt"><b>${esc(f.t)}</b>${sub?`<small>${esc(sub)}</small>`:""}${f.ot&&f.ot!==f.t?`<small class="orig">${esc(f.ot)}</small>`:""}${f.vc?`<small class="rate">${icon("star",1)}${f.va.toFixed(1)} · ${nf.format(f.vc)} votes</small>`:""}</span></button><button class="icon-btn" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button></div>`;
+}
+const loadingHTML=t=>`<div class="loading g"><div class="lin"></div><p>${esc(t)}</p></div>`;
+async function runSearch(q,more){
+  const seq=++qSeq,box=searchBox();
+  if(q.length<2){qState={q:"",page:0,total:0,count:0,items:[]};
+    if(trending){renderTrending();return}
+    box.innerHTML=loadingHTML("Loading what's trending");
+    try{const r=await tmdb("/trending/movie/week",{language:CFG.lang});if(seq!==qSeq)return;trending=(r.results||[]).slice(0,20).map(norm);renderTrending()}
+    catch(e){if(seq===qSeq)box.innerHTML=`<div class="empty g"><div class="halo">${icon("error")}</div><h2>Couldn't load suggestions</h2><p>${esc(errText(e))}</p></div>`}
+    return;
+  }
+  if(!more){qState={q,page:0,total:0,count:0,items:[]};box.innerHTML=loadingHTML(`Searching for “${q}”`)}
+  try{
+    const r=await tmdb("/search/movie",{query:q,language:CFG.lang,include_adult:false,page:qState.page+1});
+    if(seq!==qSeq)return;
+    qState.page=r.page||1;qState.total=r.total_pages||0;qState.count=r.total_results||0;
+    qState.items.push(...(r.results||[]).map(norm));
+    renderSearch();
+  }catch(e){if(seq!==qSeq)return;box.innerHTML=`<div class="empty g"><div class="halo">${icon(e.kind==="network"?"wifi_off":"error")}</div><h2>Search didn't finish</h2><p>${esc(errText(e))}</p><button class="btn filled" data-act="qretry">${icon("refresh")}Try again</button></div>`}
+}
+function renderTrending(){
+  searchBox().innerHTML=`<div class="g"><p class="sec-title">Trending this week</p><div class="list">${trending.map(rowHTML).join("")}</div></div>`;
+}
+function renderSearch(){
+  const box=searchBox();
+  if(!qState.items.length){box.innerHTML=`<div class="empty g"><div class="halo">${icon("search_off")}</div><h2>No film found</h2><p>Nothing matches “${esc(qState.q)}”. Check the spelling, or try the original title.</p></div>`;return}
+  box.innerHTML=`<div class="g"><p class="sec-title">${plural(qState.count,"result")} for “${esc(qState.q)}”</p><div class="list">${qState.items.map(rowHTML).join("")}</div></div>`
+    +(qState.page<qState.total?`<div class="more-row"><button class="btn tonal" data-act="qmore">${icon("expand_more")}More results</button></div>`:"");
+}
+$("#v-search").addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b||b.id==="q-clear")return;const d=b.dataset;
+  if(d.open){openDetail(+d.open);return}
+  if(d.addlist){openSheet(+d.addlist);return}
+  if(d.act==="qmore"){b.disabled=true;runSearch(qState.q,true)}
+  if(d.act==="qretry")runSearch($("#q").value.trim());
+});
 
 /* ================= Snackbar ================= */
 let snackT=null,snackFn=null;
@@ -1070,7 +1314,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(!sticky)snackT=setTimeout(()=>$("#snack").classList.remove("show"),3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1";
+const APP_VERSION="2026.11.17-1617";
 let updateShown=false;
 async function checkUpdate(){
   if(updateShown||location.protocol!=="https:")return;
