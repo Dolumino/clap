@@ -670,6 +670,7 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
 .pick-actions .icon-btn[data-seen][aria-pressed="true"]{color:var(--on-amber);background:var(--amber);border-color:var(--amber)}
 
 /* ---- Settings page ---- */
+.app-version{margin:0;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 .setup-sec{display:flex;flex-direction:column;gap:10px}
 .setup-h{margin:0;font-family:var(--font-display);font-stretch:82%;font-weight:600;font-size:21px;letter-spacing:-.02em}
 #catalog-h{margin-top:4px;padding-top:20px;border-top:1px solid var(--rule)}
@@ -775,6 +776,7 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
         <button type="button" class="btn text" id="f-forget" hidden>Remove key</button>
       </div>
       <p class="fineprint">This product uses the TMDB API but is not endorsed or certified by TMDB. Streaming availability data is provided by JustWatch.</p>
+      <p class="app-version">Clap · version <span id="app-ver"></span></p>
     </form>
   </main>
 
@@ -2090,7 +2092,8 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1801";
+const APP_VERSION="2026.11.17-1808";
+$("#app-ver").textContent=APP_VERSION;
 let updateShown=false;
 async function checkUpdate(){
   if(updateShown||location.protocol!=="https:")return;
