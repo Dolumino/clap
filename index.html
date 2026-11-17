@@ -126,10 +126,7 @@ img{max-width:100%}
 .slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--primary);margin-top:-7px;border:0;transition:box-shadow .15s}
 .slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--primary);border:0}
 .slider:active::-webkit-slider-thumb{box-shadow:0 0 0 10px color-mix(in srgb,var(--primary) 16%,transparent)}
-.ticks{display:grid;grid-template-columns:repeat(4,1fr);margin-top:4px;font-size:11px;color:var(--on-surface-variant);line-height:14px}
-.ticks span:nth-child(2){text-align:center;transform:translateX(-12%)}
-.ticks span:nth-child(3){text-align:center;transform:translateX(12%)}
-.ticks span:last-child{text-align:right}
+.ticks{display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--on-surface-variant);line-height:14px}
 .ticks span.on{color:var(--primary);font-weight:650}
 .fame-note{margin:10px 0 0;font-size:13px;color:var(--on-surface-variant);line-height:18px;min-height:36px}
 
@@ -768,8 +765,8 @@ h1,h2,.hero h2,.card-title,.d-title h2,.empty h2,.lists-head h2,.sheet h2,.dialo
     <section class="set g">
       <div class="set-head"><h3>How well known?</h3><span class="val" id="fame-val"></span></div>
       <p class="hint">From films everyone has seen to cinephile deep cuts.</p>
-      <input type="range" class="slider" id="fame" min="1" max="4" step="1" aria-label="Discovery level">
-      <div class="ticks" id="fame-ticks"><span>Popular</span><span>Classic</span><span>Cinephile</span><span>Deep cut</span></div>
+      <input type="range" class="slider" id="fame" min="0" max="4" step="1" aria-label="How well known">
+      <div class="ticks" id="fame-ticks"><span>Any</span><span>Popular</span><span>Classic</span><span>Cinephile</span><span>Deep cut</span></div>
       <p class="fame-note" id="fame-note"></p>
     </section>
 
@@ -925,7 +922,7 @@ const DEFAULT_PLATS=[/^netflix$/i,/^amazon prime video$/i,/^canal\+$/i];
 
 /* ================= State ================= */
 const KEY="cesoir.tmdb.v1";
-const DEFAULTS={mood:["thoughtful"],who:"duo",genres:[],fame:2,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,added:[],shown:null,shownV:0,only:false,hideSeen:true};
+const DEFAULTS={mood:[],who:null,genres:[],fame:0,era:[1920,2026],image:"any",len:"any",lang:"any",plats:null,added:[],shown:null,shownV:0,only:false,hideSeen:true};
 const TOP_PLATS=10;
 /* Default streaming services, in this order (TMDB names vary slightly, so each has alternatives) */
 const DEFAULT_SERVICES=[[/^canal\+$/i],[/^netflix$/i],[/^amazon prime video$/i,/^prime video$/i],[/^disney ?(plus|\+)$/i],[/^apple tv ?(plus|\+)$/i,/^apple tv$/i],[/^youtube premium$/i],[/^arte$/i],[/^france ?[.]?tv$/i,/^france ?télévisions$/i],[/^m6 ?\+$/i,/^6play$/i],[/^mubi$/i]];
@@ -945,7 +942,8 @@ function plainOf(st){return{mood:[...st.mood],who:st.who,genres:[...st.genres],f
 function toPlain(){return plainOf(S)}
 const cloneState=st=>fromPlain(plainOf(st));
 S=fromPlain(DEFAULTS);
-try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){if(d.cfg)CFG=Object.assign(CFG,d.cfg);if(d.s)S=fromPlain(Object.assign({},DEFAULTS,d.s));if(Array.isArray(d.lists)&&d.lists.length)lists=d.lists;if(d.meta)meta=d.meta;if(Array.isArray(d.favs))d.favs.forEach(f=>{meta[f.id]=f;if(!lists[0].films.includes(f.id))lists[0].films.push(f.id)});if(d.theme&&d.themeMode===2)theme=d.theme;if(d.seen&&typeof d.seen==="object")seen=d.seen}}catch(e){}
+function clearFilters(st){st.mood=new Set();st.who=null;st.genres=new Set();st.fame=0;st.era=[1920,2026];st.image="any";st.len="any";st.lang="any";st.only=false;st.plats=new Set();return st}
+try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d){if(d.cfg)CFG=Object.assign(CFG,d.cfg);if(d.s)S=clearFilters(fromPlain(Object.assign({},DEFAULTS,d.s)));if(Array.isArray(d.lists)&&d.lists.length)lists=d.lists;if(d.meta)meta=d.meta;if(Array.isArray(d.favs))d.favs.forEach(f=>{meta[f.id]=f;if(!lists[0].films.includes(f.id))lists[0].films.push(f.id)});if(d.theme&&d.themeMode===2)theme=d.theme;if(d.seen&&typeof d.seen==="object")seen=d.seen}}catch(e){}
 if(!lists.some(l=>l.id==="fav"))lists.unshift({id:"fav",name:"Favorites",films:[]});
 {const keep=new Set([...lists.flatMap(l=>l.films),...Object.keys(seen).map(Number)]);Object.keys(meta).forEach(k=>{if(!keep.has(+k))delete meta[k]})}
 function save(){try{localStorage.setItem(KEY,JSON.stringify({cfg:CFG,s:toPlain(),lists,meta,theme,themeMode:2,seen}))}catch(e){}}
@@ -1000,7 +998,7 @@ async function loadCatalogMeta(){
   PROV_BY_ID=new Map(PROVIDERS.map(p=>[p.id,p]));
   const exact=(kw.results||[]).find(k=>k.name.toLowerCase()==="black and white");
   BW_KW=exact?exact.id:null;
-  if(!S.plats){S.plats=new Set(PROVIDERS.filter(p=>DEFAULT_PLATS.some(re=>re.test(p.n))).map(p=>p.id))}
+  if(!S.plats)S.plats=new Set();
   else S.plats=new Set([...S.plats].filter(id=>PROV_BY_ID.has(id)));
   const topIds=new Set(PROVIDERS.slice(0,TOP_PLATS).map(p=>p.id));
   DEF_IDS=defaultShown();
@@ -1008,7 +1006,7 @@ async function loadCatalogMeta(){
     /* Reset to the 10 default services; keep selections only among them */
     S.shown=new Set(DEF_IDS);S.added=new Set();
     const keepSel=[...(S.plats||[])].filter(id=>S.shown.has(id));
-    S.plats=new Set(keepSel.length?keepSel:PROVIDERS.filter(p=>DEFAULT_PLATS.some(re=>re.test(p.n))&&S.shown.has(p.id)).map(p=>p.id));
+    S.plats=new Set(keepSel);
     S.shownV=3;
   }
   S.plats.forEach(id=>S.shown.add(id));
@@ -1020,7 +1018,7 @@ function moodGenres(){const g=new Set();S.mood.forEach(k=>MOOD[k].g.forEach(x=>g
 function moodAvoid(){const g=new Set();S.mood.forEach(k=>(MOOD[k].no||[]).forEach(x=>g.add(x)));S.genres.forEach(x=>g.delete(x));S.mood.forEach(k=>MOOD[k].g.forEach(x=>g.delete(x)));return g}
 function buildParams(page){
   const p={include_adult:false,include_video:false,language:CFG.lang,page,"with_runtime.gte":60};
-  Object.assign(p,FAME[S.fame-1].q);
+  Object.assign(p,S.fame?FAME[S.fame-1].q:{"vote_count.gte":150,sort_by:"popularity.desc"});
   const wanted=S.genres.size?S.genres:moodGenres();
   if(wanted.size)p.with_genres=[...wanted].join("|");
   const avoid=moodAvoid();
@@ -1189,9 +1187,9 @@ function syncSettings(){
   $("#mood-val").textContent=S.mood.size?S.mood.size+" selected":"";
   $("#gen-val").textContent=S.genres.size?S.genres.size+" selected":"From your mood";
   const np=S.plats?S.plats.size:0;$("#plat-val").textContent=np?np+" selected":"None yet";
-  const fm=$("#fame");fm.value=S.fame;fm.style.setProperty("--fill",((S.fame-1)/3*100)+"%");
-  $("#fame-val").textContent=FAME[S.fame-1].t;$("#fame-note").textContent=FAME[S.fame-1].d;
-  document.querySelectorAll("#fame-ticks span").forEach((s,i)=>s.classList.toggle("on",i===S.fame-1));
+  const fm=$("#fame");fm.value=S.fame;fm.style.setProperty("--fill",(S.fame/4*100)+"%");
+  $("#fame-val").textContent=S.fame?FAME[S.fame-1].t:"Any";$("#fame-note").textContent=S.fame?FAME[S.fame-1].d:"No preference: from blockbusters to rare finds.";
+  document.querySelectorAll("#fame-ticks span").forEach((s,i)=>s.classList.toggle("on",i===S.fame));
   $("#only").setAttribute("aria-checked",S.only);$("#hideseen").setAttribute("aria-checked",S.hideSeen);
   const[a,b]=S.era;$("#era-a").value=a;$("#era-b").value=b;
   $("#dual").style.setProperty("--a",(a-1920)/106*100+"%");$("#dual").style.setProperty("--b",(b-1920)/106*100+"%");
@@ -1228,7 +1226,7 @@ $("#v-settings").addEventListener("click",e=>{
     snack(`${p?p.n:"Service"} removed`,()=>{S.shown.add(id);if(was)S.plats.add(id);syncSettings()});return}
   else if(d.act==="restoreplats"){const before=new Set(S.shown);DEF_IDS.forEach(id=>S.shown.add(id));syncSettings();
     snack("Suggestions restored",()=>{S.shown=before;syncSettings()});return}
-  else if(d.who)S.who=d.who;
+  else if(d.who)S.who=S.who===d.who?null:d.who;
   else if(d.image)S.image=d.image;
   else if(d.len)S.len=d.len;
   else if(d.lang)S.lang=d.lang;
@@ -1236,7 +1234,7 @@ $("#v-settings").addEventListener("click",e=>{
   else if(t.id==="only")S.only=!S.only;
   else if(t.id==="hideseen")S.hideSeen=!S.hideSeen;
   else if(t.id==="acc"){const open=t.getAttribute("aria-expanded")!=="true";t.setAttribute("aria-expanded",open);$("#acc-panel").hidden=!open;return}
-  else if(t.id==="reset"){const plats=S.plats;S=fromPlain(Object.assign({},DEFAULTS,{mood:[]}));S.plats=plats;snack("Settings cleared. Your platforms are kept.")}
+  else if(t.id==="reset"){const before=plainOf(S);clearFilters(S);snack("All filters cleared",()=>{S=fromPlain(before);syncSettings()})}
   else if(t.id==="shuffle"){surprise();return}
   else if(t.id==="go"){search();return}
   else return;
@@ -1467,9 +1465,9 @@ function rowRankHTML(r,rank){
 function summaryChips(){
   const c=[];
   S.mood.forEach(k=>c.push([MOOD[k].i,MOOD[k].n]));
-  const w=WHO.find(o=>o.k===S.who);c.push([w.i,w.n]);
+  const w=WHO.find(o=>o.k===S.who);if(w)c.push([w.i,w.n]);
   S.genres.forEach(g=>c.push(["label",GNAME[g]]));
-  c.push(["insights",FAME[S.fame-1].n]);
+  if(S.fame)c.push(["insights",FAME[S.fame-1].n]);
   if(S.era[0]>1920||S.era[1]<2026)c.push(["calendar_month",`${S.era[0]}–${S.era[1]===2026?"today":S.era[1]}`]);
   if(S.image!=="any")c.push(["contrast",IMAGE.find(o=>o.k===S.image).n]);
   if(S.len!=="any")c.push(["schedule",LEN.find(o=>o.k===S.len).n]);
@@ -1889,7 +1887,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-1745";
+const APP_VERSION="2026.11.17-1750";
 let updateShown=false;
 async function checkUpdate(){
   if(updateShown||location.protocol!=="https:")return;
