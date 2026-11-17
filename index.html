@@ -765,6 +765,11 @@ input,select,textarea{font-size:max(16px,1em)}
   .fab{height:42px}
 }
 
+
+/* Breathing room between the eye and bookmark actions */
+.detail .dbar{gap:10px}
+.pick-actions{gap:10px}
+.pick-actions .btn.filled{margin-right:2px}
 </style>
 </head>
 <body>
@@ -2112,7 +2117,7 @@ function snack(msg,undo,label,sticky){
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-2135";
+const APP_VERSION="2026.11.17-2144";
 $("#app-ver").textContent=APP_VERSION;
 let updateShown=false;
 async function checkUpdate(){
