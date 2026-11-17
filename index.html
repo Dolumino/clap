@@ -782,6 +782,22 @@ input,select,textarea{font-size:max(16px,1em)}
 .pg-arrow.next .ms{transform:rotate(180deg)}
 .pg-arrow:disabled{opacity:.35;cursor:default}
 .refresh-row .pager{margin-bottom:8px}
+
+/* Toasts at the bottom, above the tab bar */
+.snack{top:auto;bottom:calc(var(--toast-b,88px));transform:translateY(16px)}
+.snack.show{transform:none}
+.upd{position:absolute;left:12px;right:12px;bottom:calc(var(--toast-b,88px));z-index:61;display:flex;align-items:center;gap:12px;min-height:72px;padding:12px 10px 12px 14px;border-radius:10px;background:var(--amber);color:var(--on-amber);box-shadow:0 14px 34px color-mix(in srgb,var(--amber) 45%,transparent),0 2px 6px rgba(0,0,0,.18);transform:translateY(20px);opacity:0;transition:transform .28s cubic-bezier(.2,0,0,1),opacity .2s}
+.upd.show{transform:none;opacity:1}
+.upd-ic{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;background:rgba(255,255,255,.16)}
+.upd-ic .ms{font-size:22px}
+.upd-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.upd-txt b{font-family:var(--font-display);font-stretch:85%;font-size:17px;font-weight:700;line-height:20px;letter-spacing:-.01em}
+.upd-txt small{font-size:13px;line-height:17px;opacity:.88}
+.upd-go{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 16px;border:0;border-radius:999px;background:#fff7ef;color:#7a2a1b;font-weight:700;font-size:14px;flex:none}
+.upd-go .ms{font-size:17px}
+.upd-x{width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:inherit;display:grid;place-items:center;flex:none;opacity:.8}
+.upd-x .ms{font-size:18px}
+@media (min-width:600px){.upd{margin-inline:auto;max-width:520px}}
 </style>
 </head>
 <body>
@@ -969,6 +985,7 @@ input,select,textarea{font-size:max(16px,1em)}
   </section>
 
   <div class="snack" id="snack" role="status" aria-live="polite"><span id="snack-t"></span><button id="snack-a">Undo</button></div>
+  <div class="upd" id="upd" role="status" aria-live="polite" hidden><span class="upd-ic" id="upd-ic"></span><span class="upd-txt"><b>Update ready</b><small id="upd-sub">Refresh to get the latest Clap.</small></span><button class="upd-go" id="upd-go">Refresh</button><button class="upd-x" id="upd-x" aria-label="Later"></button></div>
 </div>
 
 <script>
@@ -1209,7 +1226,7 @@ $("#topbar").addEventListener("click",e=>{
     onOk:()=>{lists=lists.filter(x=>x!==cur);openList=null;save();renderLists();renderTopbar();snack("List deleted")}});
 });
 document.querySelectorAll(".view").forEach(v=>v.addEventListener("scroll",()=>$("#topbar").classList.toggle("scrolled",v.scrollTop>4),{passive:true}));
-function go(v){
+function go(v){setTimeout(placeToasts,0);
   view=v;if(v==="settings"||v==="results")discoverSub=v;
   for(const id of["setup","settings","results","search","lists","theatres"])$("#v-"+id).hidden=v!==id;
   $("#navbar").hidden=v==="setup";
@@ -2141,12 +2158,19 @@ $("#v-search").addEventListener("click",e=>{
 
 /* ================= Snackbar ================= */
 let snackT=null,snackFn=null;
+function placeToasts(){
+  const n=$("#navbar"),nh=n&&n.offsetParent&&!$("#detail").classList.contains("open")?n.offsetHeight:0;
+  const v=document.querySelector(".view:not([hidden])"),cta=v&&v.querySelector(".bottom-cta"),ch=cta&&cta.offsetParent?cta.offsetHeight:0;
+  document.documentElement.style.setProperty("--toast-b",(nh+ch+12)+"px");
+}
+addEventListener("resize",placeToasts);
 function snack(msg,undo,label,sticky){
+  placeToasts();
   $("#snack-t").textContent=msg;snackFn=undo||null;$("#snack-a").hidden=!undo;$("#snack-a").textContent=label||"Undo";
   $("#snack").classList.add("show");clearTimeout(snackT);if(sticky!==true)snackT=setTimeout(()=>$("#snack").classList.remove("show"),typeof sticky==="number"?sticky:3200);
 }
 /* ================= Update notice ================= */
-const APP_VERSION="2026.11.17-2150";
+const APP_VERSION="2026.11.17-2153";
 $("#app-ver").textContent=APP_VERSION;
 let updateShown=false;
 async function checkUpdate(){
@@ -2155,8 +2179,15 @@ async function checkUpdate(){
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
     const j=await r.json();
     if(j.version&&j.version!==APP_VERSION){updateShown=true;
-      snack("New version of Clap available",()=>location.replace(location.pathname+"?v="+encodeURIComponent(j.version)),"Refresh",true)}
+      showUpdate(j.version)}
   }catch(e){}
+}
+function showUpdate(ver){
+  const u=$("#upd");$("#upd-ic").innerHTML=icon("auto_awesome",1);$("#upd-x").innerHTML=icon("close");
+  $("#upd-go").textContent="Refresh";
+  $("#upd-go").onclick=()=>location.replace(location.pathname+"?v="+encodeURIComponent(ver));
+  $("#upd-x").onclick=()=>{u.classList.remove("show");setTimeout(()=>u.hidden=true,250)};
+  placeToasts();u.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>u.classList.add("show")));
 }
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")checkUpdate()});
 setTimeout(checkUpdate,1500);
