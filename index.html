@@ -969,6 +969,21 @@ button,.btn{-webkit-tap-highlight-color:transparent}
 /* Film page: availability note, set apart and quiet */
 .d-sec .note{margin:28px 0 4px;font-size:11px;line-height:15px;color:var(--faint);opacity:.85;letter-spacing:.01em}
 .d-sec .note .ms{font-size:13px;margin-top:1px;color:var(--faint)}
+
+/* Results rows: % beside the title, full year · director, mood tags (max 2) */
+.rhead{display:flex;align-items:baseline;gap:10px;min-width:0}
+.rhead b{flex:1;min-width:0}
+.rpct{flex:none;font-style:normal;font-size:12px;font-weight:700;color:var(--amber-text);font-variant-numeric:tabular-nums}
+.rtxt small.rmeta{white-space:normal;overflow:visible;text-transform:none;letter-spacing:0;font-size:13px;line-height:17px;font-stretch:100%}
+.rtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.rtag{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 7px;border:1px solid var(--rule-strong);border-radius:999px;font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap}
+.rtag .ms{font-size:12px;color:var(--amber-text)}
+
+/* Tonight's pick: title, then year · director, then duration */
+.pick-by{margin:0;font-size:15px;line-height:20px;color:var(--text)}
+.pick-by b{color:var(--amber-text);font-weight:700}
+.pick-len{margin:0;display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pick-len .ms{font-size:15px;color:var(--amber-text)}
 </style>
 </head>
 <body>
@@ -1954,7 +1969,8 @@ function pickHTML(r){
       <button class="pick-poster" data-open="${f.id}" aria-label="Details for ${esc(f.t)}">${posterHTML(f,"w500")}</button>
       <div class="pick-info">
         <h2 id="pick-t">${esc(f.t)}</h2>
-        <p class="pick-meta"><b>${esc(f.y||"")}</b>${f.d?" · "+esc(f.d):""}${f.r?" · "+rt(f.r):""}</p>
+        <p class="pick-by"><b>${esc(f.y||"")}</b>${f.d?" · "+esc(f.d):""}</p>
+        ${f.r?`<p class="pick-len">${icon("schedule")}${rt(f.r)}</p>`:""}
         ${f.vc?`<p class="pick-rate">${icon("star",1)}${f.va.toFixed(1)} · ${nf.format(f.vc)} votes</p>`:""}
         <div class="pick-plats">${platLogos(f,3)}</div>
       </div>
@@ -1970,13 +1986,14 @@ function pickHTML(r){
 }
 function rowRankHTML(r,rank){
   const f=r.f,saved=inAnyCustom(f.id),why=r.why.find(x=>!/^Rated /.test(x))||r.why[0]||"";
+  const tags=[...S.mood].map(k=>MOOD[k]).filter(m=>m&&m.g.some(g=>(f.g||[]).includes(g))).slice(0,2);
   return `<li class="ritem">
     <button class="ritem-open" data-open="${f.id}">
       <span class="rank" aria-hidden="true">${rank}</span>
       <span class="thumb">${posterHTML(f,"w185",true)}</span>
-      <span class="rtxt"><b>${esc(f.t)}</b>
-        <small><em>${r.pct}%</em> · ${esc(f.y||"")}${f.d?" · "+esc(f.d):""}</small>${seenTag(f.id)}
-        ${why?`<small class="rwhy">${esc(why)}</small>`:""}
+      <span class="rtxt"><span class="rhead"><b>${esc(f.t)}</b><em class="rpct">${r.pct}%</em></span>
+        <small class="rmeta">${esc([f.y,f.d].filter(Boolean).join(" · "))}</small>${seenTag(f.id)}
+        ${tags.length?`<span class="rtags">${tags.map(m=>`<span class="rtag">${icon(m.i)}${esc(m.n)}</span>`).join("")}</span>`:why?`<small class="rwhy">${esc(why)}</small>`:""}
         <span class="rplat">${platLogos(f,3)}</span></span>
     </button>
     ${seenBtn(f.id)}<button class="icon-btn" data-addlist="${f.id}" aria-label="${saved?"Saved in a list. Change lists":"Save to a list"}">${icon(saved?"bookmark_added":"bookmark_add",saved)}</button>
