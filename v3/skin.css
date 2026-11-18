@@ -187,3 +187,14 @@ h1,h2,.set h3,.acc-btn h3,.topbar h1,.pick-info h2,.d-title h2,.empty h2,.lists-
 .rtag{height:20px!important;padding:0 6px!important;font-size:10.5px!important;gap:0!important}
 .rtag .ms{display:none}
 .rtags{gap:4px!important;flex-wrap:nowrap!important;overflow:hidden}
+
+/* ---------- Logo: three slanted vintage bands + "clap." in a square */
+.brand{gap:12px!important;align-items:center}
+.brand::before{content:"";width:46px;height:24px;flex:none;
+  background:linear-gradient(90deg,#C74D1E 0 30%,transparent 30% 35%,#EBB83F 35% 65%,transparent 65% 70%,var(--text) 70% 100%)!important;
+  transform:skewX(-24deg);margin-left:8px}
+.brand b{width:auto!important;height:46px;min-width:46px;box-sizing:border-box;padding:0 7px 6px!important;border:3px solid var(--text)!important;
+  display:flex!important;align-items:flex-end;justify-content:flex-start;word-break:normal!important;white-space:nowrap;
+  font-size:18px!important;line-height:18px!important;letter-spacing:-.04em!important;text-transform:lowercase}
+.brand b::after{content:"."!important;color:#C74D1E!important}
+.brand b{width:54px!important;min-width:54px;height:54px!important;padding:0 0 7px!important;justify-content:center!important;font-size:18px!important}
