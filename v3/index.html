@@ -1175,6 +1175,17 @@ h1,h2,.set h3,.acc-btn h3,.topbar h1,.pick-info h2,.d-title h2,.empty h2,.lists-
 .rtag .ms{display:none}
 .rtags{gap:4px!important;flex-wrap:nowrap!important;overflow:hidden}
 
+/* ---------- Logo: three slanted vintage bands + "clap." in a square */
+.brand{gap:12px!important;align-items:center}
+.brand::before{content:"";width:46px;height:24px;flex:none;
+  background:linear-gradient(90deg,#C74D1E 0 30%,transparent 30% 35%,#EBB83F 35% 65%,transparent 65% 70%,var(--text) 70% 100%)!important;
+  transform:skewX(-24deg);margin-left:8px}
+.brand b{width:auto!important;height:46px;min-width:46px;box-sizing:border-box;padding:0 7px 6px!important;border:3px solid var(--text)!important;
+  display:flex!important;align-items:flex-end;justify-content:flex-start;word-break:normal!important;white-space:nowrap;
+  font-size:18px!important;line-height:18px!important;letter-spacing:-.04em!important;text-transform:lowercase}
+.brand b::after{content:"."!important;color:#C74D1E!important}
+.brand b{width:54px!important;min-width:54px;height:54px!important;padding:0 0 7px!important;justify-content:center!important;font-size:18px!important}
+
 </style>
 </head>
 <body>
@@ -2820,7 +2831,10 @@ $("#snack-a").onclick=()=>{if(snackFn)snackFn();$("#snack").classList.remove("sh
 document.addEventListener("pointerdown",e=>{const el=e.target.closest(".mood,.chip,.d-act,.pick-actions .icon-btn,.switch,.seg button");if(!el)return;
   const r=el.getBoundingClientRect();el.style.setProperty("--x",((e.clientX-r.left)/r.width*100).toFixed(1)+"%");el.style.setProperty("--y",((e.clientY-r.top)/r.height*100).toFixed(1)+"%")},{passive:true});
 /* ================= Boot ================= */
-$("#tonight").textContent=new Date().toLocaleDateString(LOC,{weekday:"long"})+(UI_FR?" soir":" night");
+/* Day + part of the day, refreshed every minute: morning (5–12h), afternoon (12–18h), night (18–5h) */
+function dayPart(){const d=new Date(),h=d.getHours(),k=h>=5&&h<12?0:h>=12&&h<18?1:2;if(h<5)d.setDate(d.getDate()-1);
+  return d.toLocaleDateString(LOC,{weekday:"long"})+" "+(UI_FR?["matin","après-midi","soir"]:["morning","afternoon","night"])[k]}
+$("#tonight").textContent=dayPart();setInterval(()=>{const e=$("#tonight");if(e)e.textContent=dayPart()},60000);
 if(mq&&mq.addEventListener)mq.addEventListener("change",()=>{if(!theme)renderTopbar()});
 applyTheme();syncFavUI();
 (async function boot(){
