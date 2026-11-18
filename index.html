@@ -2629,7 +2629,10 @@ $("#snack-a").onclick=()=>{if(snackFn)snackFn();$("#snack").classList.remove("sh
 document.addEventListener("pointerdown",e=>{const el=e.target.closest(".mood,.chip,.d-act,.pick-actions .icon-btn,.switch,.seg button");if(!el)return;
   const r=el.getBoundingClientRect();el.style.setProperty("--x",((e.clientX-r.left)/r.width*100).toFixed(1)+"%");el.style.setProperty("--y",((e.clientY-r.top)/r.height*100).toFixed(1)+"%")},{passive:true});
 /* ================= Boot ================= */
-$("#tonight").textContent=new Date().toLocaleDateString(LOC,{weekday:"long"})+(UI_FR?" soir":" night");
+/* Day + part of the day, refreshed every minute: morning (5–12h), afternoon (12–18h), night (18–5h) */
+function dayPart(){const d=new Date(),h=d.getHours(),k=h>=5&&h<12?0:h>=12&&h<18?1:2;if(h<5)d.setDate(d.getDate()-1);
+  return d.toLocaleDateString(LOC,{weekday:"long"})+" "+(UI_FR?["matin","après-midi","soir"]:["morning","afternoon","night"])[k]}
+$("#tonight").textContent=dayPart();setInterval(()=>{const e=$("#tonight");if(e)e.textContent=dayPart()},60000);
 if(mq&&mq.addEventListener)mq.addEventListener("change",()=>{if(!theme)renderTopbar()});
 applyTheme();syncFavUI();
 (async function boot(){
