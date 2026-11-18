@@ -31,7 +31,10 @@ Owner: Ludo (freelance Senior Product Designer, Paris). Shared with his partner 
 | `manifest.webmanifest`, `icon-*-v3.png`, `apple-touch-icon-v3.png` | PWA install. Icon files are versioned in their names to beat phone caches. |
 | `version.json`, `bump.sh` | Update detection. |
 | `tools/preview/build.py` | Wraps the app with a mock `fetch` (sample films, posters, cinemas) into a standalone `preview.html`. `CLAP_APP=… CLAP_OUT=… python3 tools/preview/build.py "note"`. Needs Pillow. |
+| `tools/preview/shoot.py` | Taps through a preview at iPhone 15 size (393×852), saves 10 screenshots to `tools/preview/shots/`, fails on JavaScript errors. Options: `--dark`, `--fr`. |
 | `tools/build-v3.py` | Builds V3 from `index.html` + `v3/skin.css`. |
+| `tools/setup.sh` | Installs Pillow + Playwright (+ Chromium) if missing. Runs automatically at session start (`.claude/settings.json` hook). |
+| `.claude/commands/` | `/preview [v1\|v3]` builds + screenshots a preview; `/publish [v1\|v3\|both]` bumps, commits, pushes (only after the owner says "publish"). |
 | `design/icons/` | SVG sources of the app icon (cream clapperboard on brick). |
 
 ## Branches
@@ -74,8 +77,8 @@ Max 2 fonts, sans-serif only. Icons are inline SVG from the `ICONS` dictionary v
 
 ## Testing
 
-Playwright + Chromium: open the preview file, block the network except `file:`/`data:`, serve fonts locally if needed,
-screenshot at 393×852 (iPhone 15). Check `pageerror`. Quick syntax check of the app scripts:
+`python3 tools/preview/build.py "note" && python3 tools/preview/shoot.py` (or `/preview`). The preview is self-contained
+(mock TMDB, Photon, Overpass); real TMDB calls need the owner's key, which lives only in his browser. Quick syntax check of the app scripts:
 
 ```bash
 node -e "const s=require('fs').readFileSync('index.html','utf8');const re=/<script>([\s\S]*?)<\/script>/g;let m;while(m=re.exec(s)){new Function(m[1])}console.log('ok')"
